@@ -1,0 +1,17 @@
+name:Terrasol
+distance:3000
+angle:150
+difficulty:1
+textureName:planet1
+textureLocation:environment/planets/planet1.png
+textureScale:1
+region
+ name:Forest
+ desc:A dense forest
+ exploreTime:10000
+ yield:Scrap Metal,10,Rare Metal,1
+region
+ name:Plains
+ desc:Clear lands
+ exploreTime:5000
+ yield:Scrap Metal,2

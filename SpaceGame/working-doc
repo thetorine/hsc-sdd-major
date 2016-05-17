@@ -1,0 +1,42 @@
+creating entity:
+- import entitybase class
+- use addsavabledata and loadsavabledata to save and load data from disk
+- add condition for entity class in entitymanager to correctly load the class from disk
+
+spawner entity: 
+- orbit or fly around base??
+- spawner delay
+- lots of health
+- only spawn enemy if there are not enough currently protecting base
+- tiers? shield? fighting back?
+
+shop items: 
+- need entity in each sector to allow the purchasing of items using the scrap metal and rare metal.
+- perhaps certain planets that once liberated can be used as a hub to buy items.
+- potential items:
+	- armor (tiers)
+	- weapons (game should start with 1 weapon, inv needs to display weapons)
+	- ammo (perhaps, might be too tough on new players)
+	- ship upgrades (better nav unit, more dmg from weapons, aoe dmg weapons)
+	- boosts (bonus metals, faster travel, faster rate of fire (ship upgrades???)) last a limited time
+- ui
+	- two columns: 1 scrollable list for the items that can be purchased, items that cannot be purchased or not enough metal
+	should be grayed out.
+	- second column should activate if an item is clicked in the list that shows its details and potential benefits
+	- list scroll bar should be indicative of the last elemeent that is being displayed on the screen. 
+	- for scroll bar probably find the percentage it has moved then multiply that by the value of currentDrawStart
+	that is required for the last element to be perfectly at the bottom of the screen.
+	
+submission requirements
+
+- The final software solution in a form that allows it to be executed on a computer. The original source code must 
+also be submitted. Both copies must be in a properly labeled folder. A hard copy of the coded solution, 
+which forms part of your documentation must also be submitted.
+- A Process diary or logbook that describes the development
+- User documentation including user manuals, installation guides and tutorials, troubleshooting guides and
+Help. These should be submitted as hard copies.
+- Final screen user interfaces (not screen shots) with annotations explaining the function of screen elements used.
+- A report describing the testing processes done. Include the actual test data used and test results (both successful and
+unsuccessful). 
+A report identifying and explaining the maintenance issues with the final solution. Propose
+modifications/enhancements that can be done to address
