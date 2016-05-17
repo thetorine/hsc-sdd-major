@@ -23,7 +23,7 @@ public class GuiIngame {
 	public void render(Graphics g, GameContainer container, float width, float height) {
 		EntityPlayer player = CoreGame.getInstance().entityManager.player;
 		
-		if(CoreGame.getInstance().currentGui == null || CoreGame.getInstance().currentGui instanceof GuiDiagnostics) {
+		if(CoreGame.getInstance().guiHierarchy.currentGui == null || CoreGame.getInstance().guiHierarchy.currentGui instanceof GuiDiagnostics) {
 			//health bar
 			g.setColor(Color.white);
 			float healthPercentage = ((float)player.currentHealth/player.maxHealth);

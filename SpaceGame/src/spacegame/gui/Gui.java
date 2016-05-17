@@ -126,4 +126,16 @@ public class Gui {
 	public void removeGuiElement(Gui gui) {
 		removalList.add(gui);
 	}
+	
+	public boolean supportsHierachy() {
+		return false;
+	}
+	
+	public void onOpen() {}
+	
+	public void onClose() {}
+	
+	public boolean shouldPauseGame() {
+		return true;
+	}
 }

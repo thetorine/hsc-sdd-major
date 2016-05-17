@@ -5,6 +5,7 @@ import java.util.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
+import spacegame.*;
 import spacegame.core.*;
 import spacegame.core.ExplorablePlanet.*;
 import spacegame.entity.*;
@@ -17,21 +18,9 @@ import spacegame.other.*;
 public class GuiPlanetInfo extends Gui implements EventListener {
 	public ExplorablePlanet planetInfo;
 
-	public GuiPlanetInfo(EntityPlanet planet) {
+	public GuiPlanetInfo() {
 		super(TextureHandler.uiImages.get("bg_green.png"), 0.4f);
-		planetInfo = World.getPlanetInfo(planet);
 		setBackgroundTint();
-		GuiList list = new GuiList((int)(0.05f*width), (int)(0.15f*height), 0.32f, this);
-		ArrayList<ListData> data = new ArrayList<>();
-		for(PlanetRegion region : planetInfo.planetRegions) {
-			data.add(new ListData(region.locationName));
-		}
-		list.addRows(data);
-		guiElements.add(list);
-		GuiProgressBar bar = new GuiProgressBar(0, 0, 0.08f, this);
-		guiElements.add(bar);
-		GuiButton exploreButton = new GuiButton("Explore", 0, 0, 0.08f, this);
-		guiElements.add(exploreButton);
 	}
 	
 	@Override
@@ -130,5 +119,32 @@ public class GuiPlanetInfo extends Gui implements EventListener {
 		}
 	}
 	
+	@Override
+	public void onOpen() {
+		super.onOpen();
+		EntityPlanet planet = (EntityPlanet) CoreGame.getInstance().entityManager.getEntityAt(CoreGame.getInstance().entityManager.player.asPoint(), true);
+		if(planet != null) {
+			planetInfo = World.getPlanetInfo(planet);
+			GuiList list = new GuiList((int)(0.05f*width), (int)(0.15f*height), 0.32f, this);
+			ArrayList<ListData> data = new ArrayList<>();
+			for(PlanetRegion region : planetInfo.planetRegions) {
+				data.add(new ListData(region.locationName));
+			}
+			list.addRows(data);
+			guiElements.add(list);
+			GuiProgressBar bar = new GuiProgressBar(0, 0, 0.08f, this);
+			guiElements.add(bar);
+			GuiButton exploreButton = new GuiButton("Explore", 0, 0, 0.08f, this);
+			guiElements.add(exploreButton);
+		} else {
+			CoreGame.getInstance().guiHierarchy.loadPreviousGui();
+		}
+	}
 	
+	@Override
+	public void onClose() {
+		super.onClose();
+		guiElements.clear();
+		planetInfo = null;
+	}
 }

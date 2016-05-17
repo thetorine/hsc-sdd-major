@@ -25,8 +25,7 @@ public class GuiPauseMenu extends Gui implements EventListener {
 		if(element instanceof GuiButton) {
 			GuiButton gb = (GuiButton) element;
 			if(gb.buttonName.equals("Resume Game")) {
-				CoreGame.getInstance().currentGui = null;
-				CoreGame.getInstance().gamePaused = false;
+				CoreGame.getInstance().guiHierarchy.collapseHeirarchy();
 			} else if(gb.buttonName.equals("Exit Game")) {
 				System.exit(0);
 			}

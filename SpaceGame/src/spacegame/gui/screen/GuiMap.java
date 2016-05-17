@@ -75,6 +75,11 @@ public class GuiMap extends Gui {
 		}
 	}
 	
+	@Override
+	public boolean shouldPauseGame() {
+		return false;
+	}
+	
 	private Point translatePointToMap(Point p, float scale) {
 		float xCoord = (p.x-xStart-width/2)/scale;
 		float yCoord = (p.y-yStart-height/2)/scale;
@@ -88,5 +93,4 @@ public class GuiMap extends Gui {
 		float yCoord = this.height/2 + yCoordDiff*scale;
 		return new Point(this.xStart+xCoord, this.yStart+yCoord);
 	}
-
 }

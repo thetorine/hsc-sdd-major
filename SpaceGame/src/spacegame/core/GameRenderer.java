@@ -76,7 +76,7 @@ public class GameRenderer {
 		EntityPlayer player = game.entityManager.player;
 		EntityBase target = player.selectedTarget;
 		if(target != null) { 
-			if(!game.camera.currentDisplayedMap.contains(target.collisionShape) && !(game.currentGui instanceof GuiMap)) {
+			if(!game.camera.currentDisplayedMap.contains(target.collisionShape) && !(game.guiHierarchy.currentGui instanceof GuiMap)) {
 				float bearing = GameUtilities.calculateBearing(player, target);
 				float xCoord = (float) (gameWidth/2 + 200*Math.sin(Math.toRadians(bearing)));
 				float yCoord = (float) (gameHeight/2 - 200*Math.cos(Math.toRadians(bearing)));

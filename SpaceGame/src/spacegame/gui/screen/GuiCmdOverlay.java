@@ -40,15 +40,7 @@ public class GuiCmdOverlay extends Gui {
 				}
 			} else if(typedString.length() > 0 && keyCode == Keyboard.KEY_BACK) {
 				typedString = typedString.substring(0, typedString.length()-1);
-			} else if(keyCode == Keyboard.KEY_RETURN) {
-				if(typedString.length() > 0) {
-					String command = typedString.split(" ")[0];
-					String[] args = typedString.replace(command + " ", "").split(" ");
-					CommandListener.performCommand(command, args);
-					CoreGame.getInstance().currentGui = null;
-					CoreGame.getInstance().gamePaused = false;
-				}
-			}
+			} 
 		}
 	}
 	
@@ -69,4 +61,14 @@ public class GuiCmdOverlay extends Gui {
 		}
 	}
 
+	@Override
+	public void onClose() {
+		super.onClose();
+		if(typedString.length() > 0) {
+			String command = typedString.split(" ")[0];
+			String[] args = typedString.replace(command + " ", "").split(" ");
+			CommandListener.performCommand(command, args);
+			typedString = "";
+		}
+	}
 }
