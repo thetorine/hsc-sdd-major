@@ -28,7 +28,7 @@ public class CoreGame extends BasicGame {
 			GameConstants.GAME_WIDTH = (int) (container.getScreenWidth()/scale);
 			GameConstants.GAME_HEIGHT = (int) (container.getScreenHeight()/scale);
 			container.setDisplayMode(GameConstants.GAME_WIDTH, GameConstants.GAME_HEIGHT, scale == 1f);
-			container.setVSync(true);
+			container.setTargetFrameRate(60); //screen tearing occurs with this but minimizes CPU usage
 			container.setShowFPS(true);
 			container.start();
 		} catch (SlickException e) {
@@ -81,14 +81,14 @@ public class CoreGame extends BasicGame {
 		guiHierarchy = new GuiHierarchy();
 		renderer = new GameRenderer();
 		ingameGUI = new GuiIngame();
-		world.onGameCreation();
 		craftingManager = new CraftingManager();
+		world.onGameCreation();
 		
 		KeyboardListener.registerListener(guiHierarchy);
 		try {
 			int arrayLength = GameConstants.GAME_FONT.length;
 			for(int i = 0; i < arrayLength; i++) {
-				UnicodeFont font = new UnicodeFont(fontLocation, (int) ((15+10*i)/GameConstants.WINDOW_SCALE*1.2f), false, false);
+				UnicodeFont font = new UnicodeFont(fontLocation, (int) ((15+10*i)/GameConstants.WINDOW_SCALE*1.1f), false, false);
 				font.addAsciiGlyphs();
 				font.getEffects().add(new ColorEffect());
 				font.loadGlyphs();
@@ -102,11 +102,12 @@ public class CoreGame extends BasicGame {
 		}
 		
 		guiHierarchy.openGuiOnKeyPress(new GuiPauseMenu(), GameConstants.PAUSE_MENU);
-		guiHierarchy.openGuiOnKeyPress(new GuiCmdOverlay(), GameConstants.OPEN_COMMAND);
+		guiHierarchy.openGuiOnKeyPress(new GuiCmdOverlay(), GameConstants.COMMAND);
 		guiHierarchy.openGuiOnKeyPress(new GuiDiagnostics(), GameConstants.DIAGNOSTICS);
-		guiHierarchy.openGuiOnKeyPress(new GuiInventory(), GameConstants.OPEN_INV);
-		guiHierarchy.openGuiOnKeyPress(new GuiMap(), GameConstants.OPEN_MAP);
-		guiHierarchy.openGuiOnKeyPress(new GuiPlanetInfo(), GameConstants.OPEN_PLANET_REGION);
+		guiHierarchy.openGuiOnKeyPress(new GuiInventory(), GameConstants.INVENTORY);
+		guiHierarchy.openGuiOnKeyPress(new GuiMap(), GameConstants.MAP);
+		guiHierarchy.openGuiOnKeyPress(new GuiPlanetInfo(), GameConstants.PLANET);
+		guiHierarchy.openGuiOnKeyPress(new GuiShopMenu(), GameConstants.SHOP);
 	}
 	
 	@Override
@@ -140,6 +141,13 @@ public class CoreGame extends BasicGame {
 	public void mouseReleased(int button, int x, int y) {
 		if(guiHierarchy.currentGui != null) {
 			guiHierarchy.currentGui.mouseReleased(button, x, y);
+		}
+	}
+	
+	@Override
+	public void mouseWheelMoved(int change) {
+		if(guiHierarchy.currentGui != null) {
+			guiHierarchy.currentGui.mouseWheelMoved(change);
 		}
 	}
 

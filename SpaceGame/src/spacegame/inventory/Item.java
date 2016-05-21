@@ -18,10 +18,15 @@ public class Item {
 	public static ArrayList<Item> loadedItems = new ArrayList<>();
 	
 	public static ItemWeapon blaster = (ItemWeapon) new ItemWeapon("Photon Blaster", 50, 200).setMaxQuantity(1).setResource("gun09.png", 0.8f, 315);
-	public static ItemWeapon missile = (ItemWeapon) new ItemWeapon("Missile Launcher", 100, 1).setMaxQuantity(1).setResource("gun06.png", 0.8f, 315);
+	public static ItemWeapon missile = (ItemWeapon) new ItemWeapon("Missile Launcher", 100, 550).setMaxQuantity(1).setResource("gun06.png", 0.8f, 315);
+	public static ItemWeapon gamma_burst = (ItemWeapon) new ItemWeapon("Gamma Burst", 50, 1000).setMaxQuantity(1).setResource("turretBase_big.png", 0.8f, 0);
 	
-	public static Item metal = new Item("Scrap Metal").setResource("things_silver.png", 1f, 0).setMaxQuantity(100);
-	public static Item rare_metal = new Item("Rare Metal").setResource("things_gold.png", 1f, 0).setMaxQuantity(25);
+	public static Item metal = new Item("Component Metal").setResource("things_silver.png", 1f, 0).setMaxQuantity(100);
+	public static Item rare_metal = new Item("Active Metal").setResource("things_gold.png", 1f, 0).setMaxQuantity(25);
+	
+	public static Item energy_casket = new Item("Energy Casket").setResource("engine5.png", 0.9f, 0).setMaxQuantity(4);
+	public static Item flux_capacitor = new Item("Flux Capacitor").setResource("engine2.png", 1f, 0).setMaxQuantity(1);
+	public static Item ionic_diode = new Item("Ionic Diode").setResource("engine3.png", 1f, 0).setMaxQuantity(8);
 	
 	public static ItemArmor goldArmor = (ItemArmor) new ItemArmor("Gold Hull", 90).setResource("shield_gold.png", 1f, 0);
 	public static ItemArmor steelArmor = (ItemArmor) new ItemArmor("Steel Hull", 70).setResource("shield_silver.png", 1f, 0);

@@ -10,6 +10,11 @@ spawner entity:
 - only spawn enemy if there are not enough currently protecting base
 - tiers? shield? fighting back?
 
+updating entities
+- update the rectangle contained within the current map view
+- update the rectangle contained within the current game view
+- update all planets (so they continue motion around the map)
+
 shop items: 
 - need entity in each sector to allow the purchasing of items using the scrap metal and rare metal.
 - perhaps certain planets that once liberated can be used as a hub to buy items.

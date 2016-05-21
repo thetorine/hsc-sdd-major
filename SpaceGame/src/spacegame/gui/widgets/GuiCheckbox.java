@@ -11,10 +11,11 @@ public class GuiCheckbox extends Gui {
 	public Image selectImage = TextureHandler.uiImages.get("checkbox_activate.png");
 	public boolean selected;
 	
-	public GuiCheckbox(int x, int y, float scale, Gui parent) {
+	public GuiCheckbox(int x, int y, float scale, Gui parent, boolean b) {
 		super(TextureHandler.uiImages.get("checkbox.png"), x, y, scale, parent);
 		baseImage = scaleImage(TextureHandler.uiImages.get("checkbox.png"), scale);
 		selectImage = scaleImage(TextureHandler.uiImages.get("checkbox_activate.png"), scale);
+		selected = b;
 	}
 	
 	@Override
@@ -27,6 +28,9 @@ public class GuiCheckbox extends Gui {
 		super.mousedPressed(button, x, y);
 		if(x > xStart && x < xStart+width && y > yStart && y < yStart+height) {
 			selected ^= true;
+			if(parentClass instanceof EventListener) {
+				((EventListener) parentClass).onStateChange(this);
+			}
 		}
 	}
 	

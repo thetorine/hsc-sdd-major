@@ -9,9 +9,9 @@ region
  name:Forest
  desc:A dense forest
  exploreTime:10000
- yield:Scrap Metal,10,Rare Metal,1
+ yield:Component Metal,10,Active Metal,1
 region
  name:Plains
  desc:Clear lands
  exploreTime:5000
- yield:Scrap Metal,2
+ yield:Component Metal,2

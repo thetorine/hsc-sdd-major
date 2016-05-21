@@ -20,7 +20,7 @@ public class GuiDiagnostics extends Gui {
 		super.renderBackground(g, container);
 		g.setColor(Color.white);
 		int lastHeight = yStart;
-		int x = (int) (0.01f*GameConstants.GAME_WIDTH);
+		int x = (int) (0.008f*GameConstants.GAME_WIDTH);
 		int maxWidth = (int) (0.7f*GameConstants.GAME_WIDTH);
 		
 		Runtime runtime = Runtime.getRuntime();
@@ -58,4 +58,13 @@ public class GuiDiagnostics extends Gui {
 		return y+g.getFont().getHeight(cLine)*(currentLine+1)+0.02f*GameConstants.GAME_HEIGHT;
 	}
 
+	@Override
+	public boolean shouldPauseGame() {
+		return false;
+	}
+	
+	@Override
+	public boolean supportsHierachy() {
+		return true;
+	}
 }

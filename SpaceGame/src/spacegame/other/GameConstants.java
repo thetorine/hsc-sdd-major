@@ -21,11 +21,12 @@ public class GameConstants {
 	public static int FIRE_WEAPON = Keyboard.KEY_SPACE;
 	public static int CYCLE_WEAPON = Keyboard.KEY_Q;
 	public static int PAUSE_MENU = Keyboard.KEY_ESCAPE;
-	public static int OPEN_MAP = Keyboard.KEY_M;
-	public static int OPEN_INV = Keyboard.KEY_I;
-	public static int OPEN_PLANET_REGION = Keyboard.KEY_L;
+	public static int MAP = Keyboard.KEY_M;
+	public static int INVENTORY = Keyboard.KEY_I;
+	public static int PLANET = Keyboard.KEY_L;
 	public static int MAP_ZOOMIN = Keyboard.KEY_R;
 	public static int MAP_ZOOMOUT = Keyboard.KEY_E;
-	public static int OPEN_COMMAND = Keyboard.KEY_RETURN;
+	public static int COMMAND = Keyboard.KEY_RETURN;
+	public static int SHOP = Keyboard.KEY_P;
 	public static int DIAGNOSTICS = Keyboard.KEY_TAB;
 }

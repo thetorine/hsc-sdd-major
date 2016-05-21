@@ -102,6 +102,12 @@ public class Gui {
 		}
 	}
 	
+	public void mouseWheelMoved(int change) {
+		for(Gui gui : guiElements) {
+			gui.mouseWheelMoved(change);
+		}
+	}
+	
 	public Image scaleImage(Image img, float scale) {
 		scale /= GameConstants.WINDOW_SCALE;
 		return img.getScaledCopy(scale);

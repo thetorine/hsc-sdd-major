@@ -29,6 +29,7 @@ public class TextureHandler {
 		TextureHandler.registerCustomImage("bg", "environment/bg/bg.png", 1f, false);
 		TextureHandler.registerCustomImage("star", "environment/planets/star.png", 0.6f, true);
 		TextureHandler.registerCustomImage("moon", "environment/planets/moon.png", 0.7f, true);
+		TextureHandler.registerCustomImage("manik", "extra/manik.png", 1f, true);
 		
 		loadUIImages();
 	}

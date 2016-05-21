@@ -62,7 +62,7 @@ public abstract class EntityBase implements Comparable<EntityBase> {
 		}
 		
 		timeSinceLastDmg += delta;
-		if(timeSinceLastDmg > 0 && timeSinceLastDmg < 150) {
+		if(timeSinceLastDmg < 150) {
 			if(currentHealth > 0) {
 				model.bind();
 				model.setImageColor(1f, 0.5f, 0.5f);

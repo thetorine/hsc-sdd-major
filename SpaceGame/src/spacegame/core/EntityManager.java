@@ -40,6 +40,7 @@ public class EntityManager implements ISavable {
 	
 	public void onUpdate(int delta) {
 		for(EntityBase entity : ingameEntities) {
+			//TODO change to update only if the entity is currently near the player
 			entity.update(delta);
 		}
 		
