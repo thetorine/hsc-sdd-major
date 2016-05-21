@@ -60,6 +60,30 @@ public class GuiInventory extends Gui implements EventListener {
 			String amount = String.valueOf(currentHeldItem.stack.quantity);
 			g.drawString(amount, container.getInput().getMouseX()+10, container.getInput().getMouseY());
 		}
+		
+		String info = "";
+		for(Gui element : guiElements) {
+			if (element instanceof GuiInvSlot) {
+				GuiInvSlot invSlot = (GuiInvSlot) element;
+				if(invSlot.highlighted) {
+					ItemStack stack = invSlot.getHeldStack();
+					if (stack != null) {
+						info = stack.itemClass.itemName;
+					}
+				}
+			} else if(element instanceof GuiEquipSlot) {
+				GuiEquipSlot invSlot = (GuiEquipSlot) element;
+				if(invSlot.highlighted) {
+					ItemStack stack = invSlot.getHeldStack();
+					if (stack != null) {
+						info = stack.itemClass.itemName;
+					}
+				}
+			}
+		}
+		if(info.length() > 0) {
+			drawInfoBoxAtMousePos(g, container, info);
+		}
 	}
 	
 	@Override

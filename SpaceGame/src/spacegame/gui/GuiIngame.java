@@ -9,6 +9,7 @@ import spacegame.entity.*;
 import spacegame.gui.screen.*;
 import spacegame.other.*;
 
+//TODO rewrite so class is an extension of Gui.class
 public class GuiIngame {
 	
 	public Minimap gameMinimap = new Minimap();

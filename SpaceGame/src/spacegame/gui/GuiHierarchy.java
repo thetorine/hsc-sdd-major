@@ -3,6 +3,7 @@ package spacegame.gui;
 import java.util.*;
 
 import spacegame.*;
+import spacegame.gui.screen.*;
 import spacegame.other.KeyboardListener.*;
 
 public class GuiHierarchy implements IKeyboard {
@@ -26,6 +27,10 @@ public class GuiHierarchy implements IKeyboard {
 			activateGui(gui);
 		} else if(currentGui.supportsHierachy()) {
 			activateGui(gui);
+		} else if(gui instanceof GuiPauseMenu) {
+			//universal close button (esc)
+			gui.onClose();
+			loadPreviousGui();
 		}
 	}
 	

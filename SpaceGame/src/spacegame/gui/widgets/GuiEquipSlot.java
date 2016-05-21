@@ -71,5 +71,9 @@ public class GuiEquipSlot extends Gui {
 			}
 		}
 	}
-
+	
+	public ItemStack getHeldStack() {
+		EntityPlayer player = CoreGame.getInstance().entityManager.player;
+		return player.inventory.getWeaponStackAt(col);
+	}
 }

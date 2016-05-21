@@ -3,6 +3,7 @@ package spacegame.gui;
 import java.util.*;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.*;
 
 import spacegame.other.*;
 
@@ -54,7 +55,7 @@ public class Gui {
 	
 	public void onUpdate(int delta) {
 		for(Gui gui : guiElements) {
-			gui.onUpdate(delta);;
+			gui.onUpdate(delta);
 		}
 	}
 	
@@ -66,6 +67,7 @@ public class Gui {
 	public void renderForeground(Graphics g, GameContainer container) {
 		for(Gui gui : guiElements) {
 			gui.render(g, container);
+			postElementRender(gui, g, container);
 		}
 		
 		if(removalList.size() > 0) {
@@ -125,6 +127,28 @@ public class Gui {
 		}
 	}
 	
+	public void drawInfoBoxAtMousePos(Graphics g, GameContainer container, String info) {
+		drawInfoBox(g, container, info, container.getInput().getMouseX(), container.getInput().getMouseY());
+	}
+	
+	public void drawInfoBox(Graphics g, GameContainer container, String info, int x, int y) {
+		g.setFont(GameConstants.GAME_FONT[0]);
+		int textWidth = g.getFont().getWidth(info);
+		int boxWidth = (int) (textWidth+0.025f*GameConstants.GAME_WIDTH);
+		int textHeight = (int) g.getFont().getHeight(info);
+		int boxHeight = (int) (textHeight+0.025f*GameConstants.GAME_HEIGHT);
+		g.setColor(Color.white);
+		Polygon triangle = new Polygon(new float[] {0,0, 2, -3, 4,0 });
+		triangle = (Polygon) triangle.transform(Transform.createScaleTransform(5f, 5f));
+		triangle.setCenterX(x);
+		triangle.setY(y+triangle.getHeight()/2);
+		Rectangle rect = new Rectangle(triangle.getCenterX()-boxWidth/2, triangle.getY(), boxWidth, boxHeight);
+		g.fill(rect);
+		g.fill(triangle);
+		g.setColor(Color.black);
+		g.drawString(info, rect.getMinX() + (rect.getWidth()-textWidth)/2, rect.getMinY()+(rect.getHeight()-textHeight)/2);
+	}
+	
 	public void addGuiElement(Gui gui) {
 		addList.add(gui);
 	}
@@ -132,6 +156,8 @@ public class Gui {
 	public void removeGuiElement(Gui gui) {
 		removalList.add(gui);
 	}
+	
+	public void postElementRender(Gui gui, Graphics g, GameContainer container) {}
 	
 	public boolean supportsHierachy() {
 		return false;

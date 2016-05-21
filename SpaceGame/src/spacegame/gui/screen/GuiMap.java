@@ -38,7 +38,7 @@ public class GuiMap extends Gui {
 		centerScreen.xStart = (int) (mapBoundary.getX());
 		centerScreen.yStart = (int) (mapBoundary.getMaxY()+0.025f*mapBoundary.getHeight());
 		
-		s = "Set Player As Center";
+		s = "Player Center";
 		g.setFont(GameConstants.GAME_FONT[1]);
 		g.drawString(s, centerScreen.xStart+centerScreen.width+0.025f*width, centerScreen.yStart+(centerScreen.height-g.getFont().getHeight(s))/2);
 		
@@ -63,18 +63,11 @@ public class GuiMap extends Gui {
 		}
 		
 		Input input = container.getInput();
-		Point p = translatePointToMap(new Point(input.getAbsoluteMouseX(), input.getAbsoluteMouseY()), mapRatio);
+		Point p = translatePointToMap(new Point(input.getMouseX(), input.getMouseY()), mapRatio);
 		EntityBase entity = CoreGame.getInstance().entityManager.getEntityAt(p, true);
 		if(entity != null && entity instanceof EntityPlanet) {
-			String displayStr = World.getPlanetInfo((EntityPlanet) entity).planetName;
-			g.setColor(Color.white);
-			g.setFont(GameConstants.GAME_FONT[0]);
-			float strWidth = g.getFont().getWidth(displayStr);
-			float strHeight = g.getFont().getHeight(displayStr);
-			Rectangle bgRect = new Rectangle(input.getAbsoluteMouseX(), input.getAbsoluteMouseY(), strWidth+25, strHeight+10);
-			g.fill(bgRect);
-			g.setColor(Color.black);
-			g.drawString(displayStr, bgRect.getMinX()+(bgRect.getWidth()-strWidth)/2, bgRect.getMinY()+(bgRect.getHeight()-strHeight)/2);
+			EntityPlanet planet = (EntityPlanet) entity;
+			drawInfoBoxAtMousePos(g, container, World.getPlanetInfo(planet).planetName);
 		}
 		
 		g.clearClip();

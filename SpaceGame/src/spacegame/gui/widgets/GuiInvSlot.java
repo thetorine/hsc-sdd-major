@@ -1,14 +1,12 @@
 package spacegame.gui.widgets;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.*;
 
 import spacegame.*;
 import spacegame.core.*;
 import spacegame.entity.*;
 import spacegame.gui.*;
 import spacegame.inventory.*;
-import spacegame.other.*;
 
 public class GuiInvSlot extends Gui {
 	public int row;
@@ -58,24 +56,6 @@ public class GuiInvSlot extends Gui {
 	@Override
 	public void renderForeground(Graphics g, GameContainer container) {
 		super.renderForeground(g, container);
-		EntityPlayer player = CoreGame.getInstance().entityManager.player;
-		ItemStack slotItem = placeHolder == null ? player.inventory.getItemStackAt(row, col) : placeHolder;
-		if(highlighted && slotItem != null) {
-			drawInfoBox(g, container, slotItem.itemClass.itemName);
-		}
-	}
-	
-	public void drawInfoBox(Graphics g, GameContainer container, String info) {
-		g.setFont(GameConstants.GAME_FONT[0]);
-		int textWidth = g.getFont().getWidth(info);
-		int boxWidth = textWidth+20;
-		int textHeight = g.getFont().getHeight(info);
-		int boxHeight = textHeight+20;
-		g.setColor(Color.white);
-		Rectangle rect = new Rectangle(container.getInput().getMouseX(), container.getInput().getMouseY(), boxWidth, boxHeight);
-		g.fill(rect);
-		g.setColor(Color.black);
-		g.drawString(info, rect.getMinX() + (rect.getWidth()-textWidth)/2, rect.getMinY()+(rect.getHeight()-textHeight)/2);
 	}
 	
 	@Override
@@ -107,5 +87,10 @@ public class GuiInvSlot extends Gui {
 
 	public void setPlaceHolder(ItemStack s) {
 		this.placeHolder = s;
+	}
+	
+	public ItemStack getHeldStack() {
+		EntityPlayer player = CoreGame.getInstance().entityManager.player;
+		return placeHolder == null ? player.inventory.getItemStackAt(row, col) : placeHolder;
 	}
 }

@@ -17,6 +17,8 @@ import spacegame.other.*;
 
 public class GuiPlanetInfo extends Gui implements EventListener {
 	public ExplorablePlanet planetInfo;
+	public ArrayList<GuiInvSlot> slotsDrawn = new ArrayList<>();
+	public int slotWidth;
 
 	public GuiPlanetInfo() {
 		super(TextureHandler.uiImages.get("bg_green.png"), 0.4f);
@@ -61,12 +63,17 @@ public class GuiPlanetInfo extends Gui implements EventListener {
 		int maxWidth = (int) (infoRect.getWidth() - 2*0.05*width);
 		lastHeight = (int) wrapText(region.desc, (float) (infoRect.getMinX()+0.05*width), lastHeight, maxWidth, g);
 		lastHeight = (int) wrapText("Completion Time: " + (region.exploreTime/1000f) + " sec", (float) (infoRect.getMinX()+0.05*width), lastHeight, maxWidth, g);
-		String exploreYield = "Explore Yield: ";
-		for(int i = 0; i < region.exploreYield.size(); i++) {
-			String s1 = region.exploreYield.get(i).itemClass.itemName;
-			exploreYield = exploreYield + s1 + ", ";
+		lastHeight = (int) wrapText("Explore Yield:", (float) (infoRect.getMinX()+0.05*width), lastHeight, maxWidth, g);
+		int totalWidth = (int) (slotWidth*slotsDrawn.size() + 0.1f*infoRect.getWidth()*(slotsDrawn.size()-1));
+		int x = (int) (infoRect.getMinX() + (infoRect.getWidth()-totalWidth)/2);
+		for(int i = 0; i < slotsDrawn.size(); i++) {
+			GuiInvSlot slot = slotsDrawn.get(i);
+			slot.xStart = (int) (x+slotWidth*i+0.1f*infoRect.getWidth()*i);
+			slot.yStart = lastHeight;
+			if(i == slotsDrawn.size()-1) {
+				lastHeight = (int) (slot.yStart + slot.height + 0.02f*GameConstants.GAME_HEIGHT);
+			}
 		}
-		lastHeight = (int) wrapText(exploreYield, (float) (infoRect.getMinX()+0.05*width), lastHeight, maxWidth, g);
 		
 		progressBar.xStart = (int) (infoRect.getMinX() + (infoRect.getWidth()-progressBar.width)/2);
 		progressBar.yStart = lastHeight;
@@ -115,7 +122,21 @@ public class GuiPlanetInfo extends Gui implements EventListener {
 					currentList = (GuiList) gui;
 				} 
 			}
-			 planetInfo.planetRegions.get(currentList.selectedIndex).beginExplore();
+			planetInfo.planetRegions.get(currentList.selectedIndex).beginExplore();
+		} else if (element instanceof GuiList) {
+			GuiList guiList = (GuiList) element;
+			for(Gui gui : slotsDrawn) {
+				removeGuiElement(gui);
+			}
+			slotsDrawn.clear();
+			PlanetRegion region = planetInfo.planetRegions.get(guiList.selectedIndex);
+			for(int i = 0; i < region.exploreYield.size(); i++) {
+				GuiInvSlot slot = new GuiInvSlot(i*100, 0, 0.08f, this, 0, 0);
+				slot.setPlaceHolder(region.exploreYield.get(i));
+				slotsDrawn.add(slot);
+				addGuiElement(slot);
+				slotWidth = slot.width;
+			}
 		}
 	}
 	
@@ -136,6 +157,7 @@ public class GuiPlanetInfo extends Gui implements EventListener {
 			guiElements.add(bar);
 			GuiButton exploreButton = new GuiButton("Explore", 0, 0, 0.08f, this);
 			guiElements.add(exploreButton);
+			onStateChange(list);
 		} else {
 			CoreGame.getInstance().guiHierarchy.loadPreviousGui();
 		}
