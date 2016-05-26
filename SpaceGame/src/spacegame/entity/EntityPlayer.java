@@ -7,6 +7,8 @@ import org.lwjgl.input.*;
 import spacegame.*;
 import spacegame.core.*;
 import spacegame.core.CollisionDetector.*;
+import spacegame.entity.environment.*;
+import spacegame.gameplay.*;
 import spacegame.inventory.*;
 import spacegame.other.*;
 import spacegame.other.GameUtilities.*;
@@ -14,6 +16,7 @@ import spacegame.other.KeyboardListener.*;
 
 public class EntityPlayer extends EntityBase implements IKeyboard, ICollisionDetection{
 	public EntityBase selectedTarget;
+	public UpgradeManager manager;
 	
 	public float currentShield;
 	public int maxShield;
@@ -31,6 +34,7 @@ public class EntityPlayer extends EntityBase implements IKeyboard, ICollisionDet
 			setMaxHealth(1000);
 		}
 		KeyboardListener.registerListener(this);
+		manager = new UpgradeManager();
 	}
 	
 	@Override

@@ -3,6 +3,7 @@ package spacegame.other;
 import spacegame.*;
 import spacegame.core.*;
 import spacegame.entity.*;
+import spacegame.entity.enemy.*;
 import spacegame.inventory.*;
 
 public class CommandListener {

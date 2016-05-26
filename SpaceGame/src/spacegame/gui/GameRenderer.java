@@ -1,10 +1,12 @@
-package spacegame.core;
+package spacegame.gui;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
 import spacegame.*;
+import spacegame.core.*;
 import spacegame.entity.*;
+import spacegame.entity.environment.*;
 import spacegame.gui.screen.*;
 import spacegame.other.*;
 import spacegame.other.GameUtilities.Point;
@@ -22,7 +24,6 @@ public class GameRenderer {
 		game.world.render(g);
 		renderEntities(container, g);
 		renderTargetIcon(container, g);
-		game.ingameGUI.render(g, container, gameWidth, gameHeight);
 	}
 	
 	public void renderEntities(GameContainer container, Graphics g) {

@@ -8,6 +8,7 @@ import org.newdawn.slick.geom.*;
 import spacegame.*;
 import spacegame.ai.*;
 import spacegame.core.*;
+import spacegame.gameplay.*;
 import spacegame.inventory.*;
 import spacegame.other.*;
 import spacegame.other.GameUtilities.Point;
@@ -222,6 +223,6 @@ public abstract class EntityBase implements Comparable<EntityBase> {
 	}
 	
 	public enum EntityType {
-		Blaster, Enemy, Meteor, Missile, Planet, Player, Star, Item, Spawner
+		Blaster, Enemy, Meteor, Missile, Patrol, Planet, Player, Star, Item, Spawner
 	}
 }

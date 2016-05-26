@@ -1,10 +1,13 @@
-package spacegame.entity;
+package spacegame.entity.weapon;
 
 import java.util.*;
 
 import spacegame.*;
 import spacegame.core.*;
 import spacegame.core.CollisionDetector.*;
+import spacegame.entity.*;
+import spacegame.entity.EntityBase.*;
+import spacegame.entity.enemy.*;
 import spacegame.inventory.*;
 
 public class EntityBlaster extends EntityBase implements ICollisionDetection {
@@ -53,8 +56,8 @@ public class EntityBlaster extends EntityBase implements ICollisionDetection {
 	public void onCollision(EntityBase collisionWith) {
 		EntityBase shootingEntity = getManager().getEntityByID(shooter);
 		if(shootingEntity != null && collisionWith.maxHealth > 0 && collisionWith.getType() != shootingEntity.getType()) {
-			if(collisionWith instanceof EntitySpawner && shootingEntity instanceof EntityEnemy) {
-				
+			if(shootingEntity instanceof EntityEnemy && collisionWith instanceof EntityEnemy) {
+				//dont do anything
 			} else {
 				CoreGame.getInstance().entityManager.despawnEntity(this);
 				CoreGame.getInstance().world.createImpactAt(asPoint());

@@ -2,12 +2,14 @@ package spacegame;
 
 import java.io.*;
 
+import org.lwjgl.input.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.*;
 
 import spacegame.core.*;
-import spacegame.core.ExplorablePlanet.*;
 import spacegame.entity.*;
+import spacegame.gameplay.*;
+import spacegame.gameplay.ExplorablePlanet.*;
 import spacegame.gui.*;
 import spacegame.gui.screen.*;
 import spacegame.inventory.*;
@@ -40,7 +42,6 @@ public class CoreGame extends BasicGame {
 	public Camera camera;
 	public DataHandler dataHandler;
 	public GameContainer gContainer;
-	public GuiIngame ingameGUI;
 	public KeyboardListener keyboardListener;
 	public GameRenderer renderer;
 	public TextureHandler textureManager;
@@ -80,7 +81,6 @@ public class CoreGame extends BasicGame {
 		keyboardListener = new KeyboardListener();
 		guiHierarchy = new GuiHierarchy();
 		renderer = new GameRenderer();
-		ingameGUI = new GuiIngame();
 		craftingManager = new CraftingManager();
 		world.onGameCreation();
 		
@@ -108,13 +108,11 @@ public class CoreGame extends BasicGame {
 		guiHierarchy.openGuiOnKeyPress(new GuiMap(), GameConstants.MAP);
 		guiHierarchy.openGuiOnKeyPress(new GuiPlanetInfo(), GameConstants.PLANET);
 		guiHierarchy.openGuiOnKeyPress(new GuiShopMenu(), GameConstants.SHOP);
+		guiHierarchy.openGuiOnKeyPress(new GuiUpgrade(), GameConstants.UPGRADE_MENU);
 	}
 	
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		if(ingameGUI != null) {
-			ingameGUI.mouseMoved(oldx, oldy, newx, newy);
-		}
 		if(guiHierarchy.currentGui != null) {
 			guiHierarchy.currentGui.mouseMoved(oldx, oldy, newx, newy);
 		}
@@ -122,9 +120,6 @@ public class CoreGame extends BasicGame {
 	
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		if(ingameGUI != null) {
-			ingameGUI.mousePressed(button, x, y);
-		}
 		if(guiHierarchy.currentGui != null) {
 			guiHierarchy.currentGui.mousedPressed(button, x, y);
 		}

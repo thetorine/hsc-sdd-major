@@ -1,10 +1,12 @@
-package spacegame.entity;
+package spacegame.entity.enemy;
 
 import java.util.*;
 
 import spacegame.ai.*;
 import spacegame.core.*;
 import spacegame.core.CollisionDetector.*;
+import spacegame.entity.*;
+import spacegame.entity.environment.*;
 import spacegame.inventory.*;
 import spacegame.other.GameUtilities.*;
 
@@ -48,9 +50,7 @@ public class EntityEnemy extends EntityBase implements ICollisionDetection {
 
 	@Override
 	public void setModel() {
-		this.model = TextureHandler.getImageByName(TextureHandler.baseSheet, getModelName(), 0.25f);
-		inventory.addWeaponStack(new ItemStack(Item.blaster, 1));
-		inventory.selectNextWeapon();
+		this.model = TextureHandler.getImageByName(TextureHandler.baseSheet, getModelName(), 0.3f);
 	}
 
 	@Override
@@ -83,6 +83,8 @@ public class EntityEnemy extends EntityBase implements ICollisionDetection {
 				}
 			}
 			protectingEntity = closestPlanet.id;
+			inventory.addWeaponStack(new ItemStack(Item.blaster, 1));
+			inventory.selectNextWeapon();
 		}
 		addAIController(new AIProtectBase(this, protectingEntity, true, 0));
 		addAIController(new AICollisionWithObject(this));
@@ -91,7 +93,7 @@ public class EntityEnemy extends EntityBase implements ICollisionDetection {
 	
 	@Override
 	public void onDespawn() {
-//		CoreGame.getInstance().world.dropItemIntoWorld(this, new ItemStack(Item.metal, 7));
+//		TODO add drops CoreGame.getInstance().world.dropItemIntoWorld(this, new ItemStack(Item.metal, 7));
 	}
 	
 	private double getDistanceToPoint(Point p) {

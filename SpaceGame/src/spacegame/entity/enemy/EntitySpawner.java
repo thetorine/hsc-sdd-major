@@ -1,16 +1,18 @@
-package spacegame.entity;
+package spacegame.entity.enemy;
 
 import java.util.*;
 
 import spacegame.*;
-import spacegame.ai.*;
 import spacegame.core.*;
+import spacegame.entity.*;
+import spacegame.entity.environment.*;
+import spacegame.inventory.*;
 
-public class EntitySpawner extends EntityBase {
+public class EntitySpawner extends EntityEnemy {
 	
-	public long protectingEntity; 
 	public int spawnDelay; 
 	public int strength;
+	public Random random = new Random();
 	
 	public EntitySpawner(long entity) {
 		this.protectingEntity = entity;
@@ -27,12 +29,12 @@ public class EntitySpawner extends EntityBase {
 		if(spawnDelay > 2000*(strength)) {
 			int noOfProtectors = 0;
 			for(EntityBase e : getManager().getIngameEntities()) {
-				if(e instanceof EntityEnemy && ((EntityEnemy) e).protectingEntity == protectingEntity) {
+				if(e instanceof EntityEnemy && ((EntityEnemy) e).protectingEntity == protectingEntity || e instanceof EntityPatrol && ((EntityPatrol) e).protectingEntity == protectingEntity) {
 					noOfProtectors += 1;
 				}
 			}
 			if(noOfProtectors < 3*(strength+1)) {
-				EntityEnemy entity = new EntityEnemy();
+				EntityBase entity = random.nextBoolean() ? new EntityPatrol() : new EntityEnemy();
 				entity.getVector().setCoords(getVector().xCoord, getVector().yCoord);
 				getManager().spawnEntity(entity);
 			}
@@ -71,6 +73,7 @@ public class EntitySpawner extends EntityBase {
 	@Override
 	public void setModel() {
 		this.model = TextureHandler.getImageByName(TextureHandler.baseSheet, getModelName(), 0.8f);
+		attackModifier = 2;
 	}
 
 	@Override
@@ -79,8 +82,10 @@ public class EntitySpawner extends EntityBase {
 	}
 
 	@Override
-	public void onLoad() {
-		addAIController(new AIProtectBase(this, protectingEntity, false, strength));
+	public void onLoad() { 
+		super.onLoad();
+		inventory.addWeaponStack(new ItemStack(Item.blaster, 1));
+		inventory.selectNextWeapon();
 	}
 
 	@Override
@@ -90,13 +95,13 @@ public class EntitySpawner extends EntityBase {
 	
 	@Override
 	public void addSavableData(HashMap<String, Object> savableMap) {
-		savableMap.put("protectingEntity", protectingEntity);
+		super.addSavableData(savableMap);
 		savableMap.put("spawnDelay", spawnDelay);
 	}
 	
 	@Override
 	public void loadSavableData(HashMap<String, String> rawData) {
+		super.loadSavableData(rawData);
 		spawnDelay = Integer.parseInt(rawData.get("spawnDelay"));
 	}
-
 }

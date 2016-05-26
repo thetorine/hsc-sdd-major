@@ -1,11 +1,14 @@
-package spacegame.core;
+package spacegame.gameplay;
 
 import java.util.*;
 
 import org.newdawn.slick.*;
 
 import spacegame.*;
+import spacegame.core.*;
 import spacegame.entity.*;
+import spacegame.entity.enemy.*;
+import spacegame.entity.environment.*;
 import spacegame.inventory.*;
 import spacegame.other.GameUtilities.*;
 
@@ -64,6 +67,7 @@ public class PlanetSystem {
 				EntitySpawner spawner = new EntitySpawner(b.id);
 				spawner.inventory.addItemStack(new ItemStack(Item.goldArmor, 1));
 				spawner.getVector().setCoords(b.getVector().xCoord, b.getVector().yCoord);
+				spawner.strength = World.getPlanetInfo((EntityPlanet) b).difficulty;
 				CoreGame.getInstance().entityManager.spawnEntity(spawner);
 			}
 		}

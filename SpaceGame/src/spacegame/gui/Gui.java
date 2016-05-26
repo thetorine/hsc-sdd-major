@@ -15,6 +15,7 @@ public class Gui {
 	public ArrayList<Gui> removalList = new ArrayList<>();
 	public Gui parentClass;
 	public boolean bgTint;
+	public boolean hidden;
 	
 	//draw centered
 	public Gui(Image bg, float scale) {
@@ -49,13 +50,17 @@ public class Gui {
 	}
 	
 	public void render(Graphics g, GameContainer container) {
-		renderBackground(g, container);
-		renderForeground(g, container);
+		if(!hidden) {
+			renderBackground(g, container);
+			renderForeground(g, container);
+		}
 	}
 	
 	public void onUpdate(int delta) {
 		for(Gui gui : guiElements) {
-			gui.onUpdate(delta);
+			if(!gui.hidden) {
+				gui.onUpdate(delta);
+			}
 		}
 	}
 	
@@ -147,6 +152,27 @@ public class Gui {
 		g.fill(triangle);
 		g.setColor(Color.black);
 		g.drawString(info, rect.getMinX() + (rect.getWidth()-textWidth)/2, rect.getMinY()+(rect.getHeight()-textHeight)/2);
+	}
+	
+	public float wrapText(String s, float x, float y, float maxWidth, Graphics g) {
+		String[] words = s.split(" ");
+		int currentWord = 0;
+		int currentLine = 0;
+		String cLine = "";
+		while(currentWord < words.length) {
+			String newLine = cLine + " " + words[currentWord];
+			float w = g.getFont().getWidth(newLine);
+			if(w <= maxWidth) {
+				cLine = newLine;
+			} else {
+				g.drawString(cLine, x, y + g.getFont().getHeight(cLine)*currentLine);
+				currentLine++;
+				cLine = " " + words[currentWord];
+			}
+			currentWord++;
+		}
+		g.drawString(cLine, x, y + g.getFont().getHeight(cLine)*currentLine);
+		return y+g.getFont().getHeight(cLine)*(currentLine+1)+0.02f*GameConstants.GAME_HEIGHT;
 	}
 	
 	public void addGuiElement(Gui gui) {

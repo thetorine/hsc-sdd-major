@@ -13,6 +13,8 @@ public class AICollisionWithObject extends AIEntity {
 	@Override
 	public void update(int delta) {
 		super.update(delta);
+		//simply causes a colliding object to suddenly move in the opposite direction to the collision. 
+		//TODO currently working against planets as well, shouldnt
 		if(collisionWith != null && collisionWith.maxHealth > 0) {
 			float bearing = GameUtilities.calculateBearing(collisionWith, entity);
 			entity.getVector().accelerateInDirection(500, bearing, delta/1000f);

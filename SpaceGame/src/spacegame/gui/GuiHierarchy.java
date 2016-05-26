@@ -17,6 +17,7 @@ public class GuiHierarchy implements IKeyboard {
 		currentHeirarchy = new ArrayList<>();
 		guiKeys = new HashMap<>();
 		registeredKeys = new HashMap<>();
+		activateGui(new GuiHUD());
 	}
 	
 	public void openGui(Gui gui) {
@@ -27,6 +28,9 @@ public class GuiHierarchy implements IKeyboard {
 			activateGui(gui);
 		} else if(currentGui.supportsHierachy()) {
 			activateGui(gui);
+			if(gui.shouldPauseGame()) {
+				CoreGame.getInstance().gamePaused = true;
+			}
 		} else if(gui instanceof GuiPauseMenu) {
 			//universal close button (esc)
 			gui.onClose();
@@ -48,6 +52,7 @@ public class GuiHierarchy implements IKeyboard {
 	public void collapseHeirarchy() {
 		currentHeirarchy.clear();
 		currentGui = null;
+		activateGui(new GuiHUD());
 		CoreGame.getInstance().gamePaused = false;
 	}
 	
@@ -55,11 +60,13 @@ public class GuiHierarchy implements IKeyboard {
 		if(currentHeirarchy.size() > 1) {
 			currentHeirarchy.remove(currentHeirarchy.size()-1);
 			currentGui = currentHeirarchy.get(currentHeirarchy.size()-1);
+			if(currentGui.shouldPauseGame()) {
+				CoreGame.getInstance().gamePaused = true;
+			} else {
+				CoreGame.getInstance().gamePaused = false;
+			}
 			return currentGui;
 		}
-		CoreGame.getInstance().gamePaused = false;
-		currentHeirarchy.clear();
-		currentGui = null;
 		return null; 
 	}
 	

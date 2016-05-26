@@ -45,7 +45,16 @@ public class Inventory {
 	}
 	
 	public void addWeaponStack(ItemStack stack) {
-		addWeaponToAvailablePosition(stack);
+		boolean alreadyContained = false;
+		for(ItemStack is : weaponStacks) {
+			if(is != null && is.itemClass == stack.itemClass) {
+				alreadyContained = true;
+				break;
+			}
+		}
+		if(!alreadyContained) {
+			addWeaponToAvailablePosition(stack);
+		}
 	}
 	
 	//one day account for full inventory
@@ -134,7 +143,10 @@ public class Inventory {
 	}
 	
 	public void selectWeaponByID(int id) {
-		selectedWeapon = weaponStacks[id];
+		if(weaponStacks[id] != null) {
+			selectedWeapon = weaponStacks[id];
+			weaponid = id;
+		}
 	}
 	
 	public int calculateTotalArmor() {

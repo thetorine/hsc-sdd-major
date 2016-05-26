@@ -2,6 +2,7 @@ package spacegame.inventory;
 
 import spacegame.*;
 import spacegame.entity.*;
+import spacegame.entity.weapon.*;
 
 public class ItemWeapon extends Item {
 	public int baseDamage;

@@ -1,4 +1,4 @@
-package spacegame.core;
+package spacegame.gameplay;
 
 public class VelocityVector {
 	public float xCoord = 0;

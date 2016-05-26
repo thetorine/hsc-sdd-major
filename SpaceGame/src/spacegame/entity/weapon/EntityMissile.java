@@ -1,10 +1,13 @@
-package spacegame.entity;
+package spacegame.entity.weapon;
 
 import java.util.*;
 
 import spacegame.*;
 import spacegame.core.*;
 import spacegame.core.CollisionDetector.*;
+import spacegame.entity.*;
+import spacegame.entity.EntityBase.*;
+import spacegame.entity.enemy.*;
 import spacegame.inventory.*;
 import spacegame.other.*;
 import spacegame.other.GameUtilities.*;
@@ -44,7 +47,7 @@ public class EntityMissile extends EntityBase implements ICollisionDetection {
 		double distance = Double.MAX_VALUE;
 		long entityId = 0;
 		for(EntityBase base : getManager().getIngameEntities()) {
-			if(base instanceof EntityEnemy || base instanceof EntityPlayer || base instanceof EntitySpawner) {
+			if(base instanceof EntityEnemy || base instanceof EntityPlayer) {
 				if(base.id != initialEntity) {
 					double d1 = getDistanceToPoint(asPoint(), base.asPoint());
 					if(d1 < distance) {

@@ -1,10 +1,12 @@
-package spacegame.entity;
+package spacegame.entity.environment;
 
 import java.util.*;
 
 import org.newdawn.slick.*;
 
 import spacegame.core.*;
+import spacegame.entity.*;
+import spacegame.entity.EntityBase.*;
 
 public class EntityPlanet extends EntityBase {
 	

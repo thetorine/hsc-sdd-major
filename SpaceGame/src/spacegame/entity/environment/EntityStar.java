@@ -1,26 +1,20 @@
-package spacegame.entity;
+package spacegame.entity.environment;
 
 import spacegame.core.*;
+import spacegame.entity.*;
+import spacegame.entity.EntityBase.*;
 
-public class EntityMeteor extends EntityBase {
-	
-	@Override
-	public void update(int delta) {
-		super.update(delta);
-		float rotationalVelocity = 2f;
-		getVector().rotation += rotationalVelocity*delta/1000f;
-	}
+public class EntityStar extends EntityBase {
 
 	@Override
 	public EntityType getType() {
-		return EntityType.Meteor;
+		return EntityType.Star;
 	}
 
 	@Override
 	public void setSpawnCoords() {
-		
 	}
-	
+
 	@Override
 	public int getMaxVelocity() {
 		return 0;
@@ -33,12 +27,12 @@ public class EntityMeteor extends EntityBase {
 
 	@Override
 	public void setModel() {
-		this.model = TextureHandler.getCustomImageByName("moon");
+		this.model = TextureHandler.getCustomImageByName(getModelName()).getScaledCopy(0);
 	}
 
 	@Override
 	public String getModelName() {
-		return "moon";
+		return "star";
 	}
 
 	@Override
@@ -50,4 +44,5 @@ public class EntityMeteor extends EntityBase {
 	public int getRenderWeight() {
 		return 3;
 	}
+
 }

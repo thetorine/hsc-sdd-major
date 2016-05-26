@@ -2,6 +2,7 @@ package spacegame.ai;
 
 import spacegame.entity.*;
 
+//just a base class for all things ai
 public class AIEntity {
 	public EntityBase entity;
 	

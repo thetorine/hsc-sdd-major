@@ -37,27 +37,6 @@ public class GuiDiagnostics extends Gui {
 		lastHeight = (int) wrapText("Free Memory: " + freeMem + " mb", x, lastHeight, maxWidth, g);
 	}
 	
-	public float wrapText(String s, float x, float y, float maxWidth, Graphics g) {
-		String[] words = s.split(" ");
-		int currentWord = 0;
-		int currentLine = 0;
-		String cLine = "";
-		while(currentWord < words.length) {
-			String newLine = cLine + " " + words[currentWord];
-			float w = g.getFont().getWidth(newLine);
-			if(w <= maxWidth) {
-				cLine = newLine;
-			} else {
-				g.drawString(cLine, x, y + g.getFont().getHeight(cLine)*currentLine);
-				currentLine++;
-				cLine = " " + words[currentWord];
-			}
-			currentWord++;
-		}
-		g.drawString(cLine, x, y + g.getFont().getHeight(cLine)*currentLine);
-		return y+g.getFont().getHeight(cLine)*(currentLine+1)+0.02f*GameConstants.GAME_HEIGHT;
-	}
-
 	@Override
 	public boolean shouldPauseGame() {
 		return false;

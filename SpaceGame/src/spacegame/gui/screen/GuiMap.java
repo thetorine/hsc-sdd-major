@@ -1,11 +1,13 @@
 package spacegame.gui.screen;
 
+import org.lwjgl.input.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
 import spacegame.*;
 import spacegame.core.*;
 import spacegame.entity.*;
+import spacegame.entity.environment.*;
 import spacegame.gui.*;
 import spacegame.gui.widgets.*;
 import spacegame.other.*;
@@ -83,11 +85,16 @@ public class GuiMap extends Gui {
 			mapRatio = (float) Math.max(0.1f, mapRatio-0.1*delta/100f);
 		}
 		
-		//TODO map ratio should scale by proximity to the closest planet/star
 		if(centerScreen.selected) {
 			centerX = (int) CoreGame.getInstance().entityManager.player.getVector().xCoord;
 			centerY = (int) CoreGame.getInstance().entityManager.player.getVector().yCoord;
 			mapRatio = Math.max(0.1f, 0.8f-0.0006f*getPlayerProximityToPlanet());
+		}
+		
+		if(input.isKeyPressed(Keyboard.KEY_C)) {
+			EntityPlayer player = CoreGame.getInstance().entityManager.player;
+			Point pt = translatePointToMap(new Point(input.getAbsoluteMouseX(), input.getMouseY()), mapRatio);
+			player.getVector().setCoords(pt.x, pt.y);
 		}
 	}
 	

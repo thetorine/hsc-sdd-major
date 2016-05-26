@@ -1,4 +1,4 @@
-package spacegame.core;
+package spacegame.gameplay;
 
 import java.util.*;
 

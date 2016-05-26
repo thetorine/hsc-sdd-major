@@ -29,4 +29,5 @@ public class GameConstants {
 	public static int COMMAND = Keyboard.KEY_RETURN;
 	public static int SHOP = Keyboard.KEY_P;
 	public static int DIAGNOSTICS = Keyboard.KEY_TAB;
+	public static int UPGRADE_MENU = Keyboard.KEY_U;
 }

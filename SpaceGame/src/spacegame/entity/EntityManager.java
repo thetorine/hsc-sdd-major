@@ -1,4 +1,4 @@
-package spacegame.core;
+package spacegame.entity;
 
 import java.io.*;
 import java.util.*;
@@ -6,9 +6,14 @@ import java.util.*;
 import org.newdawn.slick.*;
 
 import spacegame.*;
+import spacegame.core.*;
 import spacegame.core.DataHandler.*;
-import spacegame.core.ExplorablePlanet.*;
 import spacegame.entity.*;
+import spacegame.entity.enemy.*;
+import spacegame.entity.environment.*;
+import spacegame.entity.weapon.*;
+import spacegame.gameplay.*;
+import spacegame.gameplay.ExplorablePlanet.*;
 import spacegame.inventory.*;
 import spacegame.other.*;
 import spacegame.other.GameUtilities.*;
@@ -153,6 +158,7 @@ public class EntityManager implements ISavable {
 				return new EntityItemDrop(stack);
 			}
 			case "Spawner": return new EntitySpawner(Long.parseLong(rawData.get("protectingEntity")));
+			case "Patrol": return new EntityPatrol();
 		}
 		return null;
 	}

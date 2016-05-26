@@ -1,4 +1,4 @@
-package spacegame.core;
+package spacegame.gameplay;
 
 import java.util.*;
 
@@ -33,6 +33,7 @@ public class Minimap {
 	public void render(Graphics g, float width, float height, EntityPlayer player) {
 		float cX = width-edgeDistance-mapRadius;
 		float cY = edgeDistance+mapRadius;
+		g.setColor(new Color(0f, 0, 0, 15f));
 		g.fill(new Circle(cX, cY, mapRadius*1.2f));
 		g.setColor(new Color(0f, 0.35f, 0.06f));
 		g.fill(new Circle(cX, cY, mapRadius));

@@ -36,7 +36,7 @@ public class GuiInventory extends Gui implements EventListener {
 		for(int i = 0; i < Inventory.WEAPON_COLUMNS; i++) {
 			int xStart = (i+1)*inv_slot.getWidth()+widthShift;
 			int yStart = (Inventory.COLUMNS-2)*inv_slot.getWidth()+heightShift;
-			GuiEquipSlot slot = new GuiEquipSlot(xStart, yStart, 0.1f, this, i);
+			GuiEquipSlot slot = new GuiEquipSlot(xStart, yStart, 0.1f, this, CoreGame.getInstance().entityManager.player, i);
 			guiElements.add(slot);
 		}
 	}

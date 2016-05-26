@@ -6,8 +6,10 @@ import org.newdawn.slick.*;
 
 import spacegame.*;
 import spacegame.core.DataHandler.*;
-import spacegame.core.ExplorablePlanet.*;
 import spacegame.entity.*;
+import spacegame.entity.environment.*;
+import spacegame.gameplay.*;
+import spacegame.gameplay.ExplorablePlanet.*;
 import spacegame.inventory.*;
 import spacegame.other.*;
 import spacegame.other.GameUtilities.*;

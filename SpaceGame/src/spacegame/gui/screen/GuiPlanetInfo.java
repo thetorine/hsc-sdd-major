@@ -7,8 +7,9 @@ import org.newdawn.slick.geom.*;
 
 import spacegame.*;
 import spacegame.core.*;
-import spacegame.core.ExplorablePlanet.*;
-import spacegame.entity.*;
+import spacegame.entity.environment.*;
+import spacegame.gameplay.*;
+import spacegame.gameplay.ExplorablePlanet.*;
 import spacegame.gui.*;
 import spacegame.gui.widgets.*;
 import spacegame.gui.widgets.EventListener;
@@ -92,27 +93,6 @@ public class GuiPlanetInfo extends Gui implements EventListener {
 		}
 	}
 	
-	public float wrapText(String s, float x, float y, float maxWidth, Graphics g) {
-		String[] words = s.split(" ");
-		int currentWord = 0;
-		int currentLine = 0;
-		String cLine = "";
-		while(currentWord < words.length) {
-			String newLine = cLine + " " + words[currentWord];
-			float w = g.getFont().getWidth(newLine);
-			if(w <= maxWidth) {
-				cLine = newLine;
-			} else {
-				g.drawString(cLine, x, y + g.getFont().getHeight(cLine)*currentLine);
-				currentLine++;
-				cLine = " " + words[currentWord];
-			}
-			currentWord++;
-		}
-		g.drawString(cLine, x, y + g.getFont().getHeight(cLine)*currentLine);
-		return y+g.getFont().getHeight(cLine)*(currentLine+1)+0.02f*GameConstants.GAME_HEIGHT;
-	}
-
 	@Override
 	public void onStateChange(Gui element) {
 		if(element instanceof GuiButton) {
@@ -155,6 +135,7 @@ public class GuiPlanetInfo extends Gui implements EventListener {
 			guiElements.add(list);
 			GuiProgressBar bar = new GuiProgressBar(0, 0, 0.08f, this);
 			guiElements.add(bar);
+			bar.setText("Mission Progress");
 			GuiButton exploreButton = new GuiButton("Explore", 0, 0, 0.08f, this);
 			guiElements.add(exploreButton);
 			onStateChange(list);
