@@ -1,0 +1,17 @@
+name:Strorix
+distance:2500
+angle:45
+difficulty:1
+textureName:planet5
+textureLocation:environment/planets/planet5.png
+textureScale:1
+region
+ name:Forest
+ desc:A dense forest
+ exploreTime:10000
+ yield:Component Metal,10,Active Metal,1
+region
+ name:Plains
+ desc:Clear lands
+ exploreTime:5000
+ yield:Component Metal,2

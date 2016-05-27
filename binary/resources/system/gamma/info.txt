@@ -1,0 +1,4 @@
+name:System Gamma
+xCenter:-20000
+yCenter:-15000
+starTint:0E6620
