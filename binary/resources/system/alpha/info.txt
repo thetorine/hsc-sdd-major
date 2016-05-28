@@ -1,0 +1,4 @@
+name:System Alpha
+xCenter:2500
+yCenter:2500
+starTint:0E6620
