@@ -60,7 +60,7 @@ public class GuiMap extends Gui {
 			
 			Point pt = translatePointToGame(e.asPoint(), mapRatio);
 			Image img = e instanceof EntityStar ? TextureHandler.getCustomImageByName("star").getScaledCopy(mapRatio) : e.model.getScaledCopy(mapRatio);
-			img.setRotation(e.velocity.rotation);
+			img.setRotation((float) Math.toDegrees(e.velocity.rotation));
 			img.drawCentered(pt.x, pt.y);
 		}
 		

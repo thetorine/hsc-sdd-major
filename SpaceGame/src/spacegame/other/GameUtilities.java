@@ -9,7 +9,7 @@ public class GameUtilities {
 		float deltaX = to.getVector().xCoord - from.getVector().xCoord;
 		float deltaY = to.getVector().yCoord - from.getVector().yCoord;
 		float bearing = (float) Math.atan2(deltaY, deltaX);
-		return (float) Math.toDegrees(bearing)-90;
+		return (float) (bearing - Math.PI/2);
 	}
 	
 	public static Point translateMapToGame(Point p) {

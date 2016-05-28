@@ -78,7 +78,7 @@ public class EntitySpawner extends EntityEnemy {
 
 	@Override
 	public String getModelName() {
-		return "enemyBlack4.png";
+		return "enemyBlue5.png";
 	}
 
 	@Override

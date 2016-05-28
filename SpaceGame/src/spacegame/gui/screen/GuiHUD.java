@@ -104,6 +104,8 @@ public class GuiHUD extends Gui implements EventListener {
 				slot.hidden = false;
 			}
 		}
+		
+		player = CoreGame.getInstance().entityManager.player;
 	}
 	
 	@Override
@@ -117,7 +119,7 @@ public class GuiHUD extends Gui implements EventListener {
 		g.fillRoundRect(slotXStart-0.01f*GameConstants.GAME_WIDTH, slotYStart-0.01f*GameConstants.GAME_WIDTH, slotXEnd-slotXStart+0.02f*GameConstants.GAME_WIDTH, slotYEnd-slotYStart+0.02f*GameConstants.GAME_WIDTH, 10);
 
 		if(infoRect == null) {
-			infoRect = new Rectangle(0.01f*GameConstants.GAME_WIDTH, 0, 0.23f*GameConstants.GAME_WIDTH, 0);
+			infoRect = new Rectangle(0.01f*GameConstants.GAME_WIDTH, 0, 0.25f*GameConstants.GAME_WIDTH, 0);
 		}
 		
 		if(lastEntityPressed != null) {
@@ -133,6 +135,8 @@ public class GuiHUD extends Gui implements EventListener {
 				lastHeight = (int) wrapText(String.format("Health: %d/%d", lastEntityPressed.currentHealth, lastEntityPressed.maxHealth), infoRect.getMinX()+0.01f*GameConstants.GAME_WIDTH, lastHeight, 0.22f*GameConstants.GAME_WIDTH, g);
 			}
 			
+			lastHeight = (int) wrapText("Velocity: " + (int)lastEntityPressed.getVector().velocityLength, infoRect.getMinX()+0.01f*GameConstants.GAME_WIDTH, lastHeight, 0.22f*GameConstants.GAME_WIDTH, g);
+			
 			int slotHeight = 0;
 			for(int i = 0; i < entitySlots.length; i++) {
 				GuiEquipSlot slot = entitySlots[i];
@@ -145,6 +149,11 @@ public class GuiHUD extends Gui implements EventListener {
 			infoRect.setY(initialHeight);
 			infoRect.setHeight(lastHeight-initialHeight);
 		}
+		
+		VelocityVector vector = CoreGame.getInstance().entityManager.player.getVector();
+		Circle circle = new Circle((float) (GameConstants.GAME_WIDTH/2+50*Math.sin(vector.getVelocityDirection())), (float) (GameConstants.GAME_HEIGHT/2-50*Math.cos(vector.getVelocityDirection())), 5);
+		g.setColor(Color.red);
+		g.fill(circle);
 	}
 	
 	@Override

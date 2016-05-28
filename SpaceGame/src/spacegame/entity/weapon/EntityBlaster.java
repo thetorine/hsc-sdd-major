@@ -6,7 +6,6 @@ import spacegame.*;
 import spacegame.core.*;
 import spacegame.core.CollisionDetector.*;
 import spacegame.entity.*;
-import spacegame.entity.EntityBase.*;
 import spacegame.entity.enemy.*;
 import spacegame.inventory.*;
 
@@ -27,7 +26,7 @@ public class EntityBlaster extends EntityBase implements ICollisionDetection {
 	@Override
 	public void update(int delta) {
 		super.update(delta);
-		getVector().setVelocityWithDirection(getMaxVelocity(), getVector().rotation + (invertShot ? 180 : 0));
+		getVector().setVelocityWithDirection(getMaxVelocity(), (float) (getVector().rotation + (invertShot ? Math.PI : 0)));
 		timeActive += delta;
 		if(timeActive > 500) {
 			CoreGame.getInstance().entityManager.despawnEntity(this);
@@ -43,8 +42,8 @@ public class EntityBlaster extends EntityBase implements ICollisionDetection {
 	public void setSpawnCoords() {
 		EntityBase shootingEntity = getManager().getEntityByID(shooter);
 		if(!coordsSet) {
-			getVector().xCoord = (float) (shootingEntity.getVector().xCoord + 25*Math.sin(Math.toRadians(shootingEntity.getVector().rotation))*(invertShot ? -1 : 1));
-			getVector().yCoord = (float) (shootingEntity.getVector().yCoord - 25*Math.cos(Math.toRadians(shootingEntity.getVector().rotation))*(invertShot ? -1 : 1));
+			getVector().xCoord = (float) (shootingEntity.getVector().xCoord + 25*Math.sin(shootingEntity.getVector().rotation)*(invertShot ? -1 : 1));
+			getVector().yCoord = (float) (shootingEntity.getVector().yCoord - 25*Math.cos(shootingEntity.getVector().rotation)*(invertShot ? -1 : 1));
 			
 		}
 		getVector().rotation = shootingEntity.getVector().rotation;

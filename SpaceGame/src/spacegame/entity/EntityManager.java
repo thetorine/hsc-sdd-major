@@ -8,7 +8,6 @@ import org.newdawn.slick.*;
 import spacegame.*;
 import spacegame.core.*;
 import spacegame.core.DataHandler.*;
-import spacegame.entity.*;
 import spacegame.entity.enemy.*;
 import spacegame.entity.environment.*;
 import spacegame.entity.weapon.*;

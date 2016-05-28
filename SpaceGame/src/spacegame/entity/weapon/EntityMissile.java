@@ -6,7 +6,6 @@ import spacegame.*;
 import spacegame.core.*;
 import spacegame.core.CollisionDetector.*;
 import spacegame.entity.*;
-import spacegame.entity.EntityBase.*;
 import spacegame.entity.enemy.*;
 import spacegame.inventory.*;
 import spacegame.other.*;
@@ -34,7 +33,7 @@ public class EntityMissile extends EntityBase implements ICollisionDetection {
 		
 		EntityBase entity = getManager().getEntityByID(targetEntity);
 		if(entity != null) {
-			getVector().rotation = getVector().rotation + ((getRotationDirection(entity) ? 180 : -180)*delta);
+			getVector().rotation = (float) (getVector().rotation + ((getRotationDirection(entity) ? Math.PI : -Math.PI)*delta));
 			getVector().setVelocityWithDirection(getMaxVelocity(), getVector().rotation);
 		} else {
 			setClosestTarget();
@@ -65,11 +64,11 @@ public class EntityMissile extends EntityBase implements ICollisionDetection {
 	}
 	
 	private boolean getRotationDirection(EntityBase entity) {
-		float entityRotation = getVector().rotation % 360;
-		float diff = (GameUtilities.calculateBearing(this, entity)-entityRotation) % 360;
+		float entityRotation = (float) (getVector().rotation % (2*Math.PI));
+		float diff = (float) ((GameUtilities.calculateBearing(this, entity)-entityRotation) % (2*Math.PI));
 		float absDiff = Math.abs(diff);
 		boolean movementDirection = false;
-		if(absDiff >= 180 && diff < 0) {
+		if(absDiff >= Math.PI && diff < 0) {
 			movementDirection = true;
 		} else if(diff >= 0)  {
 			movementDirection = true;
@@ -107,8 +106,8 @@ public class EntityMissile extends EntityBase implements ICollisionDetection {
 	public void setSpawnCoords() {
 		EntityBase firingEntity = getManager().getEntityByID(initialEntity);
 		getVector().rotation = firingEntity.getVector().rotation;
-		getVector().xCoord = (float) (firingEntity.getVector().xCoord + 50*Math.sin(Math.toRadians(firingEntity.getVector().rotation)));
-		getVector().yCoord = (float) (firingEntity.getVector().yCoord - 50*Math.cos(Math.toRadians(firingEntity.getVector().rotation)));
+		getVector().xCoord = (float) (firingEntity.getVector().xCoord + 25*Math.sin(firingEntity.getVector().rotation));
+		getVector().yCoord = (float) (firingEntity.getVector().yCoord - 25*Math.cos(firingEntity.getVector().rotation));
 		this.model.setRotation(getVector().rotation);
 	}
 	

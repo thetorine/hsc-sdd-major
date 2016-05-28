@@ -14,6 +14,7 @@ public class GuiCmdOverlay extends Gui {
 	public static String ALPHANUMERICAL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	public String typedString = "";
 	public int initialDelay;
+	public int timeSinceLastPress;
 	
 	public GuiCmdOverlay() {
 		super(TextureHandler.uiImages.get("bar_base.png"), 0);
@@ -41,7 +42,10 @@ public class GuiCmdOverlay extends Gui {
 			} else if(typedString.length() > 0 && keyCode == Keyboard.KEY_BACK) {
 				typedString = typedString.substring(0, typedString.length()-1);
 			} 
+			timeSinceLastPress = 0;
 		}
+		
+		timeSinceLastPress += delta;
 	}
 	
 	@Override
@@ -55,8 +59,8 @@ public class GuiCmdOverlay extends Gui {
 		g.drawString(typedString, 0.01f*GameConstants.GAME_WIDTH, r.getMinY() + (r.getHeight()-g.getFont().getHeight(ALPHANUMERICAL))/2);
 		
 		int timeModifier = (int) (System.currentTimeMillis()%1000);
-		if(timeModifier < 500) {
-			Rectangle typeInd = new Rectangle(0.01f*GameConstants.GAME_HEIGHT+g.getFont().getWidth(typedString)+0.005f*GameConstants.GAME_WIDTH, r.getMinY()+(r.getHeight()-g.getFont().getHeight(ALPHANUMERICAL))/2, 0.005f*GameConstants.GAME_WIDTH, g.getFont().getHeight(ALPHANUMERICAL));
+		if(timeModifier < 500 || timeSinceLastPress < 750) {
+			Rectangle typeInd = new Rectangle(0.01f*GameConstants.GAME_HEIGHT+g.getFont().getWidth(typedString)+0.005f*GameConstants.GAME_WIDTH, r.getMinY()+(r.getHeight()-g.getFont().getHeight(ALPHANUMERICAL))/2, 0.0025f*GameConstants.GAME_WIDTH, g.getFont().getHeight(ALPHANUMERICAL));
 			g.fill(typeInd);
 		}
 	}

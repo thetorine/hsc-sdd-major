@@ -2,7 +2,6 @@ package spacegame;
 
 import java.io.*;
 
-import org.lwjgl.input.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.*;
 
@@ -30,7 +29,7 @@ public class CoreGame extends BasicGame {
 			GameConstants.GAME_WIDTH = (int) (container.getScreenWidth()/scale);
 			GameConstants.GAME_HEIGHT = (int) (container.getScreenHeight()/scale);
 			container.setDisplayMode(GameConstants.GAME_WIDTH, GameConstants.GAME_HEIGHT, scale == 1f);
-			container.setTargetFrameRate(60); //screen tearing occurs with this but minimizes CPU usage
+			container.setTargetFrameRate(120); //screen tearing occurs with this but minimizes CPU usage
 			container.setShowFPS(true);
 			container.start();
 		} catch (SlickException e) {

@@ -183,7 +183,7 @@ public abstract class EntityBase implements Comparable<EntityBase> {
 	}
 	
 	public void updateRotation() {
-		model.setRotation(getVector().rotation);
+		model.setRotation((float) Math.toDegrees(getVector().rotation));
 	}
 	
 	public void addAIController(AIEntity ai) {

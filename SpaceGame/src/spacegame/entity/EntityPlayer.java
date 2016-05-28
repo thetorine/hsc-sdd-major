@@ -16,13 +16,16 @@ import spacegame.other.KeyboardListener.*;
 
 public class EntityPlayer extends EntityBase implements IKeyboard, ICollisionDetection{
 	public EntityBase selectedTarget;
-	public UpgradeManager manager;
+	public UpgradeManager upgradeManager;
 	
 	public float currentShield;
 	public int maxShield;
 	public boolean regenShield;
 	
 	public boolean onPlanet;
+	
+	private Random random = new Random();
+	private int textureId = random.nextInt(3)+1;
 	
 	@Override
 	public void onLoad() {
@@ -34,19 +37,21 @@ public class EntityPlayer extends EntityBase implements IKeyboard, ICollisionDet
 			setMaxHealth(1000);
 		}
 		KeyboardListener.registerListener(this);
-		manager = new UpgradeManager();
+		upgradeManager = new UpgradeManager();
 	}
 	
 	@Override
 	public void update(int delta) {
 		super.update(delta);
-		int x = (int) (getVector().xCoord - 25*Math.sin(Math.toRadians(getVector().rotation)));
-		int y = (int) (getVector().yCoord + 25*Math.cos(Math.toRadians(getVector().rotation)));
+		int x = (int) (getVector().xCoord - 25*Math.sin(getVector().rotation));
+		int y = (int) (getVector().yCoord + 25*Math.cos(getVector().rotation));
 		CoreGame.getInstance().world.engineTrailFX.addEmitterAt(new Point(x, y));
 		
 		if(timeSinceLastDmg > 2000) {
 			currentShield = (float) Math.min(maxShield, currentShield+((maxShield-currentShield)*0.1)*delta/1000f); //regen 10% of missing shield every second
 		}
+		
+		maxHealth = 1000 + upgradeManager.getUpgrade("Health").getModifier();
 		
 		this.onPlanet = false;
 	}
@@ -62,7 +67,7 @@ public class EntityPlayer extends EntityBase implements IKeyboard, ICollisionDet
 	
 	@Override
 	public int getMaxVelocity() {
-		return 300;
+		return 300 + upgradeManager.getUpgrade("Speed").getModifier();
 	}
 	
 	@Override
@@ -114,11 +119,11 @@ public class EntityPlayer extends EntityBase implements IKeyboard, ICollisionDet
 		if(key == GameConstants.UP) {
 			getVector().accelerate(getAcceleration(), delta/1000f);
 		} else if(key == GameConstants.LEFT) {
-			getVector().steerInDirection(false, 200, delta/100f);
+			getVector().steerInDirection(false, Math.PI, delta/100f);
 		} else if(key == GameConstants.RIGHT) {
-			getVector().steerInDirection(true, 200, delta/100f);
+			getVector().steerInDirection(true, Math.PI, delta/100f);
 		} else if(key == GameConstants.DOWN) {
-			getVector().decelerate(getAcceleration(), delta/1000f);
+			getVector().decelerate(getAcceleration()/2, delta/5000f);
 		} else if(key == GameConstants.CUT_VELOCITY) {
 			getVector().removeVelocity();
 		} else if(key == GameConstants.FIRE_WEAPON) {
@@ -141,7 +146,7 @@ public class EntityPlayer extends EntityBase implements IKeyboard, ICollisionDet
 
 	@Override
 	public String getModelName() {
-		return "playerShip2_orange.png";
+		return String.format("playerShip%d_blue.png", textureId);
 	}
 	
 	@Override

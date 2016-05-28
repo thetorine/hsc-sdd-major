@@ -38,7 +38,7 @@ public class Minimap {
 		g.setColor(new Color(0f, 0.35f, 0.06f));
 		g.fill(new Circle(cX, cY, mapRadius));
 		
-		double playerRotation = Math.toRadians(player.getVector().rotation);
+		double playerRotation = player.getVector().rotation;
 		
 		g.setColor(Color.green);
 		for(int i = 0; i <= 8; i++) {

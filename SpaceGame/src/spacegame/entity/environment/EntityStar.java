@@ -2,7 +2,6 @@ package spacegame.entity.environment;
 
 import spacegame.core.*;
 import spacegame.entity.*;
-import spacegame.entity.EntityBase.*;
 
 public class EntityStar extends EntityBase {
 

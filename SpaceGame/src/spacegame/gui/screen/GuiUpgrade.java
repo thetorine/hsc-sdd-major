@@ -27,7 +27,7 @@ public class GuiUpgrade extends Gui implements EventListener {
 		guiList = new GuiList((int)(0.05f*width), (int)(0.15f*height), 0.32f, this);
 		ArrayList<ListData> data = new ArrayList<>();
 		EntityPlayer player = CoreGame.getInstance().entityManager.player;
-		for(Upgrade upgrade : player.manager.availableUpgrades) {
+		for(Upgrade upgrade : player.upgradeManager.availableUpgrades) {
 			data.add(new ListData(upgrade.name));
 		}
 		guiList.addRows(data);
@@ -64,7 +64,7 @@ public class GuiUpgrade extends Gui implements EventListener {
 		int lastHeight = (int) (infoRect.getMinY()+0.05*height);
 		
 		EntityPlayer player = CoreGame.getInstance().entityManager.player;
-		UpgradeManager manager = player.manager;
+		UpgradeManager manager = player.upgradeManager;
 		Upgrade upgrade = manager.getUpgrade(guiList.pluggedData.get(guiList.selectedIndex).displayName);
 		
 		lastHeight = (int) wrapText(upgrade.name, (float) (infoRect.getMinX()+0.05*width), lastHeight, maxWidth, g);
@@ -88,7 +88,7 @@ public class GuiUpgrade extends Gui implements EventListener {
 			GuiButton button = (GuiButton) element;
 			if(button.buttonName.equals("Upgrade")) {
 				EntityPlayer player = CoreGame.getInstance().entityManager.player;
-				UpgradeManager manager = player.manager;
+				UpgradeManager manager = player.upgradeManager;
 				Upgrade upgrade = manager.getUpgrade(guiList.pluggedData.get(guiList.selectedIndex).displayName);
 				upgrade.upgrade();
 				if(upgrade.level == upgrade.maxLevel) {

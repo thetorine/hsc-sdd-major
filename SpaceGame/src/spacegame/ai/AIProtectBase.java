@@ -44,21 +44,21 @@ public class AIProtectBase extends AIEntity {
 		if(!targetAcquired && protectingBase != null) {
 			double distanceFromBase = getDistanceToPoint(entity.asPoint(), protectingBase.asPoint());
 			if(distanceFromBase > protectingBase.model.getWidth()*0.75d) {
-				float bearing = GameUtilities.calculateBearing(protectingBase, entity)-20;
-				if(!withinRange(entity.getVector().rotation, bearing, 2)) {
+				float bearing = (float) (GameUtilities.calculateBearing(protectingBase, entity)-Math.PI/9f);
+				if(!withinRange(entity.getVector().rotation, bearing, (float) (Math.PI/90f))) {
 					faceEntity(protectingBase, bearing, delta/1000f);
 				}
 				accelerate(delta/100f);
 			} else {
-				float bearing = GameUtilities.calculateBearing(protectingBase, entity)-90;
-				if(!withinRange(entity.getVector().rotation, bearing, 2)) {
+				float bearing = (float) (GameUtilities.calculateBearing(protectingBase, entity)-Math.PI/2);
+				if(!withinRange(entity.getVector().rotation, bearing, (float) (Math.PI/90f))) {
 					faceEntity(protectingBase, bearing, delta/1000f);
 				}
 				accelerate(delta/50f);
 			}
 		} else if(targetAcquired) {
 			float bearing = GameUtilities.calculateBearing(p, entity);
-			if(!withinRange(entity.getVector().rotation, bearing, 2)) {
+			if(!withinRange(entity.getVector().rotation, bearing, (float) (Math.PI/90f))) {
 				faceEntity(p, bearing, delta/1000f);
 			}
 			double distance = getDistanceToPoint(p.asPoint(), entity.asPoint());
@@ -74,11 +74,11 @@ public class AIProtectBase extends AIEntity {
 	}
 	
 	private void faceEntity(EntityBase p, float bearing, float delta) {
-		entity.getVector().rotation = entity.getVector().rotation + ((getRotationDirection(p, bearing) ? 200 : -200)*delta);
+		entity.getVector().rotation = (float) (entity.getVector().rotation + ((getRotationDirection(p, bearing) ? Math.PI : -Math.PI)*delta));
 	}
 	
 	private void accelerate(float delta) {
-		entity.getVector().accelerateInDirection(entity.getAcceleration(), entity.getVector().rotation+180, delta);
+		entity.getVector().accelerateInDirection(entity.getAcceleration(), (float) (entity.getVector().rotation+Math.PI), delta);
 	}
 	
 	private void accelerateBackwards(float delta) {
@@ -87,18 +87,18 @@ public class AIProtectBase extends AIEntity {
 	
 	private void addRandomVelocityChange(float delta) {
 		if(rand.nextFloat() < 0.3f) {
-			float rotationToAdd = rand.nextInt(360)*(rand.nextBoolean() ? 1 : -1);
+			float rotationToAdd = (float) (rand.nextFloat()*2*Math.PI*(rand.nextBoolean() ? 1 : -1));
 			int speedToAdd = 20;
 			entity.getVector().accelerateInDirection(speedToAdd, rotationToAdd, delta);
 		}
 	}
 	
 	private boolean getRotationDirection(EntityBase p, float bearing) {
-		float entityRotation = entity.getVector().rotation % 360;
-		float diff = (bearing-entityRotation) % 360;
+		float entityRotation = (float) (entity.getVector().rotation % (2*Math.PI));
+		float diff = (float) ((bearing-entityRotation) % (2*Math.PI));
 		float absDiff = Math.abs(diff);
 		boolean movementDirection = false;
-		if(absDiff >= 180 && diff < 0) {
+		if(absDiff >= Math.PI && diff < 0) {
 			movementDirection = true;
 		} else if(diff >= 0)  {
 			movementDirection = true;

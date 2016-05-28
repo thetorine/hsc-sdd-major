@@ -9,8 +9,8 @@ public class UpgradeManager {
 	public UpgradeManager() {
 		addUpgrade("Damage", 3, new int[] { 1, 2, 3 });
 		addUpgrade("Armor", 3, new int[] { 1, 2, 3 });
-		addUpgrade("Health", 5, new int[] { 1, 2, 3, 4, 5 });
-		addUpgrade("Speed", 4, new int[] { 1, 2, 3, 4 });
+		addUpgrade("Health", 5, new int[] { 120, 240, 360, 480, 600 });
+		addUpgrade("Speed", 4, new int[] { 10, 30, 70, 130 });
 	}
 	
 	public void addUpgrade(String name, int maxLevel, int[] modifiers) {
@@ -49,7 +49,7 @@ public class UpgradeManager {
 		}
 		
 		public int getModifier() {
-			return modifers[level];
+			return level > 0 ?  modifers[level-1] : 0;
 		}
 		
 		public void upgrade() {

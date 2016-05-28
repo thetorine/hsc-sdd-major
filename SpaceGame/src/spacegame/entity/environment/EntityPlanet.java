@@ -6,7 +6,6 @@ import org.newdawn.slick.*;
 
 import spacegame.core.*;
 import spacegame.entity.*;
-import spacegame.entity.EntityBase.*;
 
 public class EntityPlanet extends EntityBase {
 	
@@ -20,8 +19,7 @@ public class EntityPlanet extends EntityBase {
 	@Override
 	public void update(int delta) {
 		super.update(delta);
-		float rotationalVelocity = 2f;
-		getVector().rotation += rotationalVelocity*delta/1000f;
+		getVector().rotation += Math.PI/90f*delta/1000f;
 	}
 
 	@Override

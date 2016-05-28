@@ -1,7 +1,6 @@
 package spacegame.other;
 
 import spacegame.*;
-import spacegame.core.*;
 import spacegame.entity.*;
 import spacegame.entity.enemy.*;
 import spacegame.inventory.*;
@@ -21,7 +20,7 @@ public class CommandListener {
 				}
 			}
 		} else if(command.equals("heal")) {
-			CoreGame.getInstance().entityManager.player.setMaxHealth(1000);
+			CoreGame.getInstance().entityManager.player.setMaxHealth(CoreGame.getInstance().entityManager.player.maxHealth);
 		} else if(command.equals("immortal")) {
 			CoreGame.getInstance().entityManager.player.isImmortal ^= true;
 		} else if(command.equals("give")) {

@@ -17,26 +17,28 @@ public class VelocityVector {
 	}
 	
 	public void accelerate(int power, float delta) {
-		xVelocity += power*Math.sin(Math.toRadians(rotation))*delta;
-		yVelocity -= power*Math.cos(Math.toRadians(rotation))*delta;
+		xVelocity += power*Math.sin(rotation)*delta;
+		yVelocity -= power*Math.cos(rotation)*delta;
 		velocityLength = calculateVelocityLength();
 	}
 	
 	//TODO get velocity rotation and decelerate from that, probs using atan(y, x) - pi/2 + pi (atan(y, x) + pi/2)
 	public void decelerate(float power, float delta) {
-		xVelocity += power*Math.sin(Math.toRadians(rotation+180))*delta;
-		yVelocity -= power*Math.cos(Math.toRadians(rotation+180))*delta;
-		velocityLength = calculateVelocityLength();
+		if(velocityLength > 0) {
+			xVelocity += power*Math.sin(getVelocityDirection()+Math.PI)*delta;
+			yVelocity -= power*Math.cos(getVelocityDirection()+Math.PI)*delta;
+			velocityLength = calculateVelocityLength();
+		}
 	}
 	
 	public void accelerateInDirection(int power, float rotation, float delta) {
-		xVelocity += power*Math.sin(Math.toRadians(rotation))*delta;
-		yVelocity -= power*Math.cos(Math.toRadians(rotation))*delta;
+		xVelocity += power*Math.sin(rotation)*delta;
+		yVelocity -= power*Math.cos(rotation)*delta;
 		velocityLength = calculateVelocityLength();
 	}
 	
-	public void steerInDirection(boolean direction, int power, float delta) {
-		angularVelocity = angularVelocity + (direction ? power*delta : -power*delta);
+	public void steerInDirection(boolean direction, double power, float delta) {
+		angularVelocity = (float) (angularVelocity + (direction ? power*delta : -power*delta));
 	}
 	
 	public void setVelocity(int velocity) {
@@ -47,8 +49,8 @@ public class VelocityVector {
 	}
 	
 	public void setVelocityWithDirection(int velocity, float direction) {
-		xVelocity = (float) (velocity*Math.sin(Math.toRadians(direction)));
-		yVelocity = (float) (-velocity*Math.cos(Math.toRadians(direction)));
+		xVelocity = (float) (velocity*Math.sin(direction));
+		yVelocity = (float) (-velocity*Math.cos(direction));
 		velocityLength = calculateVelocityLength();
 	}
 	
@@ -70,6 +72,10 @@ public class VelocityVector {
 		angularVelocity = angularVelocity- deltaSec*angularDrag*angularVelocity*10;
 		
 		velocityLength = calculateVelocityLength();
+	}
+	
+	public float getVelocityDirection() {
+		return (float) (Math.atan2(yVelocity, xVelocity)+Math.PI/2f);
 	}
 	
 	public void setCoords(float x, float y) {
