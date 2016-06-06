@@ -73,6 +73,7 @@ public abstract class EntityBase implements Comparable<EntityBase> {
 			updateRotation();
 		}
 		
+		inventory.update();
 		inventory.weaponCD = Math.max(0, inventory.weaponCD-delta/attackModifier);
 	}
 	

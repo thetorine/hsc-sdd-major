@@ -2,6 +2,7 @@ package spacegame.entity.enemy;
 
 import java.util.*;
 
+import spacegame.*;
 import spacegame.ai.*;
 import spacegame.core.*;
 import spacegame.core.CollisionDetector.*;
@@ -93,7 +94,10 @@ public class EntityEnemy extends EntityBase implements ICollisionDetection {
 	
 	@Override
 	public void onDespawn() {
-//		TODO add drops CoreGame.getInstance().world.dropItemIntoWorld(this, new ItemStack(Item.metal, 7));
+		Random random = new Random();
+		if(random.nextFloat() < 0.3f) {
+			CoreGame.getInstance().world.dropItemIntoWorld(this, new ItemStack(Item.metal, random.nextInt(3)+1));
+		}
 	}
 	
 	private double getDistanceToPoint(Point p) {

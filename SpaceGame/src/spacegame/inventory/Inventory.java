@@ -12,12 +12,24 @@ public class Inventory {
 	public int weaponCD;
 	public int weaponid = -1;
 	
+	public void update() {
+		for(int row = 0; row < ROWS; row++) {
+			for(int col = 0; col < COLUMNS; col++) {
+				if(main[row][col] != null) {
+					if(main[row][col].quantity == 0) {
+						main[row][col] = null;
+					}
+				}
+			}
+		}
+	}
+	
 	//this entire class does not account for a completely full inventory. 
 	public void addItemStack(ItemStack stack) {
 		//find existing stack
 		//if exists then join stacks and then add the remainder stack to somewhere else, 
 		//however here have to account for the remainder > max quantity
-		ItemStack potentialStack = findExistingStack(stack);
+		ItemStack potentialStack = findExistingStack(stack, false);
 		if(potentialStack != null) {
 			ItemStack remainder = potentialStack.joinStacks(stack);
 			if(remainder != null) {
@@ -112,18 +124,30 @@ public class Inventory {
 		return weaponStacks[column];
 	}
 	
-	public ItemStack findExistingStack(ItemStack stack) {
+	public ItemStack findExistingStack(ItemStack stack, boolean canBeFull) {
 		for(int row = 0; row < ROWS; row++) {
 			for(int col = 0; col < COLUMNS; col++) {
 				ItemStack stackAtLocation = getItemStackAt(row, col);
 				if(stackAtLocation != null) {
-					if(stackAtLocation.equals(stack) && !stackAtLocation.isFull()) {
-						return stackAtLocation;
+					if(stackAtLocation.equals(stack)) {
+						if(!canBeFull && !stackAtLocation.isFull()) {
+							return stackAtLocation;
+						} else if(canBeFull) {
+							return stackAtLocation;
+						}
 					}
 				}
 			}
 		} 
 		return null;
+	}
+	
+	public boolean contains(ItemStack stack) {
+		ItemStack is = findExistingStack(stack, true);
+		if(is != null) {
+			return is.quantity >= stack.quantity;
+		}
+		return false;
 	}
 	
 	public void selectNextWeapon() {

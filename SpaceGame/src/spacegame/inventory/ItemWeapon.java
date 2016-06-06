@@ -40,11 +40,11 @@ public class ItemWeapon extends Item {
 	
 	public void doubleBlaster(EntityBase shooter, boolean invertShot) {
 		EntityBlaster blaster1 = new EntityBlaster(shooter.id, invertShot).setCoords(false);
-		blaster1.getVector().xCoord = (float) (shooter.getVector().xCoord + 10*Math.sin(Math.toRadians(shooter.getVector().rotation-90))*(invertShot ? -1 : 1));
-		blaster1.getVector().yCoord = (float) (shooter.getVector().yCoord - 10*Math.cos(Math.toRadians(shooter.getVector().rotation-90))*(invertShot ? -1 : 1));
+		blaster1.getVector().xCoord = (float) (shooter.getVector().xCoord + 10*Math.sin(shooter.getVector().rotation-90))*(invertShot ? -1 : 1);
+		blaster1.getVector().yCoord = (float) (shooter.getVector().yCoord - 10*Math.cos(shooter.getVector().rotation-90))*(invertShot ? -1 : 1);
 		EntityBlaster blaster2 = new EntityBlaster(shooter.id, invertShot).setCoords(false);
-		blaster2.getVector().xCoord = (float) (shooter.getVector().xCoord + 10*Math.sin(Math.toRadians(shooter.getVector().rotation+90))*(invertShot ? -1 : 1));
-		blaster2.getVector().yCoord = (float) (shooter.getVector().yCoord - 10*Math.cos(Math.toRadians(shooter.getVector().rotation+90))*(invertShot ? -1 : 1));
+		blaster2.getVector().xCoord = (float) (shooter.getVector().xCoord + 10*Math.sin(shooter.getVector().rotation+90))*(invertShot ? -1 : 1);
+		blaster2.getVector().yCoord = (float) (shooter.getVector().yCoord - 10*Math.cos(shooter.getVector().rotation+90))*(invertShot ? -1 : 1);
 		shooter.getManager().spawnEntity(blaster1);
 		shooter.getManager().spawnEntity(blaster2);
 	}

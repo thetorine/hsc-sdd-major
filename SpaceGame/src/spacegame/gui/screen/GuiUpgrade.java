@@ -86,14 +86,26 @@ public class GuiUpgrade extends Gui implements EventListener {
 	public void onStateChange(Gui element) {
 		if (element instanceof GuiButton) {
 			GuiButton button = (GuiButton) element;
-			if(button.buttonName.equals("Upgrade")) {
+			if(button.buttonName.equals(upgradeAbility.buttonName)) {
 				EntityPlayer player = CoreGame.getInstance().entityManager.player;
 				UpgradeManager manager = player.upgradeManager;
 				Upgrade upgrade = manager.getUpgrade(guiList.pluggedData.get(guiList.selectedIndex).displayName);
 				upgrade.upgrade();
 				if(upgrade.level == upgrade.maxLevel) {
 					button.buttonName = "Upgraded!";
+				} else {
+					button.buttonName = "Upgrade";
 				}
+			}
+		} else if (element instanceof GuiList) {
+			GuiList list = (GuiList) element;
+			EntityPlayer player = CoreGame.getInstance().entityManager.player;
+			UpgradeManager manager = player.upgradeManager;
+			Upgrade upgrade = manager.getUpgrade(list.pluggedData.get(list.selectedIndex).displayName);
+			if(upgrade.level == upgrade.maxLevel) {
+				upgradeAbility.buttonName = "Upgraded!";
+			} else {
+				upgradeAbility.buttonName = "Upgrade";
 			}
 		}
 	}

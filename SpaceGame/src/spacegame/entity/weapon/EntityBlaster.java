@@ -113,8 +113,8 @@ public class EntityBlaster extends EntityBase implements ICollisionDetection {
 	public EntityBlaster setCoords(boolean b) {
 		coordsSet = !b;
 		EntityBase shootingEntity = getManager().getEntityByID(shooter);
-		getVector().xCoord = (float) (shootingEntity.getVector().xCoord + 25*Math.sin(Math.toRadians(shootingEntity.getVector().rotation))*(invertShot ? -1 : 1));
-		getVector().yCoord = (float) (shootingEntity.getVector().yCoord - 25*Math.cos(Math.toRadians(shootingEntity.getVector().rotation))*(invertShot ? -1 : 1));
+		getVector().xCoord = (float) (shootingEntity.getVector().xCoord + 25*Math.sin(shootingEntity.getVector().rotation)*(invertShot ? -1 : 1));
+		getVector().yCoord = (float) (shootingEntity.getVector().yCoord - 25*Math.cos(shootingEntity.getVector().rotation)*(invertShot ? -1 : 1));
 		return this;
 	}
 }

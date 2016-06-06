@@ -149,11 +149,6 @@ public class GuiHUD extends Gui implements EventListener {
 			infoRect.setY(initialHeight);
 			infoRect.setHeight(lastHeight-initialHeight);
 		}
-		
-		VelocityVector vector = CoreGame.getInstance().entityManager.player.getVector();
-		Circle circle = new Circle((float) (GameConstants.GAME_WIDTH/2+50*Math.sin(vector.getVelocityDirection())), (float) (GameConstants.GAME_HEIGHT/2-50*Math.cos(vector.getVelocityDirection())), 5);
-		g.setColor(Color.red);
-		g.fill(circle);
 	}
 	
 	@Override

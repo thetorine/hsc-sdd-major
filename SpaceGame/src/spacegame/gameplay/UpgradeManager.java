@@ -7,8 +7,8 @@ public class UpgradeManager {
 	public ArrayList<Upgrade> availableUpgrades = new ArrayList<>();
 	
 	public UpgradeManager() {
-		addUpgrade("Damage", 3, new int[] { 1, 2, 3 });
-		addUpgrade("Armor", 3, new int[] { 1, 2, 3 });
+		addUpgrade("Damage", 3, new int[] { 1, 2, 3 }); //TODO implement dmg upgrade
+		addUpgrade("Armor", 3, new int[] { 1, 2, 3 }); //TODO implement armor upgrade
 		addUpgrade("Health", 5, new int[] { 120, 240, 360, 480, 600 });
 		addUpgrade("Speed", 4, new int[] { 10, 30, 70, 130 });
 	}

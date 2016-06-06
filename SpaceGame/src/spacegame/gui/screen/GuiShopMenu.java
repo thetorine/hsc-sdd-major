@@ -18,6 +18,7 @@ import spacegame.other.*;
 public class GuiShopMenu extends Gui implements EventListener {
 	
 	private Rectangle mainRect;
+	private GuiButton craftButton;
 	private boolean drawnPurchaseButton;
 	private HashMap<GuiInvSlot, ArrayList<GuiInvSlot>> invSlotsDrawn = new HashMap<>();
 
@@ -55,7 +56,7 @@ public class GuiShopMenu extends Gui implements EventListener {
 		g.fill(mainRect);
 		 
 		if(!drawnPurchaseButton) {
-			GuiButton craftButton = new GuiButton("Purchase", 0, 0, 0.07f, this);
+			craftButton = new GuiButton("Purchase", 0, 0, 0.07f, this);
 			craftButton.xStart = (int) (mainRect.getMinX() + (mainRect.getWidth()-craftButton.width)/2);
 			craftButton.yStart = (int) (mainRect.getMinY() + 0.8f*mainRect.getHeight());
 			addGuiElement(craftButton);
@@ -76,15 +77,34 @@ public class GuiShopMenu extends Gui implements EventListener {
 				g.drawLine(x+0.5f*outputSlot.width, outputSlot.yStart + outputSlot.height + 0.2f*mainRect.getWidth(), x+totalWidth-0.5f*outputSlot.width, outputSlot.yStart + outputSlot.height + 0.2f*mainRect.getWidth());
 				
 				for(GuiInvSlot slot : inputSlots) {
+					if(!CoreGame.getInstance().entityManager.player.inventory.contains(slot.getHeldStack())) g.setColor(Color.red);
 					g.drawLine(slot.xStart+0.5f*outputSlot.width, outputSlot.yStart + outputSlot.height + 0.2f*mainRect.getWidth(), slot.xStart+0.5f*outputSlot.width, slot.yStart);
 				}
 			}
+		}
+		g.setColor(Color.black);
+		
+		ListData data = menuList.pluggedData.get(menuList.selectedIndex);
+		ItemStack stack = new ItemStack(Item.getItemByName(data.displayName), 1);	
+		CraftingRecipe recipe = CoreGame.getInstance().craftingManager.getRecipeFor(stack.itemClass);
+		if(recipe.doesInvContainItems(CoreGame.getInstance().entityManager.player.inventory)) {
+			craftButton.buttonName = "Purchase";
+		} else {
+			craftButton.buttonName = "Not Enough Items";
 		}
 	}
 	
 	@Override
 	public void renderForeground(Graphics g, GameContainer container) {
 		super.renderForeground(g, container);
+		for(Gui gui : guiElements) {
+			if (gui instanceof GuiInvSlot) {
+				GuiInvSlot slot = (GuiInvSlot) gui;
+				if(slot.highlighted) {
+					drawInfoBoxAtMousePos(g, container, slot.getHeldStack().itemClass.itemName);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -132,10 +152,13 @@ public class GuiShopMenu extends Gui implements EventListener {
 				}
 				if(itemList != null) {
 					ListData data = itemList.pluggedData.get(itemList.selectedIndex);
-					//TODO add checks to see if item can be purchased
-					ItemStack stack = new ItemStack(Item.getItemByName(data.displayName), 1);
-					//TODO maybe allow multiple items to be purchased
-					CoreGame.getInstance().entityManager.player.inventory.addItemStack(stack);
+ 					ItemStack stack = new ItemStack(Item.getItemByName(data.displayName), 1);
+					CraftingRecipe recipe = CoreGame.getInstance().craftingManager.getRecipeFor(stack.itemClass);
+					Inventory inv = CoreGame.getInstance().entityManager.player.inventory;
+					if(recipe.doesInvContainItems(inv)) {
+						inv.addItemStack(stack);
+						recipe.consumeItems(inv);
+					}
 				}
 			}
 		}
