@@ -4,10 +4,10 @@ import org.lwjgl.input.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
-import spacegame.*;
 import spacegame.core.*;
 import spacegame.entity.*;
 import spacegame.entity.environment.*;
+import spacegame.gamestates.*;
 import spacegame.gui.*;
 import spacegame.gui.widgets.*;
 import spacegame.other.*;
@@ -22,7 +22,7 @@ public class GuiMap extends Gui {
 	public GuiCheckbox centerScreen;
 
 	public GuiMap() {
-		super(TextureHandler.uiImages.get("bg_white.png"), 0.5f);
+		super(AssetManager.uiImages.get("bg_white.png"), 0.5f);
 		setBackgroundTint();
 		centerScreen = new GuiCheckbox(0, 0, 0.1f, this, true);
 		guiElements.add(centerScreen);
@@ -48,8 +48,8 @@ public class GuiMap extends Gui {
 		g.fill(mapBoundary);
 		g.setClip(mapBoundary);
 		
-		for(EntityBase e : CoreGame.getInstance().entityManager.getIngameEntities()) {
-			if(e.inOrbit && CoreGame.getInstance().entityManager.getEntityByID(e.orbittingEntity) instanceof EntityStar) {
+		for(EntityBase e : IngameState.getInstance().entityManager.getIngameEntities()) {
+			if(e.inOrbit && IngameState.getInstance().entityManager.getEntityByID(e.orbittingEntity) instanceof EntityStar) {
 				float radius = e.orbitRadius*mapRatio;
 				Point cP = translatePointToGame(e.getManager().getEntityByID(e.orbittingEntity).asPoint(), mapRatio);
 				Circle c = new Circle(cP.x, cP.y, radius);
@@ -59,14 +59,14 @@ public class GuiMap extends Gui {
 			}
 			
 			Point pt = translatePointToGame(e.asPoint(), mapRatio);
-			Image img = e instanceof EntityStar ? TextureHandler.getCustomImageByName("star").getScaledCopy(mapRatio) : e.model.getScaledCopy(mapRatio);
+			Image img = e instanceof EntityStar ? AssetManager.getCustomImageByName("star").getScaledCopy(mapRatio) : e.model.getScaledCopy(mapRatio);
 			img.setRotation((float) Math.toDegrees(e.velocity.rotation));
 			img.drawCentered(pt.x, pt.y);
 		}
 		
 		Input input = container.getInput();
 		Point p = translatePointToMap(new Point(input.getMouseX(), input.getMouseY()), mapRatio);
-		EntityBase entity = CoreGame.getInstance().entityManager.getEntityAt(p, true);
+		EntityBase entity = IngameState.getInstance().entityManager.getEntityAt(p, true);
 		if(entity != null && entity instanceof EntityPlanet) {
 			EntityPlanet planet = (EntityPlanet) entity;
 			drawInfoBoxAtMousePos(g, container, World.getPlanetInfo(planet).planetName);
@@ -78,7 +78,7 @@ public class GuiMap extends Gui {
 	@Override
 	public void onUpdate(int delta) {
 		super.onUpdate(delta);
-		Input input = CoreGame.getInstance().gContainer.getInput();
+		Input input = IngameState.getInstance().gContainer.getInput();
 		if(input.isKeyDown(GameConstants.MAP_ZOOMIN)) {
 			mapRatio = (float) Math.min(0.8f, mapRatio+0.1*delta/100f);
 		} else if(input.isKeyDown(GameConstants.MAP_ZOOMOUT)) {
@@ -86,13 +86,13 @@ public class GuiMap extends Gui {
 		}
 		
 		if(centerScreen.selected) {
-			centerX = (int) CoreGame.getInstance().entityManager.player.getVector().xCoord;
-			centerY = (int) CoreGame.getInstance().entityManager.player.getVector().yCoord;
+			centerX = (int) IngameState.getInstance().entityManager.player.getVector().xCoord;
+			centerY = (int) IngameState.getInstance().entityManager.player.getVector().yCoord;
 			mapRatio = Math.max(0.1f, 0.8f-0.0006f*getPlayerProximityToPlanet());
 		}
 		
 		if(input.isKeyPressed(Keyboard.KEY_C)) {
-			EntityPlayer player = CoreGame.getInstance().entityManager.player;
+			EntityPlayer player = IngameState.getInstance().entityManager.player;
 			Point pt = translatePointToMap(new Point(input.getAbsoluteMouseX(), input.getMouseY()), mapRatio);
 			player.getVector().setCoords(pt.x, pt.y);
 		}
@@ -105,8 +105,8 @@ public class GuiMap extends Gui {
 	
 	public int getPlayerProximityToPlanet() {
 		int distance = Integer.MAX_VALUE;
-		EntityPlayer player = CoreGame.getInstance().entityManager.player;
-		for(EntityBase e : CoreGame.getInstance().entityManager.getIngameEntities()) {
+		EntityPlayer player = IngameState.getInstance().entityManager.player;
+		for(EntityBase e : IngameState.getInstance().entityManager.getIngameEntities()) {
 			if(e instanceof EntityPlanet || e instanceof EntityStar) {
 				int d1 = getDistance((int)player.getVector().xCoord, (int)player.getVector().yCoord, (int)e.getVector().xCoord, (int)e.getVector().yCoord);
 				if(d1 < distance) {

@@ -2,12 +2,12 @@ package spacegame.entity.enemy;
 
 import java.util.*;
 
-import spacegame.*;
 import spacegame.ai.*;
 import spacegame.core.*;
 import spacegame.core.CollisionDetector.*;
 import spacegame.entity.*;
 import spacegame.entity.environment.*;
+import spacegame.gamestates.*;
 import spacegame.inventory.*;
 import spacegame.other.GameUtilities.*;
 
@@ -51,7 +51,7 @@ public class EntityEnemy extends EntityBase implements ICollisionDetection {
 
 	@Override
 	public void setModel() {
-		this.model = TextureHandler.getImageByName(TextureHandler.baseSheet, getModelName(), 0.3f);
+		this.model = AssetManager.getImageByName(AssetManager.baseSheet, getModelName(), 0.3f);
 	}
 
 	@Override
@@ -96,7 +96,9 @@ public class EntityEnemy extends EntityBase implements ICollisionDetection {
 	public void onDespawn() {
 		Random random = new Random();
 		if(random.nextFloat() < 0.3f) {
-			CoreGame.getInstance().world.dropItemIntoWorld(this, new ItemStack(Item.metal, random.nextInt(3)+1));
+			IngameState.getInstance().world.dropItemIntoWorld(this, new ItemStack(Item.metal, random.nextInt(3)+1));
+		} else if(random.nextFloat() < 0.1f) {
+			IngameState.getInstance().world.dropItemIntoWorld(this, new ItemStack(Item.rare_metal, random.nextInt(1)+1));
 		}
 	}
 	

@@ -5,10 +5,10 @@ import java.util.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
-import spacegame.*;
 import spacegame.ai.*;
 import spacegame.core.*;
 import spacegame.gameplay.*;
+import spacegame.gamestates.*;
 import spacegame.inventory.*;
 import spacegame.other.*;
 import spacegame.other.GameUtilities.Point;
@@ -53,8 +53,8 @@ public abstract class EntityBase implements Comparable<EntityBase> {
 		}
 		
 		if(currentHealth == 0 && maxHealth > 0) {
-			CoreGame.getInstance().entityManager.despawnEntity(this);
-			CoreGame.getInstance().world.createExplosionAt(asPoint(), (int) collisionShape.getBoundingCircleRadius());
+			IngameState.getInstance().entityManager.despawnEntity(this);
+			IngameState.getInstance().world.createExplosionAt(asPoint(), (int) collisionShape.getBoundingCircleRadius());
 			onDespawn();
 		}
 		
@@ -161,7 +161,7 @@ public abstract class EntityBase implements Comparable<EntityBase> {
 	}
 	
 	public void setCollisionShape() { 
-		collisionShape = TextureHandler.getPolygonForImage(getModelName());
+		collisionShape = AssetManager.getPolygonForImage(getModelName());
 		Transform t = Transform.createRotateTransform((float) Math.toRadians(getVector().rotation), getVector().xCoord, getVector().yCoord);
 		collisionShape = (Polygon) collisionShape.transform(t);
 		collisionShape.setCenterX(getVector().xCoord);
@@ -215,7 +215,7 @@ public abstract class EntityBase implements Comparable<EntityBase> {
 	}
 	
 	public EntityManager getManager() {
-		return CoreGame.getInstance().entityManager;
+		return IngameState.getInstance().entityManager;
 	}
 	
 	@Override

@@ -7,29 +7,29 @@ import spacegame.gui.*;
 
 public class GuiButton extends Gui {
 	
-	public Image baseImage = TextureHandler.uiImages.get("button_base.png");
-	public Image highlightImage = TextureHandler.uiImages.get("button_highlight.png");
-	public Image selectImage = TextureHandler.uiImages.get("button_pressed.png");
+	public Image baseImage = AssetManager.uiImages.get("button_base.png");
+	public Image highlightImage = AssetManager.uiImages.get("button_highlight.png");
+	public Image selectImage = AssetManager.uiImages.get("button_pressed.png");
 	public boolean highlighted;
 	public boolean selected;
 	public String buttonName;
 	
 	//draw button based on coordinates supplied.
 	public GuiButton(String name, int x, int y, float scale, Gui parent) {
-		super(TextureHandler.uiImages.get("button_base.png"), x, y, scale, parent);
-		baseImage = scaleImage(TextureHandler.uiImages.get("button_base.png"), scale);
-		highlightImage = scaleImage(TextureHandler.uiImages.get("button_highlight.png"), scale);
-		selectImage = scaleImage(TextureHandler.uiImages.get("button_pressed.png"), scale);
+		super(AssetManager.uiImages.get("button_base.png"), x, y, scale, parent);
+		baseImage = scaleImage(AssetManager.uiImages.get("button_base.png"), scale);
+		highlightImage = scaleImage(AssetManager.uiImages.get("button_highlight.png"), scale);
+		selectImage = scaleImage(AssetManager.uiImages.get("button_pressed.png"), scale);
 		
 		buttonName = name;
 	}
 	
 	//draw button based on parent gui center
 	public GuiButton(String name, float scale, Gui parent) {
-		super(TextureHandler.uiImages.get("button_base.png"), scale, parent);
-		baseImage = scaleImage(TextureHandler.uiImages.get("button_base.png"), scale);
-		highlightImage = scaleImage(TextureHandler.uiImages.get("button_highlight.png"), scale);
-		selectImage = scaleImage(TextureHandler.uiImages.get("button_pressed.png"), scale);
+		super(AssetManager.uiImages.get("button_base.png"), scale, parent);
+		baseImage = scaleImage(AssetManager.uiImages.get("button_base.png"), scale);
+		highlightImage = scaleImage(AssetManager.uiImages.get("button_highlight.png"), scale);
+		selectImage = scaleImage(AssetManager.uiImages.get("button_pressed.png"), scale);
 		
 		buttonName = name;
 	}

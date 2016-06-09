@@ -26,7 +26,7 @@ public class EntityStar extends EntityBase {
 
 	@Override
 	public void setModel() {
-		this.model = TextureHandler.getCustomImageByName(getModelName()).getScaledCopy(0);
+		this.model = AssetManager.getCustomImageByName(getModelName()).getScaledCopy(0);
 	}
 
 	@Override

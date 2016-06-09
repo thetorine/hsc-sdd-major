@@ -3,10 +3,10 @@ package spacegame.gui.screen;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
-import spacegame.*;
 import spacegame.core.*;
 import spacegame.entity.*;
 import spacegame.gameplay.*;
+import spacegame.gamestates.*;
 import spacegame.gui.*;
 import spacegame.gui.widgets.*;
 import spacegame.inventory.*;
@@ -27,9 +27,9 @@ public class GuiHUD extends Gui implements EventListener {
 	public Minimap gameMinimap = new Minimap();
 
 	public GuiHUD() {
-		super(TextureHandler.uiImages.get("bg_white.png"), 1f);
+		super(AssetManager.uiImages.get("bg_white.png"), 1f);
 		background.setAlpha(0);
-		player = CoreGame.getInstance().entityManager.player;
+		player = IngameState.getInstance().entityManager.player;
 		healthBar = new GuiProgressBar(0, 0, 0.09f, this);
 		healthBar.xStart = (GameConstants.GAME_WIDTH-healthBar.width)/2;
 		healthBar.yStart = (int) (0.83f*GameConstants.GAME_HEIGHT);
@@ -105,7 +105,7 @@ public class GuiHUD extends Gui implements EventListener {
 			}
 		}
 		
-		player = CoreGame.getInstance().entityManager.player;
+		player = IngameState.getInstance().entityManager.player;
 	}
 	
 	@Override
@@ -175,7 +175,7 @@ public class GuiHUD extends Gui implements EventListener {
 	public void mousedPressed(int button, int x, int y) {
 		super.mousedPressed(button, x, y);
 		Point pt = GameUtilities.translateGameToMap(new Point(x, y));
-		EntityBase b = CoreGame.getInstance().entityManager.getEntityAt(pt, false);
+		EntityBase b = IngameState.getInstance().entityManager.getEntityAt(pt, false);
 		if(b == null || b != lastEntityPressed) {
 			lastEntityPressed = b;
 		} else {

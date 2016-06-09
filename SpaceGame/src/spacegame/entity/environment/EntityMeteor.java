@@ -33,7 +33,7 @@ public class EntityMeteor extends EntityBase {
 
 	@Override
 	public void setModel() {
-		this.model = TextureHandler.getCustomImageByName("moon");
+		this.model = AssetManager.getCustomImageByName("moon");
 	}
 
 	@Override

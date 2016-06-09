@@ -5,8 +5,8 @@ import java.util.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
-import spacegame.*;
 import spacegame.core.*;
+import spacegame.gamestates.*;
 import spacegame.gui.*;
 import spacegame.gui.widgets.*;
 import spacegame.gui.widgets.EventListener;
@@ -23,12 +23,12 @@ public class GuiShopMenu extends Gui implements EventListener {
 	private HashMap<GuiInvSlot, ArrayList<GuiInvSlot>> invSlotsDrawn = new HashMap<>();
 
 	public GuiShopMenu() {
-		super(TextureHandler.uiImages.get("bg_green.png"), 0.4f);
+		super(AssetManager.uiImages.get("bg_green.png"), 0.4f);
 		setBackgroundTint();
 		GuiList list = new GuiList((int)(0.05f*width), (int)(0.15f*height), 0.32f, this);
 		ArrayList<ListData> data = new ArrayList<>();
 		for(Item item : Item.loadedItems) {
-			if(CoreGame.getInstance().craftingManager.hasRecipeForItem(item)) {
+			if(IngameState.getInstance().craftingManager.hasRecipeForItem(item)) {
 				data.add(new ListData(item.itemName));
 			}
 		}
@@ -77,7 +77,7 @@ public class GuiShopMenu extends Gui implements EventListener {
 				g.drawLine(x+0.5f*outputSlot.width, outputSlot.yStart + outputSlot.height + 0.2f*mainRect.getWidth(), x+totalWidth-0.5f*outputSlot.width, outputSlot.yStart + outputSlot.height + 0.2f*mainRect.getWidth());
 				
 				for(GuiInvSlot slot : inputSlots) {
-					if(!CoreGame.getInstance().entityManager.player.inventory.contains(slot.getHeldStack())) g.setColor(Color.red);
+					if(!IngameState.getInstance().entityManager.player.inventory.contains(slot.getHeldStack())) g.setColor(Color.red);
 					g.drawLine(slot.xStart+0.5f*outputSlot.width, outputSlot.yStart + outputSlot.height + 0.2f*mainRect.getWidth(), slot.xStart+0.5f*outputSlot.width, slot.yStart);
 				}
 			}
@@ -86,8 +86,8 @@ public class GuiShopMenu extends Gui implements EventListener {
 		
 		ListData data = menuList.pluggedData.get(menuList.selectedIndex);
 		ItemStack stack = new ItemStack(Item.getItemByName(data.displayName), 1);	
-		CraftingRecipe recipe = CoreGame.getInstance().craftingManager.getRecipeFor(stack.itemClass);
-		if(recipe.doesInvContainItems(CoreGame.getInstance().entityManager.player.inventory)) {
+		CraftingRecipe recipe = IngameState.getInstance().craftingManager.getRecipeFor(stack.itemClass);
+		if(recipe.doesInvContainItems(IngameState.getInstance().entityManager.player.inventory)) {
 			craftButton.buttonName = "Purchase";
 		} else {
 			craftButton.buttonName = "Not Enough Items";
@@ -127,7 +127,7 @@ public class GuiShopMenu extends Gui implements EventListener {
 				output.yStart = (int) (mainRect.getMinY() + 0.15f*mainRect.getHeight());
 				addGuiElement(output);
 				
-				CraftingRecipe recipe = CoreGame.getInstance().craftingManager.getRecipeFor(stack.itemClass);
+				CraftingRecipe recipe = IngameState.getInstance().craftingManager.getRecipeFor(stack.itemClass);
 				int totalWidth = (int) (output.width*recipe.recipeItems.size() + 0.1f*mainRect.getWidth()*(recipe.recipeItems.size()-1));
 				int x = (int) (mainRect.getMinX() - xStart + (mainRect.getWidth()-totalWidth)/2);
 				ArrayList<GuiInvSlot> inputSlots = new ArrayList<>();
@@ -153,8 +153,8 @@ public class GuiShopMenu extends Gui implements EventListener {
 				if(itemList != null) {
 					ListData data = itemList.pluggedData.get(itemList.selectedIndex);
  					ItemStack stack = new ItemStack(Item.getItemByName(data.displayName), 1);
-					CraftingRecipe recipe = CoreGame.getInstance().craftingManager.getRecipeFor(stack.itemClass);
-					Inventory inv = CoreGame.getInstance().entityManager.player.inventory;
+					CraftingRecipe recipe = IngameState.getInstance().craftingManager.getRecipeFor(stack.itemClass);
+					Inventory inv = IngameState.getInstance().entityManager.player.inventory;
 					if(recipe.doesInvContainItems(inv)) {
 						inv.addItemStack(stack);
 						recipe.consumeItems(inv);

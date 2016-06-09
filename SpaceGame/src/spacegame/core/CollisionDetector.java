@@ -5,13 +5,13 @@ import java.util.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
-import spacegame.*;
 import spacegame.entity.*;
+import spacegame.gamestates.*;
 import spacegame.other.GameUtilities.Point;
 
 public class CollisionDetector {
 	public static void update(int delta) {
-		ArrayList<EntityBase> ingameEntites = CoreGame.getInstance().entityManager.getIngameEntities();
+		ArrayList<EntityBase> ingameEntites = IngameState.getInstance().entityManager.getIngameEntities();
 		for(EntityBase entityCheck : ingameEntites) {
 			if(entityCheck instanceof ICollisionDetection) {
 				Polygon p1 = entityCheck.collisionShape;
@@ -62,9 +62,11 @@ public class CollisionDetector {
 				}
 			}
 		}
-		pointsList = stripSimilarPoints(sortPoints(pointsList));
-		for(Point pt : pointsList) {
-			p.addPoint(pt.x, pt.y);
+		if(pointsList.size() > 0) {
+			pointsList = stripSimilarPoints(sortPoints(pointsList));
+			for(Point pt : pointsList) {
+				p.addPoint(pt.x, pt.y);
+			}
 		}
 		return p;
 	}

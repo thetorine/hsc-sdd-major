@@ -2,7 +2,7 @@ package spacegame.gui;
 
 import java.util.*;
 
-import spacegame.*;
+import spacegame.gamestates.*;
 import spacegame.gui.screen.*;
 import spacegame.other.KeyboardListener.*;
 
@@ -23,13 +23,13 @@ public class GuiHierarchy implements IKeyboard {
 	public void openGui(Gui gui) {
 		if(currentGui == null) {
 			if(gui.shouldPauseGame()) {
-				CoreGame.getInstance().gamePaused = true;
+				IngameState.getInstance().gamePaused = true;
 			}
 			activateGui(gui);
 		} else if(currentGui.supportsHierachy()) {
 			activateGui(gui);
 			if(gui.shouldPauseGame()) {
-				CoreGame.getInstance().gamePaused = true;
+				IngameState.getInstance().gamePaused = true;
 			}
 		} else if(gui instanceof GuiPauseMenu) {
 			//universal close button (esc)
@@ -53,7 +53,7 @@ public class GuiHierarchy implements IKeyboard {
 		currentHeirarchy.clear();
 		currentGui = null;
 		activateGui(new GuiHUD());
-		CoreGame.getInstance().gamePaused = false;
+		IngameState.getInstance().gamePaused = false;
 	}
 	
 	public Gui loadPreviousGui() {
@@ -61,9 +61,9 @@ public class GuiHierarchy implements IKeyboard {
 			currentHeirarchy.remove(currentHeirarchy.size()-1);
 			currentGui = currentHeirarchy.get(currentHeirarchy.size()-1);
 			if(currentGui.shouldPauseGame()) {
-				CoreGame.getInstance().gamePaused = true;
+				IngameState.getInstance().gamePaused = true;
 			} else {
-				CoreGame.getInstance().gamePaused = false;
+				IngameState.getInstance().gamePaused = false;
 			}
 			return currentGui;
 		}

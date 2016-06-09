@@ -2,9 +2,9 @@ package spacegame.gui.screen;
 
 import org.newdawn.slick.*;
 
-import spacegame.*;
 import spacegame.core.*;
 import spacegame.entity.*;
+import spacegame.gamestates.*;
 import spacegame.gui.*;
 import spacegame.gui.widgets.*;
 import spacegame.inventory.*;
@@ -12,11 +12,11 @@ import spacegame.other.*;
 
 public class GuiInventory extends Gui implements EventListener {
 	
-	public Image inv_slot = TextureHandler.uiImages.get("inv_slot.png");
+	public Image inv_slot = AssetManager.uiImages.get("inv_slot.png");
 	public HeldItem currentHeldItem;
 
 	public GuiInventory() {
-		super(TextureHandler.uiImages.get("bg_yellow.png"), 0.33f);
+		super(AssetManager.uiImages.get("bg_yellow.png"), 0.33f);
 		setBackgroundTint();
 		
 		inv_slot = scaleImage(inv_slot, 0.1f);
@@ -36,7 +36,7 @@ public class GuiInventory extends Gui implements EventListener {
 		for(int i = 0; i < Inventory.WEAPON_COLUMNS; i++) {
 			int xStart = (i+1)*inv_slot.getWidth()+widthShift;
 			int yStart = (Inventory.COLUMNS-2)*inv_slot.getWidth()+heightShift;
-			GuiEquipSlot slot = new GuiEquipSlot(xStart, yStart, 0.1f, this, CoreGame.getInstance().entityManager.player, i);
+			GuiEquipSlot slot = new GuiEquipSlot(xStart, yStart, 0.1f, this, IngameState.getInstance().entityManager.player, i);
 			guiElements.add(slot);
 		}
 	}
@@ -90,7 +90,7 @@ public class GuiInventory extends Gui implements EventListener {
 	public void onStateChange(Gui element) {
 		if(element instanceof GuiInvSlot) {
 			GuiInvSlot slot = (GuiInvSlot) element;
-			EntityPlayer player = CoreGame.getInstance().entityManager.player;
+			EntityPlayer player = IngameState.getInstance().entityManager.player;
 			ItemStack slotItem = player.inventory.getItemStackAt(slot.row, slot.col);
 			
 			if(currentHeldItem != null) {

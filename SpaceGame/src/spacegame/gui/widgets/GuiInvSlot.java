@@ -2,9 +2,9 @@ package spacegame.gui.widgets;
 
 import org.newdawn.slick.*;
 
-import spacegame.*;
 import spacegame.core.*;
 import spacegame.entity.*;
+import spacegame.gamestates.*;
 import spacegame.gui.*;
 import spacegame.inventory.*;
 
@@ -16,12 +16,12 @@ public class GuiInvSlot extends Gui {
 	public boolean pickable = true;
 	public ItemStack placeHolder;
 	
-	public Image inv_slot = TextureHandler.uiImages.get("inv_slot.png");
-	public Image inv_slot_highlight = TextureHandler.uiImages.get("inv_slot_highlight.png");
-	public Image inv_slot_click = TextureHandler.uiImages.get("inv_slot_click.png");
+	public Image inv_slot = AssetManager.uiImages.get("inv_slot.png");
+	public Image inv_slot_highlight = AssetManager.uiImages.get("inv_slot_highlight.png");
+	public Image inv_slot_click = AssetManager.uiImages.get("inv_slot_click.png");
 
 	public GuiInvSlot(int x, int y, float scale, Gui parent, int row, int col) {
-		super(TextureHandler.uiImages.get("inv_slot.png"), x, y, scale, parent);
+		super(AssetManager.uiImages.get("inv_slot.png"), x, y, scale, parent);
 		inv_slot = scaleImage(inv_slot, scale);
 		inv_slot_highlight = scaleImage(inv_slot_highlight, scale);
 		inv_slot_click = scaleImage(inv_slot_click, scale);
@@ -42,7 +42,7 @@ public class GuiInvSlot extends Gui {
 			g.drawImage(inv_slot, xStart, yStart);
 		}
 		
-		EntityPlayer player = CoreGame.getInstance().entityManager.player;
+		EntityPlayer player = IngameState.getInstance().entityManager.player;
 		ItemStack slotItem = placeHolder == null ? player.inventory.getItemStackAt(row, col) : placeHolder;
 		if(slotItem != null) {
 			Image item = slotItem.itemClass.getResource();
@@ -90,7 +90,7 @@ public class GuiInvSlot extends Gui {
 	}
 	
 	public ItemStack getHeldStack() {
-		EntityPlayer player = CoreGame.getInstance().entityManager.player;
+		EntityPlayer player = IngameState.getInstance().entityManager.player;
 		return placeHolder == null ? player.inventory.getItemStackAt(row, col) : placeHolder;
 	}
 }

@@ -1,8 +1,8 @@
 package spacegame.inventory;
 
-import spacegame.*;
 import spacegame.entity.*;
 import spacegame.entity.weapon.*;
+import spacegame.gamestates.*;
 
 public class ItemWeapon extends Item {
 	public int baseDamage;
@@ -22,14 +22,14 @@ public class ItemWeapon extends Item {
 					if((boolean) data[2]) {
 						doubleBlaster(entity, (boolean) data[1]);
 					} else {
-						CoreGame.getInstance().entityManager.spawnEntity(new EntityBlaster(((EntityBase) data[0]).id, (boolean) data[1]));
+						IngameState.getInstance().entityManager.spawnEntity(new EntityBlaster(((EntityBase) data[0]).id, (boolean) data[1]));
 					}
 					entity.inventory.weaponCD = this.maxTimer;
 					break;
 				}
 				case "Missile Launcher": {
 					EntityMissile m = new EntityMissile(((EntityBase) data[0]).id);
-					CoreGame.getInstance().entityManager.spawnEntity(m);
+					IngameState.getInstance().entityManager.spawnEntity(m);
 					entity.inventory.weaponCD = this.maxTimer;
 					break;
 				}
@@ -40,13 +40,15 @@ public class ItemWeapon extends Item {
 	
 	public void doubleBlaster(EntityBase shooter, boolean invertShot) {
 		EntityBlaster blaster1 = new EntityBlaster(shooter.id, invertShot).setCoords(false);
-		blaster1.getVector().xCoord = (float) (shooter.getVector().xCoord + 10*Math.sin(shooter.getVector().rotation-90))*(invertShot ? -1 : 1);
-		blaster1.getVector().yCoord = (float) (shooter.getVector().yCoord - 10*Math.cos(shooter.getVector().rotation-90))*(invertShot ? -1 : 1);
+		blaster1.getVector().xCoord = (float) (shooter.getVector().xCoord + 10*Math.sin(shooter.getVector().rotation-Math.PI/2)*(invertShot ? -1 : 1));
+		blaster1.getVector().yCoord = (float) (shooter.getVector().yCoord - 10*Math.cos(shooter.getVector().rotation-Math.PI/2)*(invertShot ? -1 : 1));
 		EntityBlaster blaster2 = new EntityBlaster(shooter.id, invertShot).setCoords(false);
-		blaster2.getVector().xCoord = (float) (shooter.getVector().xCoord + 10*Math.sin(shooter.getVector().rotation+90))*(invertShot ? -1 : 1);
-		blaster2.getVector().yCoord = (float) (shooter.getVector().yCoord - 10*Math.cos(shooter.getVector().rotation+90))*(invertShot ? -1 : 1);
+		blaster2.getVector().xCoord = (float) (shooter.getVector().xCoord + 10*Math.sin(shooter.getVector().rotation+Math.PI/2)*(invertShot ? -1 : 1));
+		blaster2.getVector().yCoord = (float) (shooter.getVector().yCoord - 10*Math.cos(shooter.getVector().rotation+Math.PI/2)*(invertShot ? -1 : 1));
 		shooter.getManager().spawnEntity(blaster1);
 		shooter.getManager().spawnEntity(blaster2);
+		
+		System.out.println(blaster1.getVector().xCoord);
 	}
 	
 	public void onImpactWith(EntityBase e) {

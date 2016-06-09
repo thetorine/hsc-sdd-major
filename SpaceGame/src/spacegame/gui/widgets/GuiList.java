@@ -5,8 +5,8 @@ import java.util.*;
 import org.lwjgl.input.*;
 import org.newdawn.slick.*;
 
-import spacegame.*;
 import spacegame.core.*;
+import spacegame.gamestates.*;
 import spacegame.gui.*;
 
 public class GuiList extends Gui {
@@ -15,11 +15,11 @@ public class GuiList extends Gui {
 	public float currentDrawStart;
 	public int selectedIndex;
 	
-	public Image scrollBar = TextureHandler.uiImages.get("scroll_bar.png");
-	public Image scrollBar_clicked = TextureHandler.uiImages.get("scroll_bar_clicked.png");
-	public Image element = TextureHandler.uiImages.get("element.png");
-	public Image element_highlight = TextureHandler.uiImages.get("element_highlight.png");
-	public Image element_select = TextureHandler.uiImages.get("element_select.png");
+	public Image scrollBar = AssetManager.uiImages.get("scroll_bar.png");
+	public Image scrollBar_clicked = AssetManager.uiImages.get("scroll_bar_clicked.png");
+	public Image element = AssetManager.uiImages.get("element.png");
+	public Image element_highlight = AssetManager.uiImages.get("element_highlight.png");
+	public Image element_select = AssetManager.uiImages.get("element_select.png");
 	
 	//drawing start/end for elements
 	public int drawStart = (int) (yStart+0.05f*height);
@@ -33,7 +33,7 @@ public class GuiList extends Gui {
 
 	public GuiList(int x, int y, float scale, Gui parent) {
 		//TODO add null background images
-		super(TextureHandler.uiImages.get("panel.png"), x, y, scale, parent);
+		super(AssetManager.uiImages.get("panel.png"), x, y, scale, parent);
 		scrollBar = scaleImage(scrollBar, scale*0.2f);
 		scrollBar_clicked = scaleImage(scrollBar_clicked, scale*0.2f);
 		element = scaleImage(element, scale*0.25f);
@@ -50,7 +50,7 @@ public class GuiList extends Gui {
 	@Override
 	public void onUpdate(int delta) {
 		super.onUpdate(delta);
-		GameContainer container = CoreGame.getInstance().gContainer;
+		GameContainer container = IngameState.getInstance().gContainer;
 		if(container.getInput().isKeyDown(Keyboard.KEY_UP)) {
 			currentDrawStart -= 50*delta/1000f;
 		} else if(container.getInput().isKeyDown(Keyboard.KEY_DOWN)) {
@@ -143,7 +143,7 @@ public class GuiList extends Gui {
 	
 	public Image getElementImageForRender(int dataIndex, int xStart, int yStart) {
 		if(dataIndex == selectedIndex) return element_select;
-		GameContainer con = CoreGame.getInstance().gContainer;
+		GameContainer con = IngameState.getInstance().gContainer;
 		int xEnd = xStart + element.getWidth();
 		int yEnd = yStart + element.getHeight();
 		int mouseX = con.getInput().getAbsoluteMouseX();

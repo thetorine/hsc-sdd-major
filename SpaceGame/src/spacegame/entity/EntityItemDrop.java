@@ -13,6 +13,8 @@ public class EntityItemDrop extends EntityBase implements ICollisionDetection {
 	
 	@Override
 	public void update(int delta) {
+		//makes the item grow and decline in size according to sine. 
+		//since sine is used the growth and decline is not linear, so it looks natural. 
 		int timer = (int) (System.currentTimeMillis()%1000);
 		double coefficient = 2*Math.PI/1000;
 		double sin = 0.15d*Math.sin(coefficient*timer);

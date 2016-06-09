@@ -22,7 +22,6 @@ public class VelocityVector {
 		velocityLength = calculateVelocityLength();
 	}
 	
-	//TODO get velocity rotation and decelerate from that, probs using atan(y, x) - pi/2 + pi (atan(y, x) + pi/2)
 	public void decelerate(float power, float delta) {
 		if(velocityLength > 0) {
 			xVelocity += power*Math.sin(getVelocityDirection()+Math.PI)*delta;

@@ -2,10 +2,10 @@ package spacegame.ai;
 
 import java.util.*;
 
-import spacegame.*;
 import spacegame.core.*;
 import spacegame.entity.*;
 import spacegame.entity.environment.*;
+import spacegame.gamestates.*;
 import spacegame.inventory.*;
 import spacegame.other.*;
 import spacegame.other.GameUtilities.*;
@@ -28,7 +28,7 @@ public class AIProtectBase extends AIEntity {
 	@Override
 	public void update(int delta) {
 		EntityBase protectingBase = entity.getManager().getEntityByID(baseEntity);
-		EntityPlayer p = CoreGame.getInstance().entityManager.player;
+		EntityPlayer p = IngameState.getInstance().entityManager.player;
 		double distanceToBase = getDistanceToPoint(p.asPoint(), protectingBase.asPoint());
 		
 		//strength determines how much health and dmg an entity does

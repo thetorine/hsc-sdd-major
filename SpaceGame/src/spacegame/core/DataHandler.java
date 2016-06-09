@@ -3,7 +3,7 @@ package spacegame.core;
 import java.io.*;
 import java.util.*;
 
-import spacegame.*;
+import spacegame.gamestates.*;
 
 public class DataHandler {
 	public ArrayList<ISavable> interfaces;
@@ -11,7 +11,7 @@ public class DataHandler {
 	
 	public DataHandler() {
 		interfaces = new ArrayList<>();
-		CoreGame.getInstance().firstLoad = !(new File(new File(baseDir).getParentFile(), "save").exists());
+		IngameState.getInstance().firstLoad = !(new File(new File(baseDir).getParentFile(), "save").exists());
 	}
 	
 	public void saveInterfaceData() throws IOException {

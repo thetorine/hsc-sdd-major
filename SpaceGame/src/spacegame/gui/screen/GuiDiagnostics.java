@@ -11,7 +11,7 @@ public class GuiDiagnostics extends Gui {
 	public int maxMemUsed;
 
 	public GuiDiagnostics() {
-		super(TextureHandler.uiImages.get("bg_white.png"), 0.52f);
+		super(AssetManager.uiImages.get("bg_white.png"), 0.52f);
 		background.setAlpha(0);
 	}
 	

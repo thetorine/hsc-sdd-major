@@ -11,7 +11,7 @@ import org.w3c.dom.*;
 
 import spacegame.other.*;
 
-public class TextureHandler {
+public class AssetManager {
 	
 	public String baseResource = GameConstants.RESOURCE + "textures/spritesheet/base.png";
 	
@@ -22,14 +22,13 @@ public class TextureHandler {
 	
 	public static HashMap<String, Image> uiImages = new HashMap<>();
 	
-	public TextureHandler() {
+	public AssetManager() {
 		baseSheet = registerSpriteSheet(baseSheet, baseResource);
 		
-		TextureHandler.registerCustomImage("missile", "weapons/missile.png", 1f, true);
-		TextureHandler.registerCustomImage("bg", "environment/bg/bg.png", 1f, false);
-		TextureHandler.registerCustomImage("star", "environment/planets/star.png", 0.6f, true);
-		TextureHandler.registerCustomImage("moon", "environment/planets/moon.png", 0.7f, true);
-		TextureHandler.registerCustomImage("manik", "extra/manik.png", 1f, true);
+		AssetManager.registerCustomImage("missile", "weapons/missile.png", 1f, true);
+		AssetManager.registerCustomImage("bg", "environment/bg/bg.png", 1f, false);
+		AssetManager.registerCustomImage("star", "environment/planets/star.png", 0.6f, true);
+		AssetManager.registerCustomImage("moon", "environment/planets/moon.png", 0.7f, true);
 		
 		loadUIImages();
 	}

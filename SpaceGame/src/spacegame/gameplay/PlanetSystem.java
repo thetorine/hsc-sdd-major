@@ -4,11 +4,11 @@ import java.util.*;
 
 import org.newdawn.slick.*;
 
-import spacegame.*;
 import spacegame.core.*;
 import spacegame.entity.*;
 import spacegame.entity.enemy.*;
 import spacegame.entity.environment.*;
+import spacegame.gamestates.*;
 import spacegame.inventory.*;
 import spacegame.other.GameUtilities.*;
 
@@ -24,7 +24,7 @@ public class PlanetSystem {
 		systemStar.setID();
 		systemStar.getVector().setCoords(centerX, centerY);
 		this.systemEntities.add(systemStar);
-		CoreGame.getInstance().world.createStarAt(systemStar.asPoint());
+		IngameState.getInstance().world.createStarAt(systemStar.asPoint());
 	}
 	
 	public void addEntity(EntityBase b, float x, float y, boolean orbit) {
@@ -42,14 +42,14 @@ public class PlanetSystem {
 		this.addEntity(planet, xCoord, yCoord, true);
 		
 		//TODO just a test for entities orbiting entities that are orbiting. 
-		if(CoreGame.getInstance().firstLoad) {
+		if(IngameState.getInstance().firstLoad) {
 			EntityMeteor meteor = new EntityMeteor();
 			float mxCoord = (float) (xCoord + distance/5*Math.sin(Math.toRadians(angle)));
 			float myCoord = (float) (yCoord - distance/5*Math.cos(Math.toRadians(angle)));
 			meteor.getVector().setCoords(mxCoord, myCoord);
 			meteor.setOrbit(mxCoord, myCoord, getInitialRotation(new Point(mxCoord, myCoord), new Point(xCoord, yCoord)), planet);
 			
-			CoreGame.getInstance().entityManager.spawnEntity(meteor);
+			IngameState.getInstance().entityManager.spawnEntity(meteor);
 		}
 	}
 	
@@ -62,13 +62,13 @@ public class PlanetSystem {
 	
 	public void spawnSystem() {
 		for(EntityBase b : systemEntities) {
-			CoreGame.getInstance().entityManager.spawnEntity(b);
+			IngameState.getInstance().entityManager.spawnEntity(b);
 			if(b instanceof EntityPlanet) {
 				EntitySpawner spawner = new EntitySpawner(b.id);
 				spawner.inventory.addItemStack(new ItemStack(Item.goldArmor, 1));
 				spawner.getVector().setCoords(b.getVector().xCoord, b.getVector().yCoord);
 				spawner.strength = World.getPlanetInfo((EntityPlanet) b).difficulty;
-				CoreGame.getInstance().entityManager.spawnEntity(spawner);
+				IngameState.getInstance().entityManager.spawnEntity(spawner);
 			}
 		}
 	}

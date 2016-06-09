@@ -2,11 +2,11 @@ package spacegame.entity.weapon;
 
 import java.util.*;
 
-import spacegame.*;
 import spacegame.core.*;
 import spacegame.core.CollisionDetector.*;
 import spacegame.entity.*;
 import spacegame.entity.enemy.*;
+import spacegame.gamestates.*;
 import spacegame.inventory.*;
 
 public class EntityBlaster extends EntityBase implements ICollisionDetection {
@@ -29,7 +29,7 @@ public class EntityBlaster extends EntityBase implements ICollisionDetection {
 		getVector().setVelocityWithDirection(getMaxVelocity(), (float) (getVector().rotation + (invertShot ? Math.PI : 0)));
 		timeActive += delta;
 		if(timeActive > 500) {
-			CoreGame.getInstance().entityManager.despawnEntity(this);
+			IngameState.getInstance().entityManager.despawnEntity(this);
 		}
 	}
 
@@ -58,8 +58,8 @@ public class EntityBlaster extends EntityBase implements ICollisionDetection {
 			if(shootingEntity instanceof EntityEnemy && collisionWith instanceof EntityEnemy) {
 				//dont do anything
 			} else {
-				CoreGame.getInstance().entityManager.despawnEntity(this);
-				CoreGame.getInstance().world.createImpactAt(asPoint());
+				IngameState.getInstance().entityManager.despawnEntity(this);
+				IngameState.getInstance().world.createImpactAt(asPoint());
 				weapon.onImpactWith(collisionWith);
 			}
 		}
@@ -93,7 +93,7 @@ public class EntityBlaster extends EntityBase implements ICollisionDetection {
 
 	@Override
 	public void setModel() {
-		this.model = TextureHandler.getImageByName(TextureHandler.baseSheet, getModelName(), 0.4f);
+		this.model = AssetManager.getImageByName(AssetManager.baseSheet, getModelName(), 0.4f);
 	}
 
 	@Override

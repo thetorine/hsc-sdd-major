@@ -4,8 +4,8 @@ import org.lwjgl.input.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
-import spacegame.*;
 import spacegame.core.*;
+import spacegame.gamestates.*;
 import spacegame.gui.*;
 import spacegame.other.*;
 
@@ -17,7 +17,7 @@ public class GuiCmdOverlay extends Gui {
 	public int timeSinceLastPress;
 	
 	public GuiCmdOverlay() {
-		super(TextureHandler.uiImages.get("bar_base.png"), 0);
+		super(AssetManager.uiImages.get("bar_base.png"), 0);
 		setBackgroundTint();
 		background.setAlpha(0);
 	}
@@ -27,7 +27,7 @@ public class GuiCmdOverlay extends Gui {
 		super.onUpdate(delta);
 		initialDelay++;
 		
-		Input input = CoreGame.getInstance().gContainer.getInput();
+		Input input = IngameState.getInstance().gContainer.getInput();
 		input.enableKeyRepeat();
 		
 		int keyCode = Keyboard.getEventKey();

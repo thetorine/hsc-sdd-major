@@ -8,13 +8,13 @@ import spacegame.other.*;
 
 public class GuiProgressBar extends Gui {
 	
-	public Image percentBar = TextureHandler.uiImages.get("element_select.png");
+	public Image percentBar = AssetManager.uiImages.get("element_select.png");
 	public float percentageFinished;
 	public Color colorFilter;
 	public String text = "";
 
 	public GuiProgressBar(int x, int y, float scale, Gui parent) {
-		super(TextureHandler.uiImages.get("bar_base.png"), x, y, scale, parent);
+		super(AssetManager.uiImages.get("bar_base.png"), x, y, scale, parent);
 		percentBar = scaleImage(percentBar, scale);
 	}
 	

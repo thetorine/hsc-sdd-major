@@ -1,9 +1,8 @@
-package spacegame;
-
-import java.io.*;
+package spacegame.gamestates;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.*;
+import org.newdawn.slick.state.*;
 
 import spacegame.core.*;
 import spacegame.entity.*;
@@ -14,27 +13,11 @@ import spacegame.gui.screen.*;
 import spacegame.inventory.*;
 import spacegame.other.*;
 
-public class CoreGame extends BasicGame {
-	private static CoreGame instance;
+public class IngameState extends BasicGameState {
+	private static IngameState instance;
 	
-	public static CoreGame getInstance() {
+	public static IngameState getInstance() {
 		return instance;
-	}
-	
-	public static void main(String[] args) {
-		instance = new CoreGame("[insert name here]");
-		try {
-			float scale = GameConstants.WINDOW_SCALE;
-			AppGameContainer container = new AppGameContainer(instance);
-			GameConstants.GAME_WIDTH = (int) (container.getScreenWidth()/scale);
-			GameConstants.GAME_HEIGHT = (int) (container.getScreenHeight()/scale);
-			container.setDisplayMode(GameConstants.GAME_WIDTH, GameConstants.GAME_HEIGHT, scale == 1f);
-			container.setTargetFrameRate(120); //screen tearing occurs with this but minimizes CPU usage
-			container.setShowFPS(true);
-			container.start();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public EntityManager entityManager;
@@ -43,34 +26,44 @@ public class CoreGame extends BasicGame {
 	public GameContainer gContainer;
 	public KeyboardListener keyboardListener;
 	public GameRenderer renderer;
-	public TextureHandler textureManager;
+	public AssetManager textureManager;
 	public World world;
 	public GuiHierarchy guiHierarchy;
 	public CraftingManager craftingManager;
 	
 	public boolean firstLoad;
-	public String fontLocation = GameConstants.RESOURCE + "font/kenvector_future_thin.ttf";
+	public static String FONT_LOCATION = GameConstants.RESOURCE + "font/kenvector_future_thin.ttf";
 	
 	public boolean gamePaused;
 	
-	public CoreGame(String title) {
-		super(title);
+	public IngameState() {
+		IngameState.instance = this;
+		loadTextures();
+		loadFonts();
 	}
-
-	@Override
-	public boolean closeRequested() {
-		try {
-			dataHandler.saveInterfaceData();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return super.closeRequested();
+	
+	public void loadTextures() {
+		textureManager = new AssetManager();
 	}
 	
 	@SuppressWarnings("unchecked")
+	public void loadFonts() {
+		int arrayLength = GameConstants.GAME_FONT.length;
+		try {
+			for(int i = 0; i < arrayLength; i++) {
+				UnicodeFont font = new UnicodeFont(FONT_LOCATION, (int) ((15+10*i)/GameConstants.WINDOW_SCALE), false, false);
+				font.addAsciiGlyphs();
+				font.getEffects().add(new ColorEffect());
+				font.loadGlyphs();
+				GameConstants.GAME_FONT[i] = font;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
-	public void init(GameContainer container) throws SlickException {
-		textureManager = new TextureHandler();
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		dataHandler = new DataHandler();
 		world = new World();
 		entityManager = new EntityManager();
@@ -84,20 +77,8 @@ public class CoreGame extends BasicGame {
 		world.onGameCreation();
 		
 		KeyboardListener.registerListener(guiHierarchy);
-		try {
-			int arrayLength = GameConstants.GAME_FONT.length;
-			for(int i = 0; i < arrayLength; i++) {
-				UnicodeFont font = new UnicodeFont(fontLocation, (int) ((15+10*i)/GameConstants.WINDOW_SCALE*1.1f), false, false);
-				font.addAsciiGlyphs();
-				font.getEffects().add(new ColorEffect());
-				font.loadGlyphs();
-				GameConstants.GAME_FONT[i] = font;
-			}
-			for(EntityBase b : entityManager.initialSpawn) {
-				entityManager.spawnEntity(b);
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
+		for(EntityBase b : entityManager.initialSpawn) {
+			entityManager.spawnEntity(b);
 		}
 		
 		guiHierarchy.openGuiOnKeyPress(new GuiPauseMenu(), GameConstants.PAUSE_MENU);
@@ -146,7 +127,7 @@ public class CoreGame extends BasicGame {
 	}
 
 	@Override
-	public void render(GameContainer container, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.setAntiAlias(true);
 		g.setFont(GameConstants.GAME_FONT[0]);
 		renderer.render(container, g);
@@ -156,7 +137,7 @@ public class CoreGame extends BasicGame {
 	}
 	
 	@Override
-	public void update(GameContainer container, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		gContainer = container;
 		if(!gamePaused) {
 			entityManager.onUpdate(delta);
@@ -177,5 +158,10 @@ public class CoreGame extends BasicGame {
 		}
 		
 		keyboardListener.onUpdate(delta);
+	}
+
+	@Override
+	public int getID() {
+		return 1;
 	}
 }

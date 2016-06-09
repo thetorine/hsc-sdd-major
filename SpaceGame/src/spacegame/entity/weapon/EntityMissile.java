@@ -2,11 +2,11 @@ package spacegame.entity.weapon;
 
 import java.util.*;
 
-import spacegame.*;
 import spacegame.core.*;
 import spacegame.core.CollisionDetector.*;
 import spacegame.entity.*;
 import spacegame.entity.enemy.*;
+import spacegame.gamestates.*;
 import spacegame.inventory.*;
 import spacegame.other.*;
 import spacegame.other.GameUtilities.*;
@@ -84,8 +84,8 @@ public class EntityMissile extends EntityBase implements ICollisionDetection {
 	@Override
 	public void onCollision(EntityBase collisionWith) {
 		if(collisionWith.id == targetEntity) {
-			CoreGame.getInstance().entityManager.despawnEntity(this);
-			CoreGame.getInstance().world.createImpactAt(asPoint());
+			IngameState.getInstance().entityManager.despawnEntity(this);
+			IngameState.getInstance().world.createImpactAt(asPoint());
 			weapon.onImpactWith(collisionWith);
 		}
 	}
@@ -123,7 +123,7 @@ public class EntityMissile extends EntityBase implements ICollisionDetection {
 
 	@Override
 	public void setModel() {
-		this.model = TextureHandler.getCustomImageByName(getModelName());
+		this.model = AssetManager.getCustomImageByName(getModelName());
 	}
 
 	@Override

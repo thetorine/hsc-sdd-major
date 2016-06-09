@@ -2,6 +2,8 @@ package spacegame.gameplay;
 
 import java.util.*;
 
+import spacegame.entity.*;
+import spacegame.gamestates.*;
 import spacegame.inventory.*;
 
 public class ExplorablePlanet {
@@ -30,6 +32,7 @@ public class ExplorablePlanet {
 		public ArrayList<ItemStack> exploreYield = new ArrayList<>();
 		
 		public boolean completed;
+		public boolean givenItems;
 		
 		public PlanetRegion(String name, String desc, int exploreTime, ItemStack... stack) {
 			this.locationName = name;
@@ -49,6 +52,14 @@ public class ExplorablePlanet {
 				currentExplore = Math.max(currentExplore-delta, 0);
 			} else if (currentExplore == 0) {
 				completed = true;
+			}
+			
+			if(completed && !givenItems) {
+				EntityPlayer player = IngameState.getInstance().entityManager.player;
+				for(ItemStack stack: exploreYield) {
+					player.inventory.addItemStack(stack);
+				}
+				givenItems = true;
 			}
 		}
 		

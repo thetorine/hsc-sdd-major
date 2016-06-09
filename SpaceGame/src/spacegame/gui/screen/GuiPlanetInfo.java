@@ -5,11 +5,11 @@ import java.util.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
-import spacegame.*;
 import spacegame.core.*;
 import spacegame.entity.environment.*;
 import spacegame.gameplay.*;
 import spacegame.gameplay.ExplorablePlanet.*;
+import spacegame.gamestates.*;
 import spacegame.gui.*;
 import spacegame.gui.widgets.*;
 import spacegame.gui.widgets.EventListener;
@@ -22,7 +22,7 @@ public class GuiPlanetInfo extends Gui implements EventListener {
 	public int slotWidth;
 
 	public GuiPlanetInfo() {
-		super(TextureHandler.uiImages.get("bg_green.png"), 0.4f);
+		super(AssetManager.uiImages.get("bg_green.png"), 0.4f);
 		setBackgroundTint();
 	}
 	
@@ -123,7 +123,7 @@ public class GuiPlanetInfo extends Gui implements EventListener {
 	@Override
 	public void onOpen() {
 		super.onOpen();
-		EntityPlanet planet = (EntityPlanet) CoreGame.getInstance().entityManager.getEntityAt(CoreGame.getInstance().entityManager.player.asPoint(), true);
+		EntityPlanet planet = (EntityPlanet) IngameState.getInstance().entityManager.getEntityAt(IngameState.getInstance().entityManager.player.asPoint(), true);
 		if(planet != null) {
 			planetInfo = World.getPlanetInfo(planet);
 			GuiList list = new GuiList((int)(0.05f*width), (int)(0.15f*height), 0.32f, this);
@@ -140,7 +140,7 @@ public class GuiPlanetInfo extends Gui implements EventListener {
 			guiElements.add(exploreButton);
 			onStateChange(list);
 		} else {
-			CoreGame.getInstance().guiHierarchy.loadPreviousGui();
+			IngameState.getInstance().guiHierarchy.loadPreviousGui();
 		}
 	}
 	

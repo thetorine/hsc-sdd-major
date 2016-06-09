@@ -2,10 +2,10 @@ package spacegame.entity.enemy;
 
 import java.util.*;
 
-import spacegame.*;
 import spacegame.core.*;
 import spacegame.entity.*;
 import spacegame.entity.environment.*;
+import spacegame.gamestates.*;
 import spacegame.inventory.*;
 
 public class EntitySpawner extends EntityEnemy {
@@ -22,7 +22,7 @@ public class EntitySpawner extends EntityEnemy {
 	public void update(int delta) {
 		super.update(delta);
 		if(strength == 0) {
-			EntityBase base = CoreGame.getInstance().entityManager.getEntityByID(protectingEntity);
+			EntityBase base = IngameState.getInstance().entityManager.getEntityByID(protectingEntity);
 			strength = (base instanceof EntityPlanet) ? World.getPlanetInfo((EntityPlanet) base).difficulty : 1;
 		}
 		spawnDelay += delta;
@@ -49,7 +49,7 @@ public class EntitySpawner extends EntityEnemy {
 	
 	@Override
 	public void onDespawn() {
-		EntityBase base = CoreGame.getInstance().entityManager.getEntityByID(protectingEntity);
+		EntityBase base = IngameState.getInstance().entityManager.getEntityByID(protectingEntity);
 		if(base instanceof EntityPlanet) {
 			World.getPlanetInfo((EntityPlanet) base).liberated = true;
 		}
@@ -72,7 +72,7 @@ public class EntitySpawner extends EntityEnemy {
 
 	@Override
 	public void setModel() {
-		this.model = TextureHandler.getImageByName(TextureHandler.baseSheet, getModelName(), 0.8f);
+		this.model = AssetManager.getImageByName(AssetManager.baseSheet, getModelName(), 0.8f);
 		attackModifier = 2;
 	}
 

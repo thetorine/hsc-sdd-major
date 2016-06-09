@@ -54,7 +54,7 @@ public class EntityPlanet extends EntityBase {
 
 	@Override
 	public void onLoad() {
-		this.planetResource = TextureHandler.getCustomImageByName(resourceName);		
+		this.planetResource = AssetManager.getCustomImageByName(resourceName);		
 	}
 	
 	@Override

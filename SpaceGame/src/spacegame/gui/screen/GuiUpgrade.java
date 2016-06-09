@@ -5,11 +5,11 @@ import java.util.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
-import spacegame.*;
 import spacegame.core.*;
 import spacegame.entity.*;
 import spacegame.gameplay.*;
 import spacegame.gameplay.UpgradeManager.*;
+import spacegame.gamestates.*;
 import spacegame.gui.*;
 import spacegame.gui.widgets.*;
 import spacegame.gui.widgets.EventListener;
@@ -22,11 +22,11 @@ public class GuiUpgrade extends Gui implements EventListener {
 	private GuiButton upgradeAbility;
 
 	public GuiUpgrade() {
-		super(TextureHandler.uiImages.get("bg_green.png"), 0.4f);
+		super(AssetManager.uiImages.get("bg_green.png"), 0.4f);
 		setBackgroundTint();
 		guiList = new GuiList((int)(0.05f*width), (int)(0.15f*height), 0.32f, this);
 		ArrayList<ListData> data = new ArrayList<>();
-		EntityPlayer player = CoreGame.getInstance().entityManager.player;
+		EntityPlayer player = IngameState.getInstance().entityManager.player;
 		for(Upgrade upgrade : player.upgradeManager.availableUpgrades) {
 			data.add(new ListData(upgrade.name));
 		}
@@ -63,7 +63,7 @@ public class GuiUpgrade extends Gui implements EventListener {
 		int maxWidth = (int) (infoRect.getWidth() - 2*0.05*width);
 		int lastHeight = (int) (infoRect.getMinY()+0.05*height);
 		
-		EntityPlayer player = CoreGame.getInstance().entityManager.player;
+		EntityPlayer player = IngameState.getInstance().entityManager.player;
 		UpgradeManager manager = player.upgradeManager;
 		Upgrade upgrade = manager.getUpgrade(guiList.pluggedData.get(guiList.selectedIndex).displayName);
 		
@@ -87,7 +87,7 @@ public class GuiUpgrade extends Gui implements EventListener {
 		if (element instanceof GuiButton) {
 			GuiButton button = (GuiButton) element;
 			if(button.buttonName.equals(upgradeAbility.buttonName)) {
-				EntityPlayer player = CoreGame.getInstance().entityManager.player;
+				EntityPlayer player = IngameState.getInstance().entityManager.player;
 				UpgradeManager manager = player.upgradeManager;
 				Upgrade upgrade = manager.getUpgrade(guiList.pluggedData.get(guiList.selectedIndex).displayName);
 				upgrade.upgrade();
@@ -99,7 +99,7 @@ public class GuiUpgrade extends Gui implements EventListener {
 			}
 		} else if (element instanceof GuiList) {
 			GuiList list = (GuiList) element;
-			EntityPlayer player = CoreGame.getInstance().entityManager.player;
+			EntityPlayer player = IngameState.getInstance().entityManager.player;
 			UpgradeManager manager = player.upgradeManager;
 			Upgrade upgrade = manager.getUpgrade(list.pluggedData.get(list.selectedIndex).displayName);
 			if(upgrade.level == upgrade.maxLevel) {

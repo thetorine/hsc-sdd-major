@@ -3,24 +3,24 @@ package spacegame.gui;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
-import spacegame.*;
 import spacegame.core.*;
 import spacegame.entity.*;
 import spacegame.entity.environment.*;
+import spacegame.gamestates.*;
 import spacegame.gui.screen.*;
 import spacegame.other.*;
 import spacegame.other.GameUtilities.Point;
 
 public class GameRenderer {
 	
-	private CoreGame game = CoreGame.getInstance();
+	private IngameState game = IngameState.getInstance();
 	private int gameWidth = GameConstants.GAME_WIDTH;
 	private int gameHeight = GameConstants.GAME_HEIGHT;
 	
 	public void render(GameContainer container, Graphics g) {
 		g.setColor(Color.white);
 		
-		TextureHandler.getCustomImageByName("bg").draw(0, 0, gameWidth, gameHeight);
+		AssetManager.getCustomImageByName("bg").draw(0, 0, gameWidth, gameHeight);
 		game.world.render(g);
 		renderEntities(container, g);
 		renderTargetIcon(container, g);
@@ -45,7 +45,7 @@ public class GameRenderer {
 					if(e instanceof EntityPlayer) {
 						EntityPlayer player = (EntityPlayer) e;
 						if(player.currentShield > 0) {
-							Image shield = TextureHandler.getImageByName(TextureHandler.baseSheet, "shield3.png", 0.5f);
+							Image shield = AssetManager.getImageByName(AssetManager.baseSheet, "shield3.png", 0.5f);
 							shield.setRotation(player.getVector().rotation);
 							shield.drawCentered(screenPos.x, screenPos.y);
 						}

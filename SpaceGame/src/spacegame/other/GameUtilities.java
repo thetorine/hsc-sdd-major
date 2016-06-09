@@ -1,7 +1,7 @@
 package spacegame.other;
 
-import spacegame.*;
 import spacegame.entity.*;
+import spacegame.gamestates.*;
 
 public class GameUtilities {
 	
@@ -13,8 +13,8 @@ public class GameUtilities {
 	}
 	
 	public static Point translateMapToGame(Point p) {
-		float xCoordDiff = p.x - CoreGame.getInstance().camera.currentDisplayedMap.getCenterX();
-		float yCoordDiff = p.y - CoreGame.getInstance().camera.currentDisplayedMap.getCenterY();
+		float xCoordDiff = p.x - IngameState.getInstance().camera.currentDisplayedMap.getCenterX();
+		float yCoordDiff = p.y - IngameState.getInstance().camera.currentDisplayedMap.getCenterY();
 		float xCoord = GameConstants.GAME_WIDTH/2 + xCoordDiff;
 		float yCoord = GameConstants.GAME_HEIGHT/2 + yCoordDiff;
 		return new Point(xCoord, yCoord);
@@ -23,8 +23,8 @@ public class GameUtilities {
 	public static Point translateGameToMap(Point p) {
 		float xCoordDiff = (p.x-GameConstants.GAME_WIDTH/2);
 		float yCoordDiff = (p.y-GameConstants.GAME_HEIGHT/2);
-		float xCoord = xCoordDiff + CoreGame.getInstance().camera.currentDisplayedMap.getCenterX();
-		float yCoord = yCoordDiff + CoreGame.getInstance().camera.currentDisplayedMap.getCenterY();
+		float xCoord = xCoordDiff + IngameState.getInstance().camera.currentDisplayedMap.getCenterX();
+		float yCoord = yCoordDiff + IngameState.getInstance().camera.currentDisplayedMap.getCenterY();
 		return new Point(xCoord, yCoord);
 	}
 	

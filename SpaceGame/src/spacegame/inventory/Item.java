@@ -48,7 +48,7 @@ public class Item {
 	}
 	
 	public Item setResource(String fileName, float scale, int rotation) {
-		this.resource = TextureHandler.getImageByName(TextureHandler.baseSheet, fileName, scale);
+		this.resource = AssetManager.getImageByName(AssetManager.baseSheet, fileName, scale);
 		this.resource.setRotation(rotation);
 		this.resourceName = fileName;
 		this.scale = scale;
@@ -58,7 +58,7 @@ public class Item {
 	
 	public Image getResource() {
 		if(resource == null) {
-			this.resource = TextureHandler.getImageByName(TextureHandler.baseSheet, resourceName, scale);
+			this.resource = AssetManager.getImageByName(AssetManager.baseSheet, resourceName, scale);
 			this.resource.setRotation(rotation);
 		}
 		return resource;

@@ -4,12 +4,12 @@ import java.util.*;
 
 import org.newdawn.slick.*;
 
-import spacegame.*;
 import spacegame.core.DataHandler.*;
 import spacegame.entity.*;
 import spacegame.entity.environment.*;
 import spacegame.gameplay.*;
 import spacegame.gameplay.ExplorablePlanet.*;
+import spacegame.gamestates.*;
 import spacegame.inventory.*;
 import spacegame.other.*;
 import spacegame.other.GameUtilities.*;
@@ -21,7 +21,7 @@ public class World implements ISavable {
 	public ParticleFX impactFX = new ParticleFX(GameConstants.RESOURCE + "emitters/impact.xml");
 	public ParticleFX starFX = new ParticleFX(GameConstants.RESOURCE + "emitters/star.xml");
 	
-	private Image starImage = TextureHandler.getImageByName(TextureHandler.baseSheet, "star2.png", 0.4f);
+	private Image starImage = AssetManager.getImageByName(AssetManager.baseSheet, "star2.png", 0.4f);
 	private ArrayList<Point> staticStarPoints = new ArrayList<>();
 	private ArrayList<Point> slowStarPoints = new ArrayList<>();
 	private ArrayList<Point> mediumStarPoints = new ArrayList<>();
@@ -31,7 +31,7 @@ public class World implements ISavable {
 	public static HashMap<Long, ExplorablePlanet> planetsList = new HashMap<>();
 	
 	public World() {
-		CoreGame.getInstance().dataHandler.registerInterface(this);
+		IngameState.getInstance().dataHandler.registerInterface(this);
 	}
 	
 	public void onGameCreation() {
@@ -88,7 +88,7 @@ public class World implements ISavable {
 			fx.updateCoordianates();
 		}
 		
-		EntityPlayer player = CoreGame.getInstance().entityManager.player;
+		EntityPlayer player = IngameState.getInstance().entityManager.player;
 		if(player.getVector().velocityLength > 0) {
 			for(Point p : slowStarPoints) {
 				modifyStarPosition(p, 100f, delta);
@@ -121,7 +121,7 @@ public class World implements ISavable {
 	public void dropItemIntoWorld(EntityBase entity, ItemStack stack) {
 		EntityItemDrop dropEntity = new EntityItemDrop(stack);
 		dropEntity.getVector().setCoords(entity.getVector().xCoord, entity.getVector().yCoord);
-		CoreGame.getInstance().entityManager.spawnEntity(dropEntity);
+		IngameState.getInstance().entityManager.spawnEntity(dropEntity);
 	}
 
 	@Override
@@ -140,6 +140,7 @@ public class World implements ISavable {
 			savableMap.put(String.format("%d,exploreTime", i), region.exploreTime);
 			savableMap.put(String.format("%d,currentExplore", i), region.currentExplore);
 			savableMap.put(String.format("%d,completed", i), region.completed);
+			savableMap.put(String.format("%d,givenItems", i), region.givenItems);
 			String yield = "";
 			for(ItemStack stack : region.exploreYield) {
 				yield = yield + "," + stack.itemClass.itemName + "," + stack.quantity;
@@ -159,6 +160,7 @@ public class World implements ISavable {
 			int exploreTime = Integer.parseInt(rawData.get(String.format("%d,exploreTime", i)));
 			int currentExplore = Integer.parseInt(rawData.get(String.format("%d,currentExplore", i)));
 			boolean completed = Boolean.parseBoolean(rawData.get(String.format("%d,completed", i)));
+			boolean givenItems = Boolean.parseBoolean(rawData.get(String.format("%d,givenItems", i)));
 			
 			ArrayList<ItemStack> yieldStacksList = new ArrayList<>();
 			String[] yield = rawData.get(String.format("%d,exploreYield", i)).split(",");
@@ -171,6 +173,7 @@ public class World implements ISavable {
 			PlanetRegion region = new PlanetRegion(locationName, desc, exploreTime, yieldStacksList.toArray(yieldStacks));
 			region.currentExplore = currentExplore;
 			region.completed = completed; 
+			region.givenItems = givenItems;
 			ep.planetRegions.add(region);
 		}
 		World.planetsList.put(ep.planet, ep);
@@ -191,7 +194,7 @@ public class World implements ISavable {
 	}
 	
 	public void modifyStarPosition(Point p, float speedModifier, int delta) {
-		EntityPlayer player = CoreGame.getInstance().entityManager.player;
+		EntityPlayer player = IngameState.getInstance().entityManager.player;
 		float xVelocity = player.getVector().xVelocity;
 		float yVelocity = player.getVector().yVelocity;
 		

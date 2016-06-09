@@ -31,7 +31,7 @@ public class EntityPatrol extends EntityEnemy implements ICollisionDetection {
 
 	@Override
 	public void setModel() {
-		this.model = TextureHandler.getImageByName(TextureHandler.baseSheet, getModelName(), 0.25f);
+		this.model = AssetManager.getImageByName(AssetManager.baseSheet, getModelName(), 0.25f);
 		attackModifier = 2;
 	}
 	

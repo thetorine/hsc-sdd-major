@@ -7,14 +7,14 @@ import spacegame.gui.*;
 
 public class GuiCheckbox extends Gui {
 
-	public Image baseImage = TextureHandler.uiImages.get("checkbox.png");
-	public Image selectImage = TextureHandler.uiImages.get("checkbox_activate.png");
+	public Image baseImage = AssetManager.uiImages.get("checkbox.png");
+	public Image selectImage = AssetManager.uiImages.get("checkbox_activate.png");
 	public boolean selected;
 	
 	public GuiCheckbox(int x, int y, float scale, Gui parent, boolean b) {
-		super(TextureHandler.uiImages.get("checkbox.png"), x, y, scale, parent);
-		baseImage = scaleImage(TextureHandler.uiImages.get("checkbox.png"), scale);
-		selectImage = scaleImage(TextureHandler.uiImages.get("checkbox_activate.png"), scale);
+		super(AssetManager.uiImages.get("checkbox.png"), x, y, scale, parent);
+		baseImage = scaleImage(AssetManager.uiImages.get("checkbox.png"), scale);
+		selectImage = scaleImage(AssetManager.uiImages.get("checkbox_activate.png"), scale);
 		selected = b;
 	}
 	

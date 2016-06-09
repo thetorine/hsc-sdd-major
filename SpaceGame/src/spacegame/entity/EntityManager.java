@@ -5,7 +5,6 @@ import java.util.*;
 
 import org.newdawn.slick.*;
 
-import spacegame.*;
 import spacegame.core.*;
 import spacegame.core.DataHandler.*;
 import spacegame.entity.enemy.*;
@@ -13,6 +12,7 @@ import spacegame.entity.environment.*;
 import spacegame.entity.weapon.*;
 import spacegame.gameplay.*;
 import spacegame.gameplay.ExplorablePlanet.*;
+import spacegame.gamestates.*;
 import spacegame.inventory.*;
 import spacegame.other.*;
 import spacegame.other.GameUtilities.*;
@@ -27,7 +27,7 @@ public class EntityManager implements ISavable {
 	public EntityPlayer player = new EntityPlayer();
 	
 	public EntityManager() {
-		CoreGame.getInstance().dataHandler.registerInterface(this);
+		IngameState.getInstance().dataHandler.registerInterface(this);
 		try {
 			initialise();
 		} catch (Exception e) {
@@ -36,7 +36,7 @@ public class EntityManager implements ISavable {
 	}
 	
 	public void initialise() throws Exception {
-		if(CoreGame.getInstance().firstLoad) {
+		if(IngameState.getInstance().firstLoad) {
 			spawnEntity(player);
 		}
 		updateEntityList();
@@ -272,7 +272,7 @@ public class EntityManager implements ISavable {
 								}
 								
 								if(textureScale > 0) {
-									TextureHandler.registerCustomImage(textureName, textureLocation, textureScale, true);
+									AssetManager.registerCustomImage(textureName, textureLocation, textureScale, true);
 									planet = new EntityPlanet(textureName);
 									planet.setID();
 									explorable = new ExplorablePlanet(planet.id, planetName, difficulty);
