@@ -51,6 +51,7 @@ public class Minimap {
 			}
 		}
 		
+		//radian magic 
 		g.setColor(Color.white);
 		String str = "N";
 		g.drawString(str, (float) (cX + (mapRadius*1.1)*Math.sin(-playerRotation)-0.5*g.getFont().getWidth(str)), (float) (cY - (mapRadius*1.1)*Math.cos(-playerRotation)-0.5*g.getFont().getHeight(str)));

@@ -124,24 +124,26 @@ public class GuiPlanetInfo extends Gui implements EventListener {
 	public void onOpen() {
 		super.onOpen();
 		EntityPlanet planet = (EntityPlanet) IngameState.getInstance().entityManager.getEntityAt(IngameState.getInstance().entityManager.player.asPoint(), true);
-		if(planet != null) {
-			planetInfo = World.getPlanetInfo(planet);
-			GuiList list = new GuiList((int)(0.05f*width), (int)(0.15f*height), 0.32f, this);
-			ArrayList<ListData> data = new ArrayList<>();
-			for(PlanetRegion region : planetInfo.planetRegions) {
-				data.add(new ListData(region.locationName));
-			}
-			list.addRows(data);
-			guiElements.add(list);
-			GuiProgressBar bar = new GuiProgressBar(0, 0, 0.08f, this);
-			guiElements.add(bar);
-			bar.setText("Mission Progress");
-			GuiButton exploreButton = new GuiButton("Explore", 0, 0, 0.08f, this);
-			guiElements.add(exploreButton);
-			onStateChange(list);
-		} else {
-			IngameState.getInstance().guiHierarchy.loadPreviousGui();
+		planetInfo = World.getPlanetInfo(planet);
+		GuiList list = new GuiList((int)(0.05f*width), (int)(0.15f*height), 0.32f, this);
+		ArrayList<ListData> data = new ArrayList<>();
+		for(PlanetRegion region : planetInfo.planetRegions) {
+			data.add(new ListData(region.locationName));
 		}
+		list.addRows(data);
+		guiElements.add(list);
+		GuiProgressBar bar = new GuiProgressBar(0, 0, 0.08f, this);
+		guiElements.add(bar);
+		bar.setText("Mission Progress");
+		GuiButton exploreButton = new GuiButton("Explore", 0, 0, 0.08f, this);
+		guiElements.add(exploreButton);
+		onStateChange(list); 
+	}
+	
+	@Override
+	public boolean shouldOpen() {
+		EntityPlanet planet = (EntityPlanet) IngameState.getInstance().entityManager.getEntityAt(IngameState.getInstance().entityManager.player.asPoint(), true);
+		return planet != null;
 	}
 	
 	@Override

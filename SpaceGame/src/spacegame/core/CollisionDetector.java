@@ -28,10 +28,12 @@ public class CollisionDetector {
 				}
 			}
 		}
-	} //intersects very expensive, should try find a way to make it not expensive other, collision not very accurate
+	} //intersect's very expensive, should try find a way to make it not expensive other, collision not very accurate
 	
 	//doesnt work for objects that are hollow--have transparent pixels within the object.
-	//or the shape is messed up hard
+	//or the shape is just screwed up
+	//basically just comparing every pixel to its surroundings to determine if the pixel forms
+	//the border of the OBJECT in the image. 
 	public static Polygon createPolygonFromImage(Image i) {
 		Polygon p = new Polygon();
 		int imageWidth = i.getWidth() - 1;
@@ -40,12 +42,16 @@ public class CollisionDetector {
 		for (int x = 0; x <= imageWidth; x++) {
 			for (int y = 0; y <= imageHeight; y++) {
 				Color c = i.getColor(x, y);
+				//a transparent pixel
 				if (c.getAlpha() == 0) {
+					//checks the pixel currently being tested isn't at the edge of the image.
 					if (x > 0 && x < imageWidth && y > 0 && y < imageHeight) {
 						boolean top = i.getColor(x, y - 1).getAlpha() != 0;
 						boolean bottom = i.getColor(x, y + 1).getAlpha() != 0;
 						boolean left = i.getColor(x - 1, y).getAlpha() != 0;
 						boolean right = i.getColor(x + 1, y).getAlpha() != 0;
+						//checks if the transparent pixel is near a colour pixel -- meaning it is a 
+						//boundary pixel of the object 
 						if (top || bottom || left || right) {
 							Point pt = new Point(x, y);
 							pointsList.add(pt);
@@ -54,7 +60,7 @@ public class CollisionDetector {
 				}
 
 				if (x == 0 || y == 0 || x == imageWidth || y == imageHeight) {
-					//check if part of image is at the boundary
+					//check if this part of image is at the boundary of the IMAGE
 					if (i.getColor(x, y).getAlpha() > 0) {
 						Point pt = new Point(x, y);
 						pointsList.add(pt);
@@ -104,6 +110,7 @@ public class CollisionDetector {
 		return list;
 	}
 	
+	//TODO just do return Math.sqrt(distanceSquaredBetweenPolygon) 
 	private static double distanceBetween(Point p1, Point p2) {
 		return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
 	}

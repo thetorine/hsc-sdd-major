@@ -16,7 +16,7 @@ public class ItemWeapon extends Item {
 
 	public void fire(Object[] data) {
 		EntityBase entity = (EntityBase) data[0];
-		if(entity.inventory.weaponCD == 0) {
+		if(entity.inventory.weaponCD == 0 ) {
 			switch(itemName) {
 				case "Photon Blaster": {
 					if((boolean) data[2]) {
@@ -47,8 +47,6 @@ public class ItemWeapon extends Item {
 		blaster2.getVector().yCoord = (float) (shooter.getVector().yCoord - 10*Math.cos(shooter.getVector().rotation+Math.PI/2)*(invertShot ? -1 : 1));
 		shooter.getManager().spawnEntity(blaster1);
 		shooter.getManager().spawnEntity(blaster2);
-		
-		System.out.println(blaster1.getVector().xCoord);
 	}
 	
 	public void onImpactWith(EntityBase e) {

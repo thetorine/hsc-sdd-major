@@ -17,7 +17,7 @@ import spacegame.other.*;
 
 public class GuiShopMenu extends Gui implements EventListener {
 	
-	private Rectangle mainRect;
+	private RoundedRectangle mainRect;
 	private GuiButton craftButton;
 	private boolean drawnPurchaseButton;
 	private HashMap<GuiInvSlot, ArrayList<GuiInvSlot>> invSlotsDrawn = new HashMap<>();
@@ -52,7 +52,7 @@ public class GuiShopMenu extends Gui implements EventListener {
 		g.setFont(GameConstants.GAME_FONT[3]);
 		g.drawString("Shop", xStart+(width-g.getFont().getWidth("Shop"))/2, yStart+0.07f*height);
 		g.setFont(GameConstants.GAME_FONT[0]);
-		mainRect = new Rectangle(listXEnd+0.05f*width, listYStart+0.04f*height, width-(listXEnd-xStart)-0.1f*width, height-(listYStart-yStart)-0.13f*height);
+		mainRect = new RoundedRectangle(listXEnd+0.05f*width, listYStart+0.04f*height, width-(listXEnd-xStart)-0.1f*width, height-(listYStart-yStart)-0.13f*height, 10);
 		g.fill(mainRect);
 		 
 		if(!drawnPurchaseButton) {

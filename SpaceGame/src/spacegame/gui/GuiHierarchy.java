@@ -60,11 +60,7 @@ public class GuiHierarchy implements IKeyboard {
 		if(currentHeirarchy.size() > 1) {
 			currentHeirarchy.remove(currentHeirarchy.size()-1);
 			currentGui = currentHeirarchy.get(currentHeirarchy.size()-1);
-			if(currentGui.shouldPauseGame()) {
-				IngameState.getInstance().gamePaused = true;
-			} else {
-				IngameState.getInstance().gamePaused = false;
-			}
+			IngameState.getInstance().gamePaused = currentGui.shouldPauseGame();
 			return currentGui;
 		}
 		return null; 
@@ -86,7 +82,9 @@ public class GuiHierarchy implements IKeyboard {
 	public void onKeyPress(int key, int delta) {
 		Gui gui = guiKeys.get(key);
 		if(!currentHeirarchy.contains(gui)) {
-			openGui(gui);
+			if(gui.shouldOpen()) {
+				openGui(gui);
+			}
 		} else if(currentGui == gui) {
 			gui.onClose();
 			loadPreviousGui();

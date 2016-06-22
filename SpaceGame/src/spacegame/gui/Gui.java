@@ -193,6 +193,10 @@ public class Gui {
 	
 	public void onClose() {}
 	
+	public boolean shouldOpen() {
+		return true;
+	}
+	
 	public boolean shouldPauseGame() {
 		return true;
 	}

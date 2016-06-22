@@ -39,7 +39,6 @@ public class IngameState extends BasicGameState {
 	public IngameState() {
 		IngameState.instance = this;
 		loadTextures();
-		loadFonts();
 	}
 	
 	public void loadTextures() {
@@ -47,11 +46,11 @@ public class IngameState extends BasicGameState {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void loadFonts() {
+	public static void loadFonts() {
 		int arrayLength = GameConstants.GAME_FONT.length;
 		try {
 			for(int i = 0; i < arrayLength; i++) {
-				UnicodeFont font = new UnicodeFont(FONT_LOCATION, (int) ((15+10*i)/GameConstants.WINDOW_SCALE), false, false);
+				UnicodeFont font = new UnicodeFont(FONT_LOCATION, (int) ((16+10*i)/GameConstants.WINDOW_SCALE), false, false);
 				font.addAsciiGlyphs();
 				font.getEffects().add(new ColorEffect());
 				font.loadGlyphs();

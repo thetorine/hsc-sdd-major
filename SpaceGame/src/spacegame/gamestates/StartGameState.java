@@ -17,6 +17,7 @@ public class StartGameState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.setAntiAlias(true);
+		g.setFont(GameConstants.GAME_FONT[0]);
 		AssetManager.getCustomImageByName("bg").draw(0, 0, GameConstants.GAME_WIDTH,  GameConstants.GAME_HEIGHT);
 		if(currentGui != null) {
 			currentGui.render(g, container);
@@ -26,6 +27,7 @@ public class StartGameState extends BasicGameState {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		currentGui = new GuiMainMenu();
+		IngameState.loadFonts();
 	}
 
 	@Override
