@@ -1,15 +1,18 @@
 package spacegame.entity.weapon;
 
-import java.util.*;
+import spacegame.core.AssetManager;
+import spacegame.core.CollisionDetector.ICollisionDetection;
+import spacegame.entity.EntityBase;
+import spacegame.entity.EntityPlayer;
+import spacegame.entity.enemy.EntityEnemy;
+import spacegame.gamestates.IngameState;
+import spacegame.gamestates.StateManager;
+import spacegame.inventory.Item;
+import spacegame.inventory.ItemWeapon;
+import spacegame.other.GameUtilities;
+import spacegame.other.GameUtilities.Point;
 
-import spacegame.core.*;
-import spacegame.core.CollisionDetector.*;
-import spacegame.entity.*;
-import spacegame.entity.enemy.*;
-import spacegame.gamestates.*;
-import spacegame.inventory.*;
-import spacegame.other.*;
-import spacegame.other.GameUtilities.*;
+import java.util.HashMap;
 
 public class EntityMissile extends EntityBase implements ICollisionDetection {
 	public long initialEntity;
@@ -20,6 +23,7 @@ public class EntityMissile extends EntityBase implements ICollisionDetection {
 	public EntityMissile(long launchEntity) {
 		this.initialEntity = launchEntity;
 		this.weapon = Item.missile;
+		StateManager.instance.soundManager.missile.play(1f, 0.2f);
 	}
 	
 	@Override

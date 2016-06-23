@@ -1,18 +1,22 @@
 package spacegame.entity;
 
-import java.util.*;
+import org.lwjgl.input.Keyboard;
+import spacegame.core.AssetManager;
+import spacegame.core.CollisionDetector.ICollisionDetection;
+import spacegame.core.World;
+import spacegame.entity.environment.EntityPlanet;
+import spacegame.gameplay.UpgradeManager;
+import spacegame.gamestates.IngameState;
+import spacegame.inventory.Item;
+import spacegame.inventory.ItemStack;
+import spacegame.inventory.ItemWeapon;
+import spacegame.other.GameConstants;
+import spacegame.other.GameUtilities.Point;
+import spacegame.other.KeyboardListener;
+import spacegame.other.KeyboardListener.IKeyboard;
 
-import org.lwjgl.input.*;
-
-import spacegame.core.*;
-import spacegame.core.CollisionDetector.*;
-import spacegame.entity.environment.*;
-import spacegame.gameplay.*;
-import spacegame.gamestates.*;
-import spacegame.inventory.*;
-import spacegame.other.*;
-import spacegame.other.GameUtilities.*;
-import spacegame.other.KeyboardListener.*;
+import java.util.HashMap;
+import java.util.Random;
 
 public class EntityPlayer extends EntityBase implements IKeyboard, ICollisionDetection{
 	public EntityBase selectedTarget;
@@ -53,6 +57,10 @@ public class EntityPlayer extends EntityBase implements IKeyboard, ICollisionDet
 		if(timeSinceLastDmg > 2000) {
 			currentShield = (float) Math.min(maxShield, currentShield+((maxShield-currentShield)*0.1)*delta/1000f); //regen 10% of missing shield every second
 		}
+
+//		if(!StateManager.instance.soundManager.rocketLoop.playing() && getVector().velocityLength > 0) {
+//			StateManager.instance.soundManager.rocketLoop.play(1f, getVector().velocityLength/getMaxVelocity());
+//		} TODO add rocket sound
 		
 		maxHealth = 1000 + upgradeManager.getUpgrade("Health").getModifier();
 		

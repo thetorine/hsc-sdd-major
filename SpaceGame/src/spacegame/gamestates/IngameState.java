@@ -1,17 +1,27 @@
 package spacegame.gamestates;
 
-import org.newdawn.slick.*;
-import org.newdawn.slick.font.effects.*;
-import org.newdawn.slick.state.*;
-
-import spacegame.core.*;
-import spacegame.entity.*;
-import spacegame.gameplay.*;
-import spacegame.gameplay.ExplorablePlanet.*;
-import spacegame.gui.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+import spacegame.core.AssetManager;
+import spacegame.core.CollisionDetector;
+import spacegame.core.DataHandler;
+import spacegame.core.World;
+import spacegame.entity.EntityBase;
+import spacegame.entity.EntityManager;
+import spacegame.gameplay.ExplorablePlanet;
+import spacegame.gameplay.ExplorablePlanet.PlanetRegion;
+import spacegame.gui.Camera;
+import spacegame.gui.GameRenderer;
+import spacegame.gui.GuiHierarchy;
 import spacegame.gui.screen.*;
-import spacegame.inventory.*;
-import spacegame.other.*;
+import spacegame.inventory.CraftingManager;
+import spacegame.other.GameConstants;
+import spacegame.other.KeyboardListener;
 
 public class IngameState extends BasicGameState {
 	private static IngameState instance;
@@ -143,6 +153,10 @@ public class IngameState extends BasicGameState {
 			camera.onUpdate(delta);
 			world.onUpdate(delta);
 			CollisionDetector.update(delta);
+
+			if(!StateManager.instance.soundManager.backgroundMusic.playing()) {
+				StateManager.instance.soundManager.backgroundMusic.loop();
+			}
 		} 
 		
 		for(Long id : World.planetsList.keySet()) {

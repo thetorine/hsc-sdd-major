@@ -1,13 +1,15 @@
 package spacegame.entity.weapon;
 
-import java.util.*;
+import spacegame.core.AssetManager;
+import spacegame.core.CollisionDetector.ICollisionDetection;
+import spacegame.entity.EntityBase;
+import spacegame.entity.enemy.EntityEnemy;
+import spacegame.gamestates.IngameState;
+import spacegame.gamestates.StateManager;
+import spacegame.inventory.Item;
+import spacegame.inventory.ItemWeapon;
 
-import spacegame.core.*;
-import spacegame.core.CollisionDetector.*;
-import spacegame.entity.*;
-import spacegame.entity.enemy.*;
-import spacegame.gamestates.*;
-import spacegame.inventory.*;
+import java.util.HashMap;
 
 public class EntityBlaster extends EntityBase implements ICollisionDetection {
 	public long shooter;
@@ -21,6 +23,8 @@ public class EntityBlaster extends EntityBase implements ICollisionDetection {
 		this.shooter = shotFrom;
 		this.weapon = Item.blaster;
 		this.invertShot = invertShot;
+
+		StateManager.instance.soundManager.laser.play();
 	}
 	
 	@Override

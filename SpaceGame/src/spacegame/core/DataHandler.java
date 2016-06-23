@@ -1,13 +1,15 @@
 package spacegame.core;
 
-import java.io.*;
-import java.util.*;
+import spacegame.gamestates.IngameState;
+import spacegame.gamestates.StateManager;
 
-import spacegame.gamestates.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DataHandler {
 	public ArrayList<ISavable> interfaces;
-	public String baseDir = System.getProperty("java.class.path").split(":")[0];
+	public String baseDir = StateManager.getHomeDirectory().getAbsolutePath();
 	
 	public DataHandler() {
 		interfaces = new ArrayList<>();

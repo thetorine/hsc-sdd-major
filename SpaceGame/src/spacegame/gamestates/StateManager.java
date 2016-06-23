@@ -1,15 +1,20 @@
 package spacegame.gamestates;
 
-import java.io.*;
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
+import spacegame.core.SoundManager;
+import spacegame.other.GameConstants;
 
-import org.newdawn.slick.*;
-import org.newdawn.slick.state.*;
-
-import spacegame.other.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 
 public class StateManager extends StateBasedGame {
 	
 	public static StateManager instance;
+	public SoundManager soundManager;
 	
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer container = new AppGameContainer(new StateManager("give me a name"));
@@ -25,6 +30,7 @@ public class StateManager extends StateBasedGame {
 	public StateManager(String name) {
 		super(name);
 		StateManager.instance = this;
+		soundManager = new SoundManager();
 	}
 	
 	@Override
@@ -41,6 +47,17 @@ public class StateManager extends StateBasedGame {
 	public void initStatesList(GameContainer container) throws SlickException {
 		addState(new StartGameState());
 		addState(new IngameState());
+	}
+
+	public static File getHomeDirectory() {
+		try {
+			URI jarLocation = StateManager.class.getProtectionDomain().getCodeSource().getLocation().toURI();
+			File jar = new File(jarLocation);
+			return jar;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

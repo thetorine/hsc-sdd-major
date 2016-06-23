@@ -1,9 +1,10 @@
 package spacegame.entity;
 
-import java.util.*;
+import spacegame.core.CollisionDetector.ICollisionDetection;
+import spacegame.gamestates.StateManager;
+import spacegame.inventory.ItemStack;
 
-import spacegame.core.CollisionDetector.*;
-import spacegame.inventory.*;
+import java.util.HashMap;
 
 public class EntityItemDrop extends EntityBase implements ICollisionDetection {
 	
@@ -75,6 +76,7 @@ public class EntityItemDrop extends EntityBase implements ICollisionDetection {
 		if(collisionWith instanceof EntityPlayer) {
 			collisionWith.inventory.addItemStack(stackDrop);
 			getManager().despawnEntity(this);
+			StateManager.instance.soundManager.spaceTrash.play();
 		}
 	}
 }
