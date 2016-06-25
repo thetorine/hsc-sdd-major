@@ -1,16 +1,22 @@
 package spacegame.gui.screen;
 
-import org.newdawn.slick.*;
-import org.newdawn.slick.geom.*;
-
-import spacegame.core.*;
-import spacegame.entity.*;
-import spacegame.gameplay.*;
-import spacegame.gamestates.*;
-import spacegame.gui.*;
-import spacegame.gui.widgets.*;
-import spacegame.inventory.*;
-import spacegame.other.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
+import spacegame.core.AssetManager;
+import spacegame.entity.EntityBase;
+import spacegame.entity.EntityPlayer;
+import spacegame.gameplay.Minimap;
+import spacegame.gamestates.IngameState;
+import spacegame.gui.Gui;
+import spacegame.gui.widgets.EventListener;
+import spacegame.gui.widgets.GuiEquipSlot;
+import spacegame.gui.widgets.GuiProgressBar;
+import spacegame.inventory.Inventory;
+import spacegame.inventory.ItemStack;
+import spacegame.other.GameConstants;
+import spacegame.other.GameUtilities;
 import spacegame.other.GameUtilities.Point;
 
 public class GuiHUD extends Gui implements EventListener {
@@ -20,6 +26,7 @@ public class GuiHUD extends Gui implements EventListener {
 	public GuiProgressBar shieldBar;
 	public EntityBase lastEntityPressed;
 	public Rectangle infoRect;
+	public Rectangle pointsRect;
 	public GuiEquipSlot[] entitySlots = new GuiEquipSlot[4];
 	
 	public int slotXStart, slotYStart, slotXEnd, slotYEnd;
@@ -121,7 +128,26 @@ public class GuiHUD extends Gui implements EventListener {
 		if(infoRect == null) {
 			infoRect = new Rectangle(0.01f*GameConstants.GAME_WIDTH, 0, 0.25f*GameConstants.GAME_WIDTH, 0);
 		}
-		
+
+		pointsRect = null;
+		if(pointsRect == null) {
+			pointsRect = new Rectangle(0.01f*GameConstants.GAME_WIDTH, slotYStart-0.01f*GameConstants.GAME_WIDTH, 0.25f*GameConstants.GAME_WIDTH, slotYEnd-slotYStart+0.02f*GameConstants.GAME_WIDTH);
+			pointsRect.setY(0.88f*GameConstants.GAME_HEIGHT);
+			pointsRect.setHeight(0.98f*GameConstants.GAME_HEIGHT - pointsRect.getMinY());
+		}
+
+		g.setColor(Color.white);
+		g.fill(pointsRect);
+
+		//current game info/stats
+		g.setColor(Color.black);
+		g.drawString("hehexd", 0, 0);
+		EntityPlayer player = IngameState.getInstance().entityManager.player;
+		int xStart = (int) (pointsRect.getMinX() + 0.01f*GameConstants.GAME_WIDTH);
+		int currentHeight = (int) (pointsRect.getMinY()+0.02f*GameConstants.GAME_HEIGHT);
+		currentHeight = (int) wrapText("Game Stats", xStart, currentHeight, 0.22f*GameConstants.GAME_WIDTH, g);
+		currentHeight = (int) wrapText("Current Points: " + player.pointsGained, xStart+0.01f*GameConstants.GAME_WIDTH, currentHeight, 0.22f*GameConstants.GAME_WIDTH, g);
+
 		if(lastEntityPressed != null) {
 			g.setColor(Color.white);
 			g.fill(infoRect);

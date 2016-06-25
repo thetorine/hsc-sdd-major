@@ -1,5 +1,8 @@
 package spacegame.inventory;
 
+import spacegame.entity.EntityBase;
+import spacegame.entity.EntityPlayer;
+
 public class Inventory {
 	public static int WEAPON_COLUMNS = 4;
 	public static int ROWS = 4;
@@ -11,6 +14,12 @@ public class Inventory {
 	public ItemStack selectedWeapon;
 	public int weaponCD;
 	public int weaponid = -1;
+
+	public EntityBase entityInv;
+
+	public Inventory(EntityBase entity) {
+		this.entityInv = entity;
+	}
 	
 	public void update() {
 		for(int row = 0; row < ROWS; row++) {
@@ -182,6 +191,10 @@ public class Inventory {
 					armor += ((ItemArmor)stack.itemClass).armor;
 				}
 			}
+		}
+		if(entityInv instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entityInv;
+			armor += player.upgradeManager.getUpgrade("Armor").getModifier();
 		}
 		return armor;
 	}

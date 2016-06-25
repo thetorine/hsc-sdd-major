@@ -90,7 +90,7 @@ public class EntityMissile extends EntityBase implements ICollisionDetection {
 		if(collisionWith.id == targetEntity) {
 			IngameState.getInstance().entityManager.despawnEntity(this);
 			IngameState.getInstance().world.createImpactAt(asPoint());
-			weapon.onImpactWith(collisionWith);
+			weapon.onImpactWith(IngameState.getInstance().entityManager.getEntityByID(initialEntity), collisionWith);
 		}
 	}
 

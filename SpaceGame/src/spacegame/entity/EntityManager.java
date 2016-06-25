@@ -1,21 +1,34 @@
 package spacegame.entity;
 
-import java.io.*;
-import java.util.*;
+import org.newdawn.slick.Color;
+import spacegame.core.AssetManager;
+import spacegame.core.DataHandler.ISavable;
+import spacegame.core.World;
+import spacegame.entity.enemy.EntityEnemy;
+import spacegame.entity.enemy.EntityPatrol;
+import spacegame.entity.enemy.EntitySpawner;
+import spacegame.entity.environment.EntityMeteor;
+import spacegame.entity.environment.EntityPlanet;
+import spacegame.entity.environment.EntityStar;
+import spacegame.entity.weapon.EntityBlaster;
+import spacegame.entity.weapon.EntityMissile;
+import spacegame.gameplay.ExplorablePlanet;
+import spacegame.gameplay.ExplorablePlanet.PlanetRegion;
+import spacegame.gameplay.PlanetSystem;
+import spacegame.gamestates.IngameState;
+import spacegame.inventory.Inventory;
+import spacegame.inventory.Item;
+import spacegame.inventory.ItemStack;
+import spacegame.other.GameConstants;
+import spacegame.other.GameUtilities.Point;
 
-import org.newdawn.slick.*;
-
-import spacegame.core.*;
-import spacegame.core.DataHandler.*;
-import spacegame.entity.enemy.*;
-import spacegame.entity.environment.*;
-import spacegame.entity.weapon.*;
-import spacegame.gameplay.*;
-import spacegame.gameplay.ExplorablePlanet.*;
-import spacegame.gamestates.*;
-import spacegame.inventory.*;
-import spacegame.other.*;
-import spacegame.other.GameUtilities.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class EntityManager implements ISavable {
 	public ArrayList<EntityBase> ingameEntities = new ArrayList<>();
@@ -44,7 +57,6 @@ public class EntityManager implements ISavable {
 	
 	public void onUpdate(int delta) {
 		for(EntityBase entity : ingameEntities) {
-			//TODO change to update only if the entity is currently near the player
 			entity.update(delta);
 		}
 		

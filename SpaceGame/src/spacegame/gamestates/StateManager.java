@@ -16,7 +16,7 @@ public class StateManager extends StateBasedGame {
 	public static StateManager instance;
 	public SoundManager soundManager;
 	
-	public static void main(String[] args) throws SlickException {
+	public static void main(String[] args) throws Exception {
 		AppGameContainer container = new AppGameContainer(new StateManager("give me a name"));
 		float scale = GameConstants.WINDOW_SCALE;
 		GameConstants.GAME_WIDTH = (int) (container.getScreenWidth()/scale);
@@ -59,5 +59,4 @@ public class StateManager extends StateBasedGame {
 		}
 		return null;
 	}
-
 }

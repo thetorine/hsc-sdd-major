@@ -64,7 +64,7 @@ public class EntityBlaster extends EntityBase implements ICollisionDetection {
 			} else {
 				IngameState.getInstance().entityManager.despawnEntity(this);
 				IngameState.getInstance().world.createImpactAt(asPoint());
-				weapon.onImpactWith(collisionWith);
+				weapon.onImpactWith(shootingEntity, collisionWith);
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package spacegame.gamestates;
 
+import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -98,6 +99,8 @@ public class IngameState extends BasicGameState {
 		guiHierarchy.openGuiOnKeyPress(new GuiPlanetInfo(), GameConstants.PLANET);
 		guiHierarchy.openGuiOnKeyPress(new GuiShopMenu(), GameConstants.SHOP);
 		guiHierarchy.openGuiOnKeyPress(new GuiUpgrade(), GameConstants.UPGRADE_MENU);
+
+		guiHierarchy.openGuiOnKeyPress(new GuiGameOver(), Keyboard.KEY_F);
 	}
 	
 	@Override
@@ -155,7 +158,7 @@ public class IngameState extends BasicGameState {
 			CollisionDetector.update(delta);
 
 			if(!StateManager.instance.soundManager.backgroundMusic.playing()) {
-				StateManager.instance.soundManager.backgroundMusic.loop();
+				StateManager.instance.soundManager.backgroundMusic.loop(1f, 0.7f);
 			}
 		} 
 		

@@ -1,13 +1,13 @@
 package spacegame.core;
 
-import java.util.*;
-
-import org.newdawn.slick.*;
-import org.newdawn.slick.geom.*;
-
-import spacegame.entity.*;
-import spacegame.gamestates.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Polygon;
+import spacegame.entity.EntityBase;
+import spacegame.gamestates.IngameState;
 import spacegame.other.GameUtilities.Point;
+
+import java.util.ArrayList;
 
 public class CollisionDetector {
 	public static void update(int delta) {
@@ -109,8 +109,7 @@ public class CollisionDetector {
 		list.removeAll(ptsToRemove);
 		return list;
 	}
-	
-	//TODO just do return Math.sqrt(distanceSquaredBetweenPolygon) 
+
 	private static double distanceBetween(Point p1, Point p2) {
 		return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
 	}

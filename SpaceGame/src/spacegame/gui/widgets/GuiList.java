@@ -1,13 +1,14 @@
 package spacegame.gui.widgets;
 
-import java.util.*;
-
-import org.lwjgl.input.*;
+import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.*;
+import spacegame.core.AssetManager;
+import spacegame.gamestates.IngameState;
+import spacegame.gui.Gui;
 
-import spacegame.core.*;
-import spacegame.gamestates.*;
-import spacegame.gui.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class GuiList extends Gui {
 	
@@ -32,7 +33,6 @@ public class GuiList extends Gui {
 	public boolean sbMousePress;
 
 	public GuiList(int x, int y, float scale, Gui parent) {
-		//TODO add null background images
 		super(AssetManager.uiImages.get("panel.png"), x, y, scale, parent);
 		scrollBar = scaleImage(scrollBar, scale*0.2f);
 		scrollBar_clicked = scaleImage(scrollBar_clicked, scale*0.2f);

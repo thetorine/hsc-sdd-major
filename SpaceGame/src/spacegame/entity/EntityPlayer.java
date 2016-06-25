@@ -7,6 +7,7 @@ import spacegame.core.World;
 import spacegame.entity.environment.EntityPlanet;
 import spacegame.gameplay.UpgradeManager;
 import spacegame.gamestates.IngameState;
+import spacegame.gui.screen.GuiGameOver;
 import spacegame.inventory.Item;
 import spacegame.inventory.ItemStack;
 import spacegame.inventory.ItemWeapon;
@@ -25,6 +26,7 @@ public class EntityPlayer extends EntityBase implements IKeyboard, ICollisionDet
 	public float currentShield;
 	public int maxShield;
 	public boolean regenShield;
+	public int pointsGained;
 	
 	public boolean onPlanet;
 	
@@ -32,6 +34,7 @@ public class EntityPlayer extends EntityBase implements IKeyboard, ICollisionDet
 	private int textureId = random.nextInt(3)+1;
 	
 	public EntityPlayer() {
+		upgradeManager = new UpgradeManager();
 	}
 	
 	@Override
@@ -44,7 +47,6 @@ public class EntityPlayer extends EntityBase implements IKeyboard, ICollisionDet
 			setMaxHealth(1000);
 		}
 		KeyboardListener.registerListener(this);
-		upgradeManager = new UpgradeManager();
 	}
 	
 	@Override
@@ -101,12 +103,31 @@ public class EntityPlayer extends EntityBase implements IKeyboard, ICollisionDet
 	public void addSavableData(HashMap<String, Object> savableMap) {
 		savableMap.put("maxShield", maxShield);
 		savableMap.put("currentShield", currentShield);
+		savableMap.put("pointsGained", pointsGained);
+
+		String upgradeSavable = "";
+		for(UpgradeManager.Upgrade upgrade : upgradeManager.availableUpgrades) {
+			if(upgradeSavable.length() == 0) {
+				upgradeSavable = upgrade.name + "," + upgrade.level;
+			} else {
+				upgradeSavable = upgradeSavable + "," + upgrade.name +  "," + upgrade.level;
+			}
+		}
+		savableMap.put("upgradeManager", upgradeSavable);
 	}
 	
 	@Override
 	public void loadSavableData(HashMap<String, String> rawData) {
 		maxShield = Integer.parseInt(rawData.get("maxShield"));
 		currentShield = Float.parseFloat(rawData.get("currentShield"));
+		pointsGained = Integer.parseInt(rawData.get("pointsGained"));
+
+		String upgradeSavable[] = rawData.get("upgradeManager").split(",");
+		for(int i = 0; i < upgradeSavable.length; i+=2) {
+			String upgradeName = upgradeSavable[i];
+			int level = Integer.parseInt(upgradeSavable[i+1]);
+			upgradeManager.getUpgrade(upgradeName).level = level;
+		}
 	}
 
 	@Override
@@ -193,5 +214,6 @@ public class EntityPlayer extends EntityBase implements IKeyboard, ICollisionDet
 	public void onDespawn() {
 		super.onDespawn();
 		KeyboardListener.deregisterListener(this);
+		IngameState.getInstance().guiHierarchy.openGui(new GuiGameOver());
 	}
 }

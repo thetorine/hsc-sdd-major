@@ -1,8 +1,12 @@
 package spacegame.inventory;
 
-import spacegame.entity.*;
-import spacegame.entity.weapon.*;
-import spacegame.gamestates.*;
+import spacegame.entity.EntityBase;
+import spacegame.entity.EntityPlayer;
+import spacegame.entity.enemy.EntityPatrol;
+import spacegame.entity.enemy.EntitySpawner;
+import spacegame.entity.weapon.EntityBlaster;
+import spacegame.entity.weapon.EntityMissile;
+import spacegame.gamestates.IngameState;
 
 public class ItemWeapon extends Item {
 	public int baseDamage;
@@ -49,7 +53,14 @@ public class ItemWeapon extends Item {
 		shooter.getManager().spawnEntity(blaster2);
 	}
 	
-	public void onImpactWith(EntityBase e) {
-		e.damageEntity(baseDamage);
+	public void onImpactWith(EntityBase shootingEntity, EntityBase e) {
+		if(shootingEntity instanceof EntityPlayer) {
+			e.damageEntity(baseDamage + ((EntityPlayer) shootingEntity).upgradeManager.getUpgrade("Damage").getModifier());
+			if(e.currentHealth <= 0) {
+				((EntityPlayer) shootingEntity).pointsGained += (e instanceof EntitySpawner ? 30 : (e instanceof EntityPatrol ? 10 : 15 ));
+			}
+		} else {
+			e.damageEntity(baseDamage);
+		}
 	}
 }

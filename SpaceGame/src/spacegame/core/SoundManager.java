@@ -10,7 +10,8 @@ public class SoundManager {
     public Sound laser;
     public Sound spaceTrash;
     public Sound missile;
-    public Sound rocketLoop;
+    public Sound rocketLoop; //TODO implement
+    public Sound explosion;
 
     //ui
     public Sound clickPress;
@@ -23,6 +24,7 @@ public class SoundManager {
             spaceTrash = new Sound("resources/sound/game/spaceTrash1.ogg");
             missile = new Sound("resources/sound/game/missile.wav");
             rocketLoop = new Sound("resources/sound/game/rocket_loop.wav");
+            explosion = new Sound("resources/sound/game/explosion.wav");
 
             clickPress = new Sound("resources/sound/ui/click1.wav");
             switchButton = new Sound("resources/sound/ui/switch1.wav");

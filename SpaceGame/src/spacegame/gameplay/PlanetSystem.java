@@ -1,16 +1,18 @@
 package spacegame.gameplay;
 
-import java.util.*;
+import org.newdawn.slick.Color;
+import spacegame.core.World;
+import spacegame.entity.EntityBase;
+import spacegame.entity.enemy.EntitySpawner;
+import spacegame.entity.environment.EntityMeteor;
+import spacegame.entity.environment.EntityPlanet;
+import spacegame.entity.environment.EntityStar;
+import spacegame.gamestates.IngameState;
+import spacegame.inventory.Item;
+import spacegame.inventory.ItemStack;
+import spacegame.other.GameUtilities.Point;
 
-import org.newdawn.slick.*;
-
-import spacegame.core.*;
-import spacegame.entity.*;
-import spacegame.entity.enemy.*;
-import spacegame.entity.environment.*;
-import spacegame.gamestates.*;
-import spacegame.inventory.*;
-import spacegame.other.GameUtilities.*;
+import java.util.ArrayList;
 
 public class PlanetSystem {
 	public Point systemCenter;
@@ -41,7 +43,6 @@ public class PlanetSystem {
 		float yCoord = (float) (systemCenter.y - distance*Math.cos(Math.toRadians(angle)));
 		this.addEntity(planet, xCoord, yCoord, true);
 		
-		//TODO just a test for entities orbiting entities that are orbiting. 
 		if(IngameState.getInstance().firstLoad) {
 			EntityMeteor meteor = new EntityMeteor();
 			float mxCoord = (float) (xCoord + distance/5*Math.sin(Math.toRadians(angle)));

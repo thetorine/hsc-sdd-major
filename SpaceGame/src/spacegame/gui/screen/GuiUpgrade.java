@@ -1,20 +1,22 @@
 package spacegame.gui.screen;
 
-import java.util.*;
-
-import org.newdawn.slick.*;
-import org.newdawn.slick.geom.*;
-
-import spacegame.core.*;
-import spacegame.entity.*;
-import spacegame.gameplay.*;
-import spacegame.gameplay.UpgradeManager.*;
-import spacegame.gamestates.*;
-import spacegame.gui.*;
-import spacegame.gui.widgets.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
+import spacegame.core.AssetManager;
+import spacegame.entity.EntityPlayer;
+import spacegame.gameplay.UpgradeManager;
+import spacegame.gameplay.UpgradeManager.Upgrade;
+import spacegame.gamestates.IngameState;
+import spacegame.gui.Gui;
 import spacegame.gui.widgets.EventListener;
-import spacegame.gui.widgets.GuiList.*;
-import spacegame.other.*;
+import spacegame.gui.widgets.GuiButton;
+import spacegame.gui.widgets.GuiList;
+import spacegame.gui.widgets.GuiList.ListData;
+import spacegame.other.GameConstants;
+
+import java.util.ArrayList;
 
 public class GuiUpgrade extends Gui implements EventListener {
 	
@@ -33,7 +35,7 @@ public class GuiUpgrade extends Gui implements EventListener {
 		guiList.addRows(data);
 		guiElements.add(guiList);
 		
-		upgradeAbility = new GuiButton("Upgrade", 0.07f, this);
+		upgradeAbility = new GuiButton("Upgrade", 0.08f, this);
 		addGuiElement(upgradeAbility);
 	}
 
@@ -72,6 +74,8 @@ public class GuiUpgrade extends Gui implements EventListener {
 		lastHeight = (int) wrapText("Max Level: " + upgrade.maxLevel, (float) (infoRect.getMinX()+0.05*width), lastHeight, maxWidth, g);
 		if(upgrade.level < upgrade.maxLevel) {
 			lastHeight = (int) wrapText("Next Level: " + (upgrade.level+1), (float) (infoRect.getMinX()+0.1*width), lastHeight, maxWidth, g);
+			lastHeight = (int) wrapText("Points Needed: " + upgrade.getPointsForUpgrade(upgrade.level+1), (float) (infoRect.getMinX()+0.1*width), lastHeight, maxWidth, g);
+			lastHeight = (int) wrapText("Current Points: " + player.pointsGained, (float) (infoRect.getMinX()+0.1*width), lastHeight, maxWidth, g);
 		}
 		lastHeight = (int) wrapText(upgrade.getUpgradeText(), (float) (infoRect.getMinX()+0.1*width), lastHeight, maxWidth, g);
 		
@@ -94,7 +98,11 @@ public class GuiUpgrade extends Gui implements EventListener {
 				if(upgrade.level == upgrade.maxLevel) {
 					button.buttonName = "Upgraded!";
 				} else {
-					button.buttonName = "Upgrade";
+					if(upgrade.getPointsForUpgrade(upgrade.level+1) <= player.pointsGained) {
+						upgradeAbility.buttonName = "Upgrade";
+					} else {
+						upgradeAbility.buttonName = "More Points Needed";
+					}
 				}
 			}
 		} else if (element instanceof GuiList) {
@@ -105,7 +113,11 @@ public class GuiUpgrade extends Gui implements EventListener {
 			if(upgrade.level == upgrade.maxLevel) {
 				upgradeAbility.buttonName = "Upgraded!";
 			} else {
-				upgradeAbility.buttonName = "Upgrade";
+				if(upgrade.getPointsForUpgrade(upgrade.level+1) <= player.pointsGained) {
+					upgradeAbility.buttonName = "Upgrade";
+				} else {
+					upgradeAbility.buttonName = "More Points Needed";
+				}
 			}
 		}
 	}

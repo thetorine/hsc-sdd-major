@@ -1,18 +1,24 @@
 package spacegame.core;
 
-import java.util.*;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import spacegame.core.DataHandler.ISavable;
+import spacegame.entity.EntityBase;
+import spacegame.entity.EntityItemDrop;
+import spacegame.entity.EntityPlayer;
+import spacegame.entity.environment.EntityPlanet;
+import spacegame.gameplay.ExplorablePlanet;
+import spacegame.gameplay.ExplorablePlanet.PlanetRegion;
+import spacegame.gamestates.IngameState;
+import spacegame.gamestates.StateManager;
+import spacegame.inventory.Item;
+import spacegame.inventory.ItemStack;
+import spacegame.other.GameConstants;
+import spacegame.other.GameUtilities.Point;
 
-import org.newdawn.slick.*;
-
-import spacegame.core.DataHandler.*;
-import spacegame.entity.*;
-import spacegame.entity.environment.*;
-import spacegame.gameplay.*;
-import spacegame.gameplay.ExplorablePlanet.*;
-import spacegame.gamestates.*;
-import spacegame.inventory.*;
-import spacegame.other.*;
-import spacegame.other.GameUtilities.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public class World implements ISavable {
 	public ArrayList<ParticleFX> particleList = new ArrayList<>();
@@ -116,6 +122,7 @@ public class World implements ISavable {
 	
 	public void createExplosionAt(Point pt, int radius) {
 		explosionFX.addEmitterAt(pt);
+		StateManager.instance.soundManager.explosion.play(1f, 0.7f);
 	}
 	
 	public void dropItemIntoWorld(EntityBase entity, ItemStack stack) {

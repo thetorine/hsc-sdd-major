@@ -1,23 +1,25 @@
 package spacegame.entity;
 
-import java.util.*;
-
-import org.newdawn.slick.*;
-import org.newdawn.slick.geom.*;
-
-import spacegame.ai.*;
-import spacegame.core.*;
-import spacegame.gameplay.*;
-import spacegame.gamestates.*;
-import spacegame.inventory.*;
-import spacegame.other.*;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Polygon;
+import org.newdawn.slick.geom.Transform;
+import spacegame.ai.AIEntity;
+import spacegame.core.AssetManager;
+import spacegame.gameplay.VelocityVector;
+import spacegame.gamestates.IngameState;
+import spacegame.inventory.Inventory;
+import spacegame.other.GameUtilities;
 import spacegame.other.GameUtilities.Point;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public abstract class EntityBase implements Comparable<EntityBase> {
 	public long id;
 	public Image model;
 	public Polygon collisionShape;
-	public Inventory inventory = new Inventory();
+	public Inventory inventory = new Inventory(this);
 	
 	public VelocityVector velocity = new VelocityVector(0, 0);
 	public int maxHealth = -1;

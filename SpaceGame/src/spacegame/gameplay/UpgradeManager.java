@@ -1,14 +1,16 @@
 package spacegame.gameplay;
 
-import java.util.*;
+import spacegame.gamestates.IngameState;
+
+import java.util.ArrayList;
 
 public class UpgradeManager {
 
 	public ArrayList<Upgrade> availableUpgrades = new ArrayList<>();
 	
 	public UpgradeManager() {
-		addUpgrade("Damage", 3, new int[] { 1, 2, 3 }); //TODO implement dmg upgrade
-		addUpgrade("Armor", 3, new int[] { 1, 2, 3 }); //TODO implement armor upgrade
+		addUpgrade("Damage", 3, new int[] { 3, 6, 9, 12 });
+		addUpgrade("Armor", 3, new int[] { 10, 20, 30 });
 		addUpgrade("Health", 5, new int[] { 120, 240, 360, 480, 600 });
 		addUpgrade("Speed", 4, new int[] { 10, 30, 70, 130 });
 	}
@@ -35,7 +37,7 @@ public class UpgradeManager {
 		}
 		return false;
 	}
-	
+
 	public static class Upgrade {
 		public String name;
 		public int level;
@@ -53,8 +55,21 @@ public class UpgradeManager {
 		}
 		
 		public void upgrade() {
-			//TODO add some currency to enable upgrading
-			level = Math.min(level+1, maxLevel);
+			if(canUpgrade()) {
+				IngameState.getInstance().entityManager.player.pointsGained -= getPointsForUpgrade(level+1);
+				level = Math.min(level+1, maxLevel);
+			}
+		}
+
+		public boolean canUpgrade() {
+			return IngameState.getInstance().entityManager.player.pointsGained >= getPointsForUpgrade(level+1);
+		}
+
+		public int getPointsForUpgrade(int level) {
+			if(level > 0) {
+				return 100 + 100*(level-1);
+			}
+			return 0;
 		}
 		
 		public String getUpgradeText() {
