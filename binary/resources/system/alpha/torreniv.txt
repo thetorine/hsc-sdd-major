@@ -6,12 +6,12 @@ textureName:planet2
 textureLocation:environment/planets/planet2.png
 textureScale:1
 region
- name:Forest
- desc:A dense forest
- exploreTime:10000
- yield:Component Metal,10,Active Metal,1
+ name:Mining Centre
+ desc:A region used for mining metals.
+ exploreTime:125000
+ yield:Component Metal,4,Active Metal,3
 region
- name:Plains
- desc:Clear lands
- exploreTime:5000
- yield:Component Metal,2
+ name:Scientific Hub
+ desc:Galaxies premier region for scientific research.
+ exploreTime:210000
+ yield:Component Metal,4,Active Metal,3,Steel Hull,1,Energy Casket,1

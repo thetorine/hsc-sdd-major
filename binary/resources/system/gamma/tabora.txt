@@ -1,0 +1,17 @@
+name:Desert
+distance:7500
+angle:0
+difficulty:2
+textureName:planet4
+textureLocation:environment/planets/planet4.png
+textureScale:1.5
+region
+ name:Desert
+ desc:A desert comprising most of the planets surface.
+ exploreTime:110000
+ yield:Component Metal,2,Active Metal,1
+region
+ name:Water Hub
+ desc:Hub for water for civilians.
+ exploreTime:42000
+ yield:Component Metal,4

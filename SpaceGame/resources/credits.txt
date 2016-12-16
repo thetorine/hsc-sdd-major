@@ -1,6 +1,0 @@
-Coding & Documentation: Tarunveer Singh
-Engine: Slick2D
-Planets: Guyome41
-Space Parts & UI: kenney.nl
-Font: kenney.nl
-Sounds: kenney.nl, Ross Bugden

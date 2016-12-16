@@ -6,12 +6,12 @@ textureName:planet6
 textureLocation:environment/planets/planet6.png
 textureScale:1
 region
- name:Forest
- desc:A dense forest
- exploreTime:10000
- yield:Component Metal,10,Active Metal,1
+ name:Sludge Factory
+ desc:A factory used for processing metals.
+ exploreTime:150000
+ yield:Component Metal,10,Active Metal,4,Ionic Diode,1
 region
- name:Plains
- desc:Clear lands
- exploreTime:5000
- yield:Component Metal,2
+ name:Overrun base
+ desc:A base overrun by nature.
+ exploreTime:45000
+ yield:Component Metal,5,Bronze Hull,1

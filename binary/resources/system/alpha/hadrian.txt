@@ -6,12 +6,17 @@ textureName:planet3
 textureLocation:environment/planets/planet3.png
 textureScale:1
 region
- name:Forest
- desc:A dense forest made of wood.
- exploreTime:10000
- yield:Component Metal,10,Active Metal,1
+ name:Wasteland
+ desc:A wasteland abandoned eons ago.
+ exploreTime:100000
+ yield:Component Metal,8
 region
- name:Plains
- desc:Clear lands made of dirt :}
- exploreTime:5000
- yield:Component Metal,2
+ name:Old Civilisation
+ desc:A prior civilisation that died out due to famine.
+ exploreTime:50000
+ yield:Component Metal,2,Bronze Hull,1
+region
+ name:Asteroid Field
+ desc:An area littered with asteroids.
+ exploreTime:120000
+ yield:Component Metal,6,Active Metal,4
